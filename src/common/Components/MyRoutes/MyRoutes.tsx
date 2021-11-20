@@ -12,13 +12,14 @@ import Error404 from '../Error/Error404'
 export const MyRoutes = () => {
     return (
         <Routes>
-            <Route path="" element={ <Test/> }/>
+            <Route path="/" element={ <Test/> }/>
 
-            <Route path="change-password" element={ <ChangePassword/> }/>
-            <Route path="login" element={ <Login/> }/>
-            <Route path="profile" element={ <Profile/> }/>
-            <Route path="recover" element={ <RecoverPassword/> }/>
+            <Route path="/change-password" element={ <ChangePassword/> }/>
+            <Route path="/login" element={ <Login/> }/>
+            <Route path="/profile" element={ <Profile/> }/>
+            <Route path="/recover" element={ <RecoverPassword/> }/>
             <Route path="/registration" element={ <Registration/> }/>
+
             <Route path="*" element={ <Error404/> }/>
         </Routes>
     )
