@@ -1,0 +1,43 @@
+:root{
+    --links-size: 600px;
+}
+
+.header{
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #008CBA;
+    border-bottom-right-radius: 5px;
+    padding: 0.5rem 1rem;
+    min-width: var(--links-size);
+    transition: 0.5s ease-in-out 1.5s;
+    display: flex;
+    justify-content: space-between;
+    width: var(--links-size);
+}
+
+
+.header a{
+    color: white;
+    text-decoration: none;
+}
+
+/*.hovered{*/
+/*    transition: 0.5s ease-in-out 0.5s;*/
+/*    left: 0;*/
+/*}*/
+
+/*.activeLink{*/
+/*    font-weight: 500;*/
+/*}*/
+
+/*.dots {*/
+/*    padding: 3px;*/
+/*    color: white;*/
+/*    transition: 0.5s ease-in-out 1s;*/
+/*}*/
+
+/*.hovered .dots{*/
+/*    transform: rotate(90deg);*/
+/*    transition: 0.5s ease-in-out;*/
+/*}*/
