@@ -1,6 +1,6 @@
 import React from 'react'
 import './App.css'
-import { MyRoutes } from './common/Components/Routes/Routes'
+import { MyRoutes } from './common/Components/MyRoutes/MyRoutes'
 
 
 function App() {
@@ -8,7 +8,6 @@ function App() {
         <>
 
             <MyRoutes/>
-
         </>
     )
 }

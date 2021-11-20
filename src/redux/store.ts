@@ -3,7 +3,11 @@ import thunk from 'redux-thunk'
 import auth from './authReducer'
 
 
-const rootReducer = combineReducers( auth )
+const rootReducer = combineReducers( {
+    auth,
+} )
 
-const store = createStore( rootReducer, applyMiddleware( thunk ) )
+export const store = createStore( rootReducer, applyMiddleware( thunk ) )
 
+//@ts-ignore
+window.store = store
