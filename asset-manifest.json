@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/homeworks-friday/static/css/main.3a23de6c.chunk.css",
-    "main.js": "/homeworks-friday/static/js/main.0a1498a0.chunk.js",
-    "main.js.map": "/homeworks-friday/static/js/main.0a1498a0.chunk.js.map",
-    "runtime-main.js": "/homeworks-friday/static/js/runtime-main.7b355b9c.js",
-    "runtime-main.js.map": "/homeworks-friday/static/js/runtime-main.7b355b9c.js.map",
-    "static/js/2.91dc1435.chunk.js": "/homeworks-friday/static/js/2.91dc1435.chunk.js",
-    "static/js/2.91dc1435.chunk.js.map": "/homeworks-friday/static/js/2.91dc1435.chunk.js.map",
-    "static/js/3.c9f6df81.chunk.js": "/homeworks-friday/static/js/3.c9f6df81.chunk.js",
-    "static/js/3.c9f6df81.chunk.js.map": "/homeworks-friday/static/js/3.c9f6df81.chunk.js.map",
+    "main.css": "/homeworks-friday/static/css/main.f59015de.chunk.css",
+    "main.js": "/homeworks-friday/static/js/main.77c90ef2.chunk.js",
+    "main.js.map": "/homeworks-friday/static/js/main.77c90ef2.chunk.js.map",
+    "runtime-main.js": "/homeworks-friday/static/js/runtime-main.f5e32a63.js",
+    "runtime-main.js.map": "/homeworks-friday/static/js/runtime-main.f5e32a63.js.map",
+    "static/js/2.413a3a04.chunk.js": "/homeworks-friday/static/js/2.413a3a04.chunk.js",
+    "static/js/2.413a3a04.chunk.js.map": "/homeworks-friday/static/js/2.413a3a04.chunk.js.map",
+    "static/js/3.29e398ad.chunk.js": "/homeworks-friday/static/js/3.29e398ad.chunk.js",
+    "static/js/3.29e398ad.chunk.js.map": "/homeworks-friday/static/js/3.29e398ad.chunk.js.map",
     "index.html": "/homeworks-friday/index.html",
-    "static/css/main.3a23de6c.chunk.css.map": "/homeworks-friday/static/css/main.3a23de6c.chunk.css.map",
-    "static/js/2.91dc1435.chunk.js.LICENSE.txt": "/homeworks-friday/static/js/2.91dc1435.chunk.js.LICENSE.txt",
+    "static/css/main.f59015de.chunk.css.map": "/homeworks-friday/static/css/main.f59015de.chunk.css.map",
+    "static/js/2.413a3a04.chunk.js.LICENSE.txt": "/homeworks-friday/static/js/2.413a3a04.chunk.js.LICENSE.txt",
     "static/media/404girl.449c1390.jpg": "/homeworks-friday/static/media/404girl.449c1390.jpg"
   },
   "entrypoints": [
-    "static/js/runtime-main.7b355b9c.js",
-    "static/js/2.91dc1435.chunk.js",
-    "static/css/main.3a23de6c.chunk.css",
-    "static/js/main.0a1498a0.chunk.js"
+    "static/js/runtime-main.f5e32a63.js",
+    "static/js/2.413a3a04.chunk.js",
+    "static/css/main.f59015de.chunk.css",
+    "static/js/main.77c90ef2.chunk.js"
   ]
 }
