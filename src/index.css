@@ -5,6 +5,12 @@
   padding: 0;
   margin: 0;
 }
+
+@font-face {
+  font-family: "SF UI Display";
+  src: url(./assets/fonts/sf-medium.otf);
+}
+
 ul {
   list-style: none;
 }

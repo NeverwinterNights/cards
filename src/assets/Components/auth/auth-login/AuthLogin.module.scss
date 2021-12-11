@@ -1,3 +1,6 @@
+@import "./../../../../styles/vars.scss";
+@import "./../../../../styles/mixins.scss";
+
 .wrap {
   width: 413px;
   margin: 0 auto;
@@ -23,13 +26,11 @@
   font-weight: 600;
 }
 .title {
-  font-size: 26px;
-  line-height: 39px;
+  @include text(26px, 600, 36px, #2d2e46);
   margin: 25px 0 32px;
 }
 .subtitle {
-  font-size: 22px;
-  line-height: 33px;
+  @include text(22px, 600, 33px, #2d2e46);
   margin-bottom: 38px;
 }
 .email,
@@ -42,18 +43,17 @@
 input {
   border: none;
   height: 24px;
-  border-bottom: 2px solid #8d8d92;
+  border-bottom: 2px solid #bcbcc0;
   font-size: 16px;
   line-height: 24px;
   outline: none;
 }
 .textTop,
 .textBottom {
-  color: #24254a;
   position: relative;
   font-family: SF UI Display;
-  font-size: 13px;
-  line-height: 20px;
+  @include text(13px, 400, 20px, #24254a);
+  opacity: 0.5;
 }
 .textTop {
   right: 156px;
@@ -66,8 +66,12 @@ input {
   position: relative;
   left: 116px;
   font-family: SF UI Display;
-  font-size: 14px;
-  line-height: 17px;
+  @include text(14px, 400, 37px, #2d2e46);
+}
+.img {
+  position: absolute;
+  top: 235px;
+  right: 40px;
 }
 .btn {
   width: 266px;
@@ -87,17 +91,11 @@ input {
 }
 .linkNewAcc {
   font-family: SF UI Display;
-  font-weight: 600;
-  font-size: 14px;
-  line-height: 24px;
-  color: #2d2e46;
+  @include text(14px, 600, 24px, #2d2e46);
   opacity: 0.5;
 }
 .linkReg {
-  color: #21268f;
   font-family: SF UI Display;
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 24px;
+  @include text(16px, 600, 24px, $accentColor);
   margin: 10px 0 30px;
 }

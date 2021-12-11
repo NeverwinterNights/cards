@@ -1,4 +1,5 @@
 import s from "./AuthLogin.module.scss";
+import eye from "./../../../images/auth-img/eye.svg";
 
 function AuthLogin() {
   // const vlas = "vlas";
@@ -10,8 +11,11 @@ function AuthLogin() {
           <h3 className={s.subtitle}>Sign In</h3>
           <p className={s.textTop}>Email</p>
           <input className={s.email} type="email" />
+
           <p className={s.textBottom}>Password</p>
+          <img className={s.img} src={eye} alt="" />
           <input className={s.password} type="password" />
+
           <a className={s.linkNewPass} href="#">
             Forgot Password
           </a>
