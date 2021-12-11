@@ -1,5 +1,7 @@
 import s from "./AuthLogin.module.scss";
 import eye from "./../../../images/auth-img/eye.svg";
+import FormPropsTextFieldsEmail from "../../mui/text-field/TextFieldEmail";
+import FormPropsTextFieldsPass from "../../mui/text-field/TextFieldPass";
 
 function AuthLogin() {
   // const vlas = "vlas";
@@ -9,13 +11,11 @@ function AuthLogin() {
         <form className={s.form}>
           <h2 className={s.title}>It-incubator</h2>
           <h3 className={s.subtitle}>Sign In</h3>
-          <p className={s.textTop}>Email</p>
-          <input className={s.email} type="email" />
-
-          <p className={s.textBottom}>Password</p>
+          <div className={s.email}>
+            <FormPropsTextFieldsEmail />
+          </div>
           <img className={s.img} src={eye} alt="" />
-          <input className={s.password} type="password" />
-
+          <FormPropsTextFieldsPass />
           <a className={s.linkNewPass} href="#">
             Forgot Password
           </a>
