@@ -7,7 +7,7 @@ import { RecoverPassword } from '../../../Components/auth/RecoverPassword/Recove
 import { Registration } from '../../../Components/auth/Registration/Registration'
 import React from 'react'
 import Error404 from '../Error/Error404'
-
+// test
 
 export const MyRoutes = () => {
     return (
