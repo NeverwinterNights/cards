@@ -12,7 +12,7 @@ function ForgotPassword() {
           <div className={s.content}>
             <FormPropsTextFieldsEmail />
             <p className={s.textInfo}>
-              Enter your email address and we will send you further instructions{" "}
+              Enter your email address and we will send you further instructions
             </p>
           </div>
           <button className={s.btn}>Send Instructions</button>
