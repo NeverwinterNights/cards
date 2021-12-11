@@ -1,0 +1,103 @@
+.wrap {
+  width: 413px;
+  margin: 0 auto;
+  top: 60px;
+  position: relative;
+  background-color: #f9f9fe;
+  border-radius: 8px;
+}
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 413px;
+  width: 100%;
+}
+.login {
+  height: 100vh;
+  background: linear-gradient(180deg, #e6d4de 0%, #9890c7 100%);
+}
+.title,
+.subtitle {
+  font-family: Poppins;
+  font-weight: 600;
+}
+.title {
+  font-size: 26px;
+  line-height: 39px;
+  margin: 25px 0 32px;
+}
+.subtitle {
+  font-size: 22px;
+  line-height: 33px;
+  margin-bottom: 38px;
+}
+.email,
+.password {
+  max-width: 347px;
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+input {
+  border: none;
+  height: 24px;
+  border-bottom: 2px solid #8d8d92;
+  font-size: 16px;
+  line-height: 24px;
+  outline: none;
+}
+.textTop,
+.textBottom {
+  color: #24254a;
+  position: relative;
+  font-family: SF UI Display;
+  font-size: 13px;
+  line-height: 20px;
+}
+.textTop {
+  right: 156px;
+}
+.textBottom {
+  right: 146px;
+}
+.linkNewPass {
+  margin-top: 24px;
+  position: relative;
+  left: 116px;
+  font-family: SF UI Display;
+  font-size: 14px;
+  line-height: 17px;
+}
+.btn {
+  width: 266px;
+  height: 36px;
+  background: #21268f;
+  box-shadow: 0px 4px 18px rgba(33, 38, 143, 0.35),
+    inset 0px 1px 0px rgba(255, 255, 255, 0.3);
+  border-radius: 30px;
+  color: #ececf9;
+  margin-top: 92px;
+}
+.wrapLink {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 38px;
+}
+.linkNewAcc {
+  font-family: SF UI Display;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 24px;
+  color: #2d2e46;
+  opacity: 0.5;
+}
+.linkReg {
+  color: #21268f;
+  font-family: SF UI Display;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  margin: 10px 0 30px;
+}
