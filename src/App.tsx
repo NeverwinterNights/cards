@@ -1,13 +1,14 @@
 import React from 'react';
-import { MyRoutes } from './common/Components/MyRoutes/MyRoutes';
-import Header from './Components/Header/Header';
 import './App.css';
+import { MyRoutes } from './assets/Components/common/MyRoutes';
+import { Register } from './assets/Components/auth/register/Register';
 
-function App() {
-	return <>
-		<Header />
-		<MyRoutes />
-	</>;
-}
+
+const App = () => (
+	<div>
+		<Register/>
+		<MyRoutes/>
+	</div>
+);
 
 export default App;

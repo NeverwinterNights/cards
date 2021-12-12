@@ -112,6 +112,9 @@
         "leadingUnderscore": "allow",
         "trailingUnderscore": "allow"
       }
-    ]
+    ],
+    "jsx-a11y/anchor-is-valid": 1,
+    "react/display-name": 1,
+    "react/button-has-type": 1
   }
 }
