@@ -94,8 +94,24 @@
         "tsx": "never",
         "mjs": "never"
       }
+    ],
+    "import/no-cycle": 1,
+    "no-debugger": 1,
+    "@typescript-eslint/naming-convention": [
+      "error",
+      {
+        "selector": "default",
+        "format": [
+          "camelCase",
+          "strictCamelCase",
+          "PascalCase",
+          "StrictPascalCase",
+          "snake_case",
+          "UPPER_CASE"
+        ],
+        "leadingUnderscore": "allow",
+        "trailingUnderscore": "allow"
+      }
     ]
   }
 }
-
-
