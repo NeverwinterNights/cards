@@ -18,6 +18,26 @@ function PackList() {
         <div>
           <input type="text" />
           <button>Add new pack</button>
+          <table>
+            <tr>
+              <th>Name</th>
+              <th>Cards</th>
+              <th>Last Updated</th>
+              <th>Created by</th>
+              <th>Actions</th>
+              <th>Заголовок 6</th>
+              <th>Заголовок 7</th>
+            </tr>
+            <tr>
+              <td>Ячейка 2x1 </td>
+              <td>Ячейка 2x2 </td>
+              <td>Ячейка 2x3 </td>
+              <td>Ячейка 2x1 </td>
+              <td>Ячейка 2x2 </td>
+              <td>Ячейка 2x3 </td>
+              <td>Ячейка 2x3 </td>
+            </tr>
+          </table>
         </div>
       </div>
     </div>
