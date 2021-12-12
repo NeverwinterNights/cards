@@ -5,6 +5,7 @@ import AuthLogin from "./assets/Components/auth/auth-login/AuthLogin";
 import ForgotPassword from "./assets/Components/auth/forgot-password/ForgotPassword";
 import CheckEmail from "./assets/Components/auth/chek-email/CheckEmail";
 import CreatNewPass from "./assets/Components/auth/creat-new-pass/CreatNewPass";
+import Main from "./assets/Components/main/Main";
 
 function App() {
   //   const vlas = "vlas";
@@ -14,6 +15,7 @@ function App() {
       <ForgotPassword />
       <CheckEmail />
       <CreatNewPass />
+      <Main />
     </>
   );
 }
