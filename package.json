@@ -18,6 +18,8 @@
     "@typescript-eslint/parser": "^5.6.0",
     "axios": "^0.24.0",
     "eslint": "^8.4.1",
+    "eslint-config-airbnb-typescript": "^16.1.0",
+    "eslint-plugin-jest": "^25.3.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-redux": "^7.2.6",
@@ -37,7 +39,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "prettier": "prettier --write src/**/*.tsx"
   },
   "eslintConfig": {
     "extends": [
