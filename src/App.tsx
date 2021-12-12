@@ -2,6 +2,7 @@ import React from "react";
 import "./App.css";
 // import { MyRoutes } from "./common/Components/MyRoutes/MyRoutes";
 import AuthLogin from "./assets/Components/auth/auth-login/AuthLogin";
+import { Register } from "./assets/Components/auth/register/Register";
 import ForgotPassword from "./assets/Components/auth/forgot-password/ForgotPassword";
 import CheckEmail from "./assets/Components/auth/chek-email/CheckEmail";
 import CreatNewPass from "./assets/Components/auth/creat-new-pass/CreatNewPass";
@@ -12,6 +13,7 @@ function App() {
   return (
     <>
       <AuthLogin />
+      <Register />
       <ForgotPassword />
       <CheckEmail />
       <CreatNewPass />
