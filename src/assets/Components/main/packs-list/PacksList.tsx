@@ -1,5 +1,6 @@
+import React from 'react';
 import s from './PackList.module.scss';
-import RangeSlider from './../../mui/range-slider/RangeSlider';
+import RangeSlider from '../../mui/range-slider/RangeSlider';
 
 function PackList() {
 	return (
