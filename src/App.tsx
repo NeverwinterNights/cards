@@ -5,6 +5,7 @@ import { Register } from './assets/Components/auth/register/Register';
 
 
 const App = () => (
+	//st
 	<div>
 		<Register/>
 		<MyRoutes/>
