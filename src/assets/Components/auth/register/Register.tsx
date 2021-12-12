@@ -47,9 +47,7 @@ export const Register = React.memo(() => {
 						type={!inputType ? 'password' : 'text'}
 						className={styles.input}
 					/>
-					<button onClick={onInputTypeChandler} className={styles.icon}>
-						+
-					</button>
+					<button onClick={onInputTypeChandler} className={styles.icon}/>
 				</div>
 				<div className={styles.confirm}>
 					<div className={styles.confirm__title}>Confirm password</div>
@@ -60,9 +58,7 @@ export const Register = React.memo(() => {
 						type={!inputType ? 'password' : 'text'}
 						className={styles.input}
 					/>
-					<button onClick={onInputTypeChandler} className={styles.icon}>
-						+
-					</button>
+					<button onClick={onInputTypeChandler} className={styles.icon}/>
 				</div>
 
 				<div className={styles.footer}>
