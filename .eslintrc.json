@@ -28,12 +28,15 @@
     "es2021": true
   },
   "extends": [
-    "plugin:react/recommended",
     "airbnb",
+    "airbnb-typescript/base",
+    "eslint:recommended",
+    "plugin:react/recommended",
     "prettier"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
+    "project": "./tsconfig.json",
     "ecmaFeatures": {
       "jsx": true
     },
@@ -41,12 +44,42 @@
     "sourceType": "module"
   },
   "plugins": [
-    "import",
     "react",
+    "import",
     "@typescript-eslint",
     "prettier"
   ],
   "rules": {
+    "jsx-a11y/label-has-associated-control": 1,
+    "@typescript-eslint/default-param-last": 0,
+    "@typescript-eslint/no-unused-expressions": 0,
+    "react/jsx-props-no-spreading": 0,
+    "react/prop-types": 0,
+    "react/no-unescaped-entities": 0,
+    "arrow-body-style": 1,
+    "import/prefer-default-export": 0,
+    "spaced-comment": 1,
+    "react/jsx-filename-extension": [
+      1,
+      {
+        "extensions": [
+          ".js",
+          ".jsx",
+          ".tsx"
+        ]
+      }
+    ],
+    "react/no-unused-class-component-methods": 0,
+    "react/function-component-definition": 0,
+    "import/no-relative-packages": 0,
+    "import/no-import-module-exports": 0,
+    "no-unused-react-component-methods/no-unused-react-component-methods": 0,
+    "react/no-invalid-html-attribute": 0,
+    "react/no-arrow-function-lifecycle": 0,
+    "react/prefer-exact-props": 0,
+    "react/jsx-uses-react": "error",
+    "react/jsx-uses-vars": "error",
+    "react/no-namespace": 0,
     "react/no-unstable-nested-components": 0,
     "no-console": 1,
     "import/extensions": [
@@ -62,3 +95,5 @@
     ]
   }
 }
+
+

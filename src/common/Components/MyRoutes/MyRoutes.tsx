@@ -1,3 +1,4 @@
+import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { Test } from '../../../Components/Test';
 import { ChangePassword } from '../../../Components/auth/ChangePassword/ChangePassword';
@@ -5,7 +6,6 @@ import { Login } from '../../../Components/auth/Login/Login';
 import { Profile } from '../../../Components/auth/Profile/Profile';
 import { RecoverPassword } from '../../../Components/auth/RecoverPassword/RecoverPassword';
 import { Registration } from '../../../Components/auth/Registration/Registration';
-import React from 'react';
 import Error404 from '../Error/Error404';
 
 export const MyRoutes = () => {

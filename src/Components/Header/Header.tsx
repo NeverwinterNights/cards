@@ -13,13 +13,13 @@ function Header() {
 			onMouseEnter={toggleHover}
 			onMouseLeave={toggleHover}
 		>
-			<NavLink to={'/'}>Test</NavLink>
-			<NavLink to={'change-password'}>change-password</NavLink>
-			<NavLink to={'login'}>login</NavLink>
-			<NavLink to={'profile'}>profile</NavLink>
-			<NavLink to={'recover'}>recover</NavLink>
-			<NavLink to={'registration'}>registration</NavLink>
-			<NavLink to={'404'}>Error404</NavLink>
+			<NavLink to='/'>Test</NavLink>
+			<NavLink to='change-password'>change-password</NavLink>
+			<NavLink to='login'>login</NavLink>
+			<NavLink to='profile'>profile</NavLink>
+			<NavLink to='recover'>recover</NavLink>
+			<NavLink to='registration'>registration</NavLink>
+			<NavLink to='404'>Error404</NavLink>
 			{/*<span className={ s.dots }>&#8285;</span>*/}
 		</div>
 	);

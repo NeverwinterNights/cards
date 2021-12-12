@@ -4,11 +4,11 @@ import SuperCheckbox from '../common/Components/SuperCheckbox/SuperCheckbox';
 import SuperInputText from '../common/Components/SuperInputText/SuperInputText';
 
 export const Test = () => {
-	return (
-		<div>
-			<SuperInputText />
-			<SuperCheckbox />
-			<SuperButton>Button</SuperButton>
-		</div>
-	);
+	return <div>
+		<SuperInputText />
+		<SuperCheckbox />
+		<SuperButton>Button</SuperButton>
+	</div>;
 };
+
+
