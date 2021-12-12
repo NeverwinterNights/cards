@@ -44,6 +44,8 @@
     "sourceType": "module"
   },
   "plugins": [
+    "eslint-plugin-react-hooks",
+    "eslint-plugin-import",
     "react",
     "import",
     "@typescript-eslint",
