@@ -50,13 +50,17 @@
 .textBottom {
   right: 146px;
 }
+.linkNewPass,
+.checkboxText {
+  font-family: SF UI Display;
+  @include text(14px, 400, 37px, #2d2e46);
+}
 .linkNewPass {
   margin-top: 24px;
   position: relative;
   left: 116px;
-  font-family: SF UI Display;
-  @include text(14px, 400, 37px, #2d2e46);
 }
+
 .img {
   position: absolute;
   top: 250px;
@@ -90,4 +94,23 @@
   font-family: SF UI Display;
   @include text(16px, 600, 24px, $accentColor);
   margin: 10px 0 30px;
+}
+
+.checkboxAndFogot {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.checkbox {
+  display: flex;
+  position: absolute;
+  top: 22px;
+  right: 80px;
+  width: 150px;
+}
+.checkboxText {
+  position: absolute;
+  top: 2px;
+  left: 36px;
 }
