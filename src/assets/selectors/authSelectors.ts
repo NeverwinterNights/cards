@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 
-import { RootState } from '../../redux/store';
 import { LoginStateType } from '../../redux/authReducer';
+import { RootState } from '../../redux/store';
 
 
 export function useAppSelector<T>(selector: (state: RootState) => T): T {

@@ -1,9 +1,11 @@
 import React, {ChangeEvent, useState} from 'react';
-import { useSelector } from 'react-redux';
 import styles from "./Register.module.scss";
 
 
-import { RequestStatusType } from '../register-reducer';
+
+import { useAppSelector } from '../assets/selectors/authSelectors';
+import { registerTC, RequestStatusType, SetStatusAC } from '../redux/register-reducer';
+import { useDispatch } from 'react-redux';
 
 export const Register = React.memo(() => {
     const [email, setEmail] = useState<string>("");
@@ -11,23 +13,36 @@ export const Register = React.memo(() => {
     const [confirm, setConfirm] = useState<string>("");
     const [inputType, setInputType] = useState<boolean>(false);
 
+    const dispatch = useDispatch()
 
-    const onEmailChandler = (e: ChangeEvent<HTMLInputElement>) => {
+    const onEmailHandle = (e: ChangeEvent<HTMLInputElement>) => {
         setEmail(e.currentTarget.value)
     }
-    const onPasswordChandler = (e: ChangeEvent<HTMLInputElement>) => {
+    const onPasswordHandle = (e: ChangeEvent<HTMLInputElement>) => {
         setPassword(e.currentTarget.value)
     }
-    const onConfirmChandler = (e: ChangeEvent<HTMLInputElement>) => {
+    const onConfirmHandle = (e: ChangeEvent<HTMLInputElement>) => {
         setConfirm(e.currentTarget.value)
     }
 
-    const onInputTypeChandler = () => {
+    const onInputTypeHandle = () => {
         setInputType(!inputType)
     }
 
-   const status = useSelector<RequestStatusType>(state=> state.registerReducer.status)
+    const onSendPasswordHandle = () => {
+        dispatch(registerTC(email, password))
+    }
 
+
+
+   const status = useAppSelector<RequestStatusType>(state=> state.registerReducer.status)
+
+    if (email || password) {
+        dispatch(SetStatusAC('loading' ))
+    }
+    if (password === confirm) {
+        dispatch(SetStatusAC('succeeded' ))
+    }
 
     return (
       <div className={styles.body}>
@@ -37,26 +52,26 @@ export const Register = React.memo(() => {
             <div className={styles.email}>
 
                 <div className={styles.email__title}>Email</div>
-                <input autoComplete="new-password" value={email} onChange={onEmailChandler} type="text"
+                <input autoComplete="new-password" value={email} onChange={onEmailHandle} type="text"
                        className={styles.input}/>
 
             </div>
             <div className={styles.password}>
                 <div className={styles.password__title}>Password</div>
-                <input autoComplete="new-password" value={password} onChange={onPasswordChandler}  type={!inputType ? "password" : "text"}
+                <input autoComplete="new-password" value={password} onChange={onPasswordHandle}  type={!inputType ? "password" : "text"}
                        className={styles.input}/>
-                <button onClick={onInputTypeChandler} className={styles.icon}> </button>
+                <button onClick={onInputTypeHandle} className={styles.icon}> </button>
             </div>
             <div className={styles.confirm}>
                 <div className={styles.confirm__title}>Confirm password</div>
-                <input autoComplete="new-password" value={confirm} onChange={onConfirmChandler}
+                <input autoComplete="new-password" value={confirm} onChange={onConfirmHandle}
                        type={!inputType ? "password" : "text"} className={styles.input}/>
-                <button onClick={onInputTypeChandler} className={styles.icon}> </button>
+                <button onClick={onInputTypeHandle} className={styles.icon}> </button>
             </div>
 
             <div className={styles.footer}>
                 <button className={styles.cancel}>Cancel</button>
-                <button disabled={status==='loading'} className={styles.register}>Register</button>
+                <button onClick={onSendPasswordHandle} disabled={status==='loading'} className={styles.register}>Register</button>
             </div>
         </div>
       </div>
