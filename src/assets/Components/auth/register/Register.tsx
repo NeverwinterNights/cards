@@ -1,9 +1,9 @@
 import React, { ChangeEvent, useState } from 'react';
 import styles from './Register.module.scss';
-import FormPropsTextFieldsEmail from '../../mui/text-field/TextFieldEmail';
+import SuperTextField from '../../mui/text-field/SuperTextField';
 
 export const Register = React.memo(() => {
-	// const [email, setEmail] = useState<string>( '' );
+	const [email, setEmail] = useState<string>( '' );
 	const [password, setPassword] = useState<string>('');
 	const [confirm, setConfirm] = useState<string>('');
 	const [inputType, setInputType] = useState<boolean>(false);
@@ -29,7 +29,7 @@ export const Register = React.memo(() => {
 				<div className={styles.subtitle}>Sign Up</div>
 				<div className={styles.email}>
 					{/* <div className={styles.email__title}>Email</div> */}
-					<FormPropsTextFieldsEmail />
+					<SuperTextField />
 					{/* <input
             autoComplete={"new-password"}
             value={email}
