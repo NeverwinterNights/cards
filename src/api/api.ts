@@ -16,6 +16,6 @@ export const api = {
 		return axiosInstance.post<LoginDataType>( 'auth/login', data );
 	},
 	registration(body: RegistrationRequestType) {
-		return axiosInstance.post<RegistrationResponseType,AxiosResponse<RegistrationResponseType>>('auth/register', {email: body.email, password: body.password});
+		return axiosInstance.post<RegistrationRequestType,AxiosResponse<RegistrationResponseType>>('auth/register', {email: body.email, password: body.password});
 	}
 };

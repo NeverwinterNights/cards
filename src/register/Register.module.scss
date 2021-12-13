@@ -37,6 +37,22 @@
   }
 }
 
+.box {
+  @media (max-width: 460px) {
+    width: 280px !important;
+  }
+}
+.textField {
+
+  @media (max-width: 460px) {
+    width: 280px !important;
+  }
+  label {
+    font-family: "SF UI Display", sans-serif;
+    font-size: 16px;
+  }
+}
+
 
 .title {
   margin-bottom: 32px;
@@ -65,16 +81,16 @@
 
 
   // .email__title
-  &__title {
-    font-family: "SF UI Display", sans-serif;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 13px;
-    line-height: 20px;
-    color: #24254A;
-    opacity: 0.5;
-    margin-bottom: 4px;
-  }
+  //&__title {
+  //  font-family: "SF UI Display", sans-serif;
+  //  font-style: normal;
+  //  font-weight: normal;
+  //  font-size: 13px;
+  //  line-height: 20px;
+  //  color: #24254A;
+  //  opacity: 0.5;
+  //  margin-bottom: 4px;
+  //}
 }
 
 .input {
@@ -97,16 +113,16 @@
   position: relative;
 
   // .password__title
-  &__title {
-    font-family: "SF UI Display", sans-serif;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 13px;
-    line-height: 20px;
-    color: #24254A;
-    opacity: 0.5;
-    margin-bottom: 4px;
-  }
+  //&__title {
+  //  font-family: "SF UI Display", sans-serif;
+  //  font-style: normal;
+  //  font-weight: normal;
+  //  font-size: 13px;
+  //  line-height: 20px;
+  //  color: #24254A;
+  //  opacity: 0.5;
+  //  margin-bottom: 4px;
+  //}
 }
 
 .confirm {
@@ -114,16 +130,16 @@
   margin-bottom: 84px;
   position: relative;
   // .confirm__title
-  &__title {
-    font-family: "SF UI Display", sans-serif;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 13px;
-    line-height: 20px;
-    color: #24254A;
-    opacity: 0.5;
-    margin-bottom: 4px;
-  }
+  //&__title {
+  //  font-family: "SF UI Display", sans-serif;
+  //  font-style: normal;
+  //  font-weight: normal;
+  //  font-size: 13px;
+  //  line-height: 20px;
+  //  color: #24254A;
+  //  opacity: 0.5;
+  //  margin-bottom: 4px;
+  //}
 }
 
 .icon {
@@ -176,9 +192,15 @@
   border-radius: 30px;
   padding: 8px 62px;
   cursor: pointer;
-  &:hover{
-    background: #43447b;
+  &:disabled{
+    background: #D7D8EF;
+    color: #21268F;
+    opacity: 0.8;
   }
+  //&:hover{
+  //  background: #43447b;
+  //
+  //}
   @media (max-width: 460px) {
     padding: 8px 42px;
   }
