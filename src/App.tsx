@@ -1,13 +1,13 @@
 import React from 'react';
 import './App.css';
-import { MyRoutes } from './assets/Components/common/MyRoutes';
+import { Register } from './register/Register';
 
 
 const App = () => (
 	<div>
 		{/*<Register/>*/ }
 		{/*<AuthLogin/>*/ }
-		<MyRoutes/>
+		<Register/>
 	</div>
 );
 

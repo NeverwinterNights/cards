@@ -116,6 +116,12 @@
     "jsx-a11y/anchor-is-valid": 1,
     "react/display-name": 1,
     "react/button-has-type": 1,
-    "jsx-a11y/control-has-associated-label": 1
+    "jsx-a11y/control-has-associated-label": 1,
+    "@typescript-eslint/no-unused-vars": 1,
+    "no-unused-vars": 1,
+    "react/jsx-curly-brace-presence": 1,
+    "no-unneeded-ternary": 1,
+    "jsx-a11y/click-events-have-key-events": 1,
+    "jsx-a11y/no-noninteractive-element-interactions": 1
   }
 }

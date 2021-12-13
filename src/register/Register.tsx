@@ -1,5 +1,9 @@
 import React, {ChangeEvent, useState} from 'react';
+import { useSelector } from 'react-redux';
 import styles from "./Register.module.scss";
+
+
+import { RequestStatusType } from '../register-reducer';
 
 export const Register = React.memo(() => {
     const [email, setEmail] = useState<string>("");
@@ -22,15 +26,18 @@ export const Register = React.memo(() => {
         setInputType(!inputType)
     }
 
+   const status = useSelector<RequestStatusType>(state=> state.registerReducer.status)
+
 
     return (
+      <div className={styles.body}>
         <div className={styles.main}>
             <div className={styles.title}>It-incubator</div>
             <div className={styles.subtitle}>Sign Up</div>
             <div className={styles.email}>
 
                 <div className={styles.email__title}>Email</div>
-                <input autoComplete={"new-password"} value={email} onChange={onEmailChandler} type="text"
+                <input autoComplete="new-password" value={email} onChange={onEmailChandler} type="text"
                        className={styles.input}/>
 
             </div>
@@ -38,20 +45,21 @@ export const Register = React.memo(() => {
                 <div className={styles.password__title}>Password</div>
                 <input autoComplete="new-password" value={password} onChange={onPasswordChandler}  type={!inputType ? "password" : "text"}
                        className={styles.input}/>
-                <button onClick={onInputTypeChandler} className={styles.icon}></button>
+                <button onClick={onInputTypeChandler} className={styles.icon}> </button>
             </div>
             <div className={styles.confirm}>
                 <div className={styles.confirm__title}>Confirm password</div>
-                <input autoComplete={"new-password"} value={confirm} onChange={onConfirmChandler}
+                <input autoComplete="new-password" value={confirm} onChange={onConfirmChandler}
                        type={!inputType ? "password" : "text"} className={styles.input}/>
-                <button onClick={onInputTypeChandler} className={styles.icon}></button>
+                <button onClick={onInputTypeChandler} className={styles.icon}> </button>
             </div>
 
             <div className={styles.footer}>
                 <button className={styles.cancel}>Cancel</button>
-                <button className={styles.register}>Register</button>
+                <button disabled={status==='loading'} className={styles.register}>Register</button>
             </div>
         </div>
+      </div>
     );
 });
 
