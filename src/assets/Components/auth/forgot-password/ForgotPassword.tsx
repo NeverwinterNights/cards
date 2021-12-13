@@ -1,6 +1,6 @@
 import React from 'react';
 import s from './FogotPassword.module.scss';
-import FormPropsTextFieldsEmail from '../../mui/text-field/TextFieldEmail';
+import SuperTextField from '../../mui/text-field/SuperTextField';
 
 function ForgotPassword() {
 	// const vlas = "vlas";
@@ -11,7 +11,7 @@ function ForgotPassword() {
 					<h2 className={s.title}>It-incubator</h2>
 					<h3 className={s.subtitle}>Forgot your password?</h3>
 					<div className={s.content}>
-						<FormPropsTextFieldsEmail />
+						<SuperTextField />
 						<p className={s.textInfo}>
 							Enter your email address and we will send you further instructions
 						</p>
