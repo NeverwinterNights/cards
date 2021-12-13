@@ -1,5 +1,8 @@
 import s from "./PackList.module.scss";
 import RangeSlider from "./../../mui/range-slider/RangeSlider";
+import DenseTable from "./../../mui/table/Table";
+
+// import ButtonForTable from "./../../../Components/common/button/ButtonForTable";
 
 function PackList() {
   return (
@@ -14,30 +17,13 @@ function PackList() {
         <RangeSlider />
       </div>
       <div className={s.wrapRight}>
-        <h2>Packs list</h2>
-        <div>
-          <input type="text" />
-          <button>Add new pack</button>
-          <table>
-            <tr>
-              <th>Name</th>
-              <th>Cards</th>
-              <th>Last Updated</th>
-              <th>Created by</th>
-              <th>Actions</th>
-              <th>Заголовок 6</th>
-              <th>Заголовок 7</th>
-            </tr>
-            <tr>
-              <td>Ячейка 2x1 </td>
-              <td>Ячейка 2x2 </td>
-              <td>Ячейка 2x3 </td>
-              <td>Ячейка 2x1 </td>
-              <td>Ячейка 2x2 </td>
-              <td>Ячейка 2x3 </td>
-              <td>Ячейка 2x3 </td>
-            </tr>
-          </table>
+        <h2 className={s.title}>Packs list</h2>
+        <div className={s.wrapForm}>
+          <input className={s.input} type="text" placeholder="Search..." />
+          <button className={s.button}>Add new pack</button>
+        </div>
+        <div className={s.table}>
+          <DenseTable />
         </div>
       </div>
     </div>
