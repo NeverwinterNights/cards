@@ -9,29 +9,46 @@ import { LoginStateType, makeLogin } from '../../../../redux/authReducer';
 import { selectAuth, useAppSelector } from '../../../selectors/authSelectors';
 import Checkboxes from "../../mui/checkbox/Checkbox";
 
+const checkValid = (value: string) => {
+	const reg = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+	return reg.test( value );
+};
+
 function AuthLogin() {
 	const authData = useAppSelector<LoginStateType>( selectAuth );
-	const [error, setError] = useState( '' );
 	const [email, setEmail] = useState( 'nya-admin@nya.nya' );
 	const [password, setPassword] = useState( '1qazxcvBG' );
-	const [isHidePassword, setHidePassword] = useState( true );
+	const [emailError, setEmailError] = useState( '' );
+	const [passwordError, setPasswordError] = useState( '' );
+	const [isPasswordHidden, setPasswordHidden] = useState( true );
 	const rememberMe = false;	// 																		Исправить !!!!!
 	const dispatch = useDispatch();
 
+	const setAllErrors = (value: string) => {
+		setEmailError( value );
+		setPasswordError( value );
+	};
+
 	const onButtonClickHandler: MouseEventHandler<HTMLButtonElement> = async () => {
+		if (!checkValid( email )) {
+			setEmailError( 'not valid email' );
+			return;
+		}
 		const errorMessage = await dispatch( makeLogin( { email, password, rememberMe } ) );
 		errorMessage
-		&& setError( JSON.stringify( errorMessage ) );
+		&& setAllErrors( JSON.stringify( errorMessage ) );
 	};
 	const emailChangeHandler = (value: string) => {
 		setEmail( value );
-		error
-		&& setError( '' );
+
+		emailError
+		&& setAllErrors( '' );
 	};
 	const passwordChangeHandler = (value: string) => {
 		setPassword( value );
-		error
-		&& setError( '' );
+
+		passwordError
+		&& setAllErrors( '' );
 	};
 
 	if (authData.isAuth) {
@@ -45,13 +62,13 @@ function AuthLogin() {
 					<h3 className={ s.subtitle }>Sign In</h3>
 					<div className={ s.email }>
 						<SuperTextField value={ email } callback={ emailChangeHandler } type={ 'Email' }
-										error={ error }/>
+										error={ emailError }/>
 					</div>
 					<div style={ { position: 'relative' } }>
 						<img className={ s.img } src={ eye } alt=''
-							 onClick={ () => setHidePassword( !isHidePassword ) }/>
+							 onClick={ () => setPasswordHidden( !isPasswordHidden ) }/>
 						<SuperTextField value={ password } callback={ passwordChangeHandler } type={ 'Password' }
-										isHide={ isHidePassword } error={ error }/>
+										isHide={ isPasswordHidden } error={ passwordError }/>
 					</div>
                   <div className={s.checkboxAndFogot}>
                     <div className={s.checkbox}>
