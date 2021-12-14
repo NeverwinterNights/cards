@@ -2,7 +2,6 @@ import React, { ChangeEvent, FormEventHandler, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import Checkbox from '@mui/material/Checkbox';
-import { CircularProgress } from '@mui/material';
 
 import SuperTextField from '../../mui/text-field/SuperTextField';
 import { makeLogin, OptionalStringType, setError } from '../../../../redux/authReducer';
@@ -10,7 +9,7 @@ import { selectEmailError, selectIsAuth, selectPasswordError, useAppSelector } f
 import s from './AuthLogin.module.scss';
 
 
-const checkValid = (value: string) => {
+const checkEmailValidity = (value: string) => {
 	const reg = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 	return reg.test( value );
 };
@@ -29,8 +28,12 @@ function AuthLogin() {
 	};
 
 	const onSubmitHandler: FormEventHandler<HTMLFormElement> = () => {
-		if (!checkValid( email )) {
+		if (!checkEmailValidity( email )) {
 			dispatch( setError( { emailError: 'not valid email' } ) );
+			return;
+		}
+		if (password.length < 8) {
+			setAllErrors( 'Incorrect pair email/password' );
 			return;
 		}
 		dispatch( makeLogin( { email, password, rememberMe } ) );
@@ -89,7 +92,7 @@ function AuthLogin() {
 							Forgot Password
 						</a>
 					</div>
-					<CircularProgress />
+					{/*<CircularProgress />*/ }
 					<button className={ s.btn } disabled={ !email || !password }>Login
 					</button>
 				</form>
