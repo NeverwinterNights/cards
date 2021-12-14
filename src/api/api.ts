@@ -12,6 +12,9 @@ const axiosInstance = axios.create( axiosConfig );
 
 export const api = {
 	login(data: any) {
-		return axiosInstance.post<LoginDataType>( 'auth/login', data );
+		return axiosInstance.post<LoginDataType>( 'auth/login', data )
 	},
+	// authMe() {
+	// 	return axiosInstance.post<LoginDataType>( '/auth/me', {} );
+	// },
 };

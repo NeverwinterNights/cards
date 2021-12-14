@@ -1,7 +1,8 @@
-import React, { ChangeEventHandler, FC } from 'react';
+import React, { ChangeEventHandler, FC, useState } from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import s from './TextFieldEmail.module.scss';
+import eye from '../../../images/auth-img/eye.svg';
 
 
 type LabelType = 'Password' | 'Email'
@@ -10,8 +11,7 @@ type FormPropsType = {
 	callback?: (value: string) => void
 	value?: string
 	type?: LabelType
-	error?: string| null
-	isHide?: boolean
+	error?: string | null
 }
 
 const SuperTextField: FC<FormPropsType> = ({
@@ -19,27 +19,32 @@ const SuperTextField: FC<FormPropsType> = ({
 											   value,
 											   type,
 											   error,
-											   isHide,
 										   }) => {
+	const [isPasswordHidden, setPasswordHidden] = useState( type === 'Password' );
 	const onChangeHandler: ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> = e => {
 		callback
 		&& callback( e.currentTarget.value );
 	};
+
+	const isPasswordHideToggle = () => setPasswordHidden( !isPasswordHidden );
+
 	return (
 		<Box
-			component='form'
+			component='div'
 			sx={ {
 				'& .MuiTextField-root': { m: 1, width: '346px', margin: '0' },
 			} }
-			noValidate={ !error }
-			autoComplete='off'
 		>
-			<div>
+			<div style={ { position: 'relative' } }>
+				{
+					type === 'Password'
+					&& <img className={ s.img } src={ eye } alt='' onClick={ isPasswordHideToggle }/>
+				}
 				<TextField
 					className={ s.textField }
 					id='standard-password-input'
-					label={ type ? type : 'Email' }
-					type={ type && !!isHide ? type : 'Email' }
+					label={ type ? type : '' }
+					type={ type && isPasswordHidden ? type : '' }
 					autoComplete='current-password'
 					variant='standard'
 					value={ value }
