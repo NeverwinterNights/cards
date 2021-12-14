@@ -10,11 +10,11 @@ export const MyRoutes = () => {
 		<Routes>
 			{/*<Route path="/" element={ <Test/> }/>*/}
 
-			<Route path='/change-password' element={<ForgotPassword />} />
-			<Route path='/login' element={<AuthLogin />} />
+			<Route path='change-password' element={<ForgotPassword />} />
+			<Route path='login' element={<AuthLogin />} />
 			{/*<Route path="/profile" element={ <Profile/> }/>*/}
-			<Route path='/recover' element={<CreatNewPass />} />
-			<Route path='/registration' element={<Register />} />
+			<Route path='recover' element={<CreatNewPass />} />
+			<Route path='registration' element={<Register />} />
 
 			{/*<Route path="*" element={ <Error404/> }/>*/}
 		</Routes>
