@@ -28,31 +28,39 @@ export const Register = React.memo(() => {
 		setInputType(!inputType);
 	};
 
-	const onSendPasswordHandle = () => {
-		dispatch(registerTC(email, password));
-	};
-
 
 	const status = useAppSelector<RequestStatusType>(state => state.registerReducer.status);
 
+	const checkValid = (value: string) => {
+		return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+	};
+
 
 
 	useEffect(() => {
-		if (email==="") {
+		if (email === '') {
 			dispatch(SetStatusAC('loading'));
 		}
-	}, [email])
+	}, [email]);
 
 	useEffect(() => {
-		if (password ==="" || confirm==="") {
-			dispatch(SetStatusAC('loading'))
+		if (password === '' || confirm === '') {
+			dispatch(SetStatusAC('loading'));
 		}
 
-		if (password &&  password === confirm) {
+		if (checkValid(email) && password.length>=7 && password === confirm) {
 			dispatch(SetStatusAC('succeeded'));
 		}
-	}, [password,confirm])
+		if (password && password !== confirm) {
+			dispatch(SetStatusAC('loading'));
+		}
+	}, [password, confirm, email]);
 
+
+	const onSendPasswordHandle = () => {
+		dispatch(registerTC(email, password));
+
+	};
 
 
 	return (
@@ -107,7 +115,7 @@ export const Register = React.memo(() => {
 							/>
 						</Box>
 					</div>
-					<button onClick={onInputTypeHandle} className={styles.icon}> </button>
+					<button onClick={onInputTypeHandle} className={styles.icon} />
 				</div>
 				<div className={styles.confirm}>
 					<div>
@@ -132,7 +140,7 @@ export const Register = React.memo(() => {
 							/>
 						</Box>
 					</div>
-					<button onClick={onInputTypeHandle} className={styles.icon}> </button>
+					<button onClick={onInputTypeHandle} className={styles.icon}/>
 				</div>
 
 				<div className={styles.footer}>
