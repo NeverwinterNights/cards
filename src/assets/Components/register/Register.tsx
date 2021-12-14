@@ -2,8 +2,10 @@ import React, { ChangeEvent, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import { useAppSelector } from '../assets/selectors/authSelectors';
-import { registerTC, RequestStatusType, SetStatusAC } from '../redux/register-reducer';
+import { Navigate } from 'react-router-dom';
+import { registerTC, RequestStatusType, SetStatusAC } from '../../../redux/register-reducer';
+import { useAppSelector } from '../../selectors/authSelectors';
+
 import styles from './Register.module.scss';
 
 export const Register = React.memo(() => {
@@ -13,6 +15,8 @@ export const Register = React.memo(() => {
 	const [inputType, setInputType] = useState<boolean>(false);
 
 	const dispatch = useDispatch();
+	const status = useAppSelector<RequestStatusType>(state => state.registerReducer.status);
+	const isRegistered = useAppSelector<boolean>(state => state.registerReducer.isRegistered);
 
 	const onEmailHandle = (e: ChangeEvent<HTMLInputElement>) => {
 		setEmail(e.currentTarget.value);
@@ -28,8 +32,12 @@ export const Register = React.memo(() => {
 		setInputType(!inputType);
 	};
 
+	// if (isRegistered ) {
+	// 	console.log(isRegistered);
+	// 	return  <Navigate to= "login"/>
+	//
+	// }
 
-	const status = useAppSelector<RequestStatusType>(state => state.registerReducer.status);
 
 	const checkValid = (value: string) => {
 		return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
@@ -38,28 +46,38 @@ export const Register = React.memo(() => {
 
 
 	useEffect(() => {
+
 		if (email === '') {
 			dispatch(SetStatusAC('loading'));
 		}
 	}, [email]);
-
+	//
 	useEffect(() => {
+
 		if (password === '' || confirm === '') {
 			dispatch(SetStatusAC('loading'));
 		}
 
-		if (checkValid(email) && password.length>=7 && password === confirm) {
+		if (checkValid(email) && password.length>=8 && password === confirm) {
+
 			dispatch(SetStatusAC('succeeded'));
 		}
-		if (password && password !== confirm) {
-			dispatch(SetStatusAC('loading'));
-		}
+		// if (!checkValid(email) ) {
+		//
+		// 	dispatch(SetStatusAC('loading'));
+		// }
+
+		// if (password && password !== confirm) {
+		//
+		// 	dispatch(SetStatusAC('loading'));
+		// }
 	}, [password, confirm, email, checkValid]);
 
 
 	const onSendPasswordHandle = () => {
-		dispatch(registerTC(email, password));
 
+		console.log(isRegistered);
+		dispatch(registerTC(email, password));
 	};
 
 
@@ -145,7 +163,7 @@ export const Register = React.memo(() => {
 
 				<div className={styles.footer}>
 					<button className={styles.cancel}>Cancel</button>
-					<button onClick={onSendPasswordHandle} disabled={status === 'loading'} className={styles.register}>Register
+					<button onClick={onSendPasswordHandle} disabled={status !== 'succeeded'} className={styles.register}>Register
 					</button>
 				</div>
 			</div>
