@@ -7,7 +7,7 @@ import eye from '../../../images/auth-img/eye.svg';
 import SuperTextField from '../../mui/text-field/SuperTextField';
 import { LoginStateType, makeLogin } from '../../../../redux/authReducer';
 import { selectAuth, useAppSelector } from '../../../selectors/authSelectors';
-import Checkboxes from "./../../mui/checkbox/Checkbox";
+import Checkboxes from "../../mui/checkbox/Checkbox";
 
 function AuthLogin() {
 	const authData = useAppSelector<LoginStateType>( selectAuth );

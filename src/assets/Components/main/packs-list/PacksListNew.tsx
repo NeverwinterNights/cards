@@ -1,3 +1,4 @@
+import React from 'react';
 import s from "./PackListNew.module.scss";
 import arrow from "../../../images/main/arrow.svg";
 

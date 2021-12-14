@@ -1,6 +1,7 @@
+import React from 'react';
 import s from "./Main.module.scss";
-import packs from "./../../images/main/packs.svg";
-import profile from "./../../images/main/profile.svg";
+import packs from "../../images/main/packs.svg";
+import profile from "../../images/main/profile.svg";
 import PackList from "./packs-list/PacksList";
 import PackListNew from "./packs-list/PacksListNew";
 

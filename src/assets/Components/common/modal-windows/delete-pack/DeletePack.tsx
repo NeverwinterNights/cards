@@ -1,5 +1,6 @@
+import React from 'react';
 import s from "./DeletePack.module.scss";
-import cross from "./../../../../images/modal/cross.png";
+import cross from "../../../../images/modal/cross.png";
 
 function DeletePack() {
   return (
