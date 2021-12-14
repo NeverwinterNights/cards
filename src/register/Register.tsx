@@ -54,7 +54,7 @@ export const Register = React.memo(() => {
 		if (password && password !== confirm) {
 			dispatch(SetStatusAC('loading'));
 		}
-	}, [password, confirm, email]);
+	}, [password, confirm, email, checkValid]);
 
 
 	const onSendPasswordHandle = () => {
