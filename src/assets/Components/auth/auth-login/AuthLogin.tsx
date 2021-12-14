@@ -2,7 +2,7 @@ import s from "./AuthLogin.module.scss";
 import eye from "./../../../images/auth-img/eye.svg";
 import FormPropsTextFieldsEmail from "../../mui/text-field/TextFieldEmail";
 import FormPropsTextFieldsPass from "../../mui/text-field/TextFieldPass";
-import Checkboxes from "./../../mui/checkbox/Checkbox";
+import BpCheckbox from "./../../mui/checkbox/Checkbox";
 
 function AuthLogin() {
   // const vlas = "vlas";
@@ -19,7 +19,7 @@ function AuthLogin() {
           <FormPropsTextFieldsPass />
           <div className={s.checkboxAndFogot}>
             <div className={s.checkbox}>
-              <Checkboxes />
+              <BpCheckbox />
               <p className={s.checkboxText}>remember me</p>
             </div>
             <a className={s.linkNewPass} href="#">

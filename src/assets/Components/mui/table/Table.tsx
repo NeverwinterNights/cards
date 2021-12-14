@@ -19,6 +19,19 @@ function createData(
   return { name, cards, last, created, actions };
 }
 
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  "&:nth-of-type(odd)": {
+    backgroundColor: theme.palette.action.hover,
+  },
+  // hide last border
+  "&:last-child td, &:last-child th": {
+    border: 0,
+  },
+  "& td": {
+    padding: 16,
+  },
+}));
+
 const rows = [
   createData("Pack Name", 4, "18.03.2021", "Ivan Ivanov", 4.0),
   createData("Name Pack", 37, "19.03.2021", "Petr Petrov", 4.3),
@@ -35,17 +48,17 @@ export default function DenseTable() {
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
         <TableHead className={s.tableHead}>
-          <TableRow>
+          <StyledTableRow>
             <TableCell>Name</TableCell>
             <TableCell align="right">Cards</TableCell>
             <TableCell align="right">Last Updated</TableCell>
             <TableCell align="right">Created by</TableCell>
             <TableCell align="right">Actions</TableCell>
-          </TableRow>
+          </StyledTableRow>
         </TableHead>
         <TableBody className={s.tableBody}>
           {rows.map((row) => (
-            <TableRow
+            <StyledTableRow
               key={row.name}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
@@ -56,7 +69,7 @@ export default function DenseTable() {
               <TableCell align="right">{row.last}</TableCell>
               <TableCell align="right">{row.created}</TableCell>
               <TableCell align="right">{row.actions}</TableCell>
-            </TableRow>
+            </StyledTableRow>
           ))}
         </TableBody>
       </Table>
