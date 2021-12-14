@@ -7,7 +7,7 @@ import eye from '../../../images/auth-img/eye.svg';
 import SuperTextField from '../../mui/text-field/SuperTextField';
 import { LoginStateType, makeLogin } from '../../../../redux/authReducer';
 import { selectAuth, useAppSelector } from '../../../selectors/authSelectors';
-
+import Checkboxes from "./../../mui/checkbox/Checkbox";
 
 function AuthLogin() {
 	const authData = useAppSelector<LoginStateType>( selectAuth );
@@ -53,9 +53,15 @@ function AuthLogin() {
 						<SuperTextField value={ password } callback={ passwordChangeHandler } type={ 'Password' }
 										isHide={ isHidePassword } error={ error }/>
 					</div>
-					<a className={ s.linkNewPass } href='#'>
-						Forgot Password
-					</a>
+                  <div className={s.checkboxAndFogot}>
+                    <div className={s.checkbox}>
+                      <Checkboxes />
+                      <p className={s.checkboxText}>remember me</p>
+                    </div>
+                    <a className={s.linkNewPass} href="#">
+                      Forgot Password
+                    </a>
+                  </div>
 					<button className={ s.btn } onClick={ onButtonClickHandler }>Login</button>
 				</div>
 				<div className={ s.wrapLink }>

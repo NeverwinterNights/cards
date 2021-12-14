@@ -1,0 +1,50 @@
+@import "./../../../../../styles/vars.scss";
+@import "./../../../../../styles/mixins.scss";
+
+.wrapper {
+  width: 394px;
+  height: 220px;
+  background: #f9f9fe;
+  border-radius: 2px;
+}
+.wrap {
+  padding: 15px 24px 32px;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 42px;
+}
+.wrapBtn {
+  display: flex;
+  justify-content: space-between;
+}
+
+.title {
+  @include text(18px, 500, 27px, #2d2e46);
+  font-family: Poppins;
+}
+.text {
+  @include text(14px, 400, 24px, #2d2e46);
+  font-family: SF UI Display;
+  margin-bottom: 29px;
+}
+.btnCancel {
+  width: 124px;
+  height: 36px;
+  background: #d7d8ef;
+  border-radius: 30px;
+  color: $accentColor;
+  opacity: 0.8;
+  text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.25);
+}
+.btnDel {
+  width: 127px;
+  height: 36px;
+  background: #f1453d;
+  box-shadow: 0px 4px 18px rgba(241, 69, 61, 0.35),
+    inset 0px 1px 0px rgba(255, 255, 255, 0.3);
+  border-radius: 30px;
+  color: #fff;
+}
