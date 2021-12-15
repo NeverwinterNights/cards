@@ -12,6 +12,7 @@ export const MyRoutes = () => {
 
 			<Route path='change-password' element={<ForgotPassword />} />
 			<Route path='login' element={<AuthLogin />} />
+			<Route path='/set-new-password/:id' element={<CreatNewPass />} />
 			{/*<Route path='/profile' element={<Profile />} />*/}
 			<Route path='recover' element={<CreatNewPass />} />
 			<Route path='registration' element={<Register />} />

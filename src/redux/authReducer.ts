@@ -1,9 +1,10 @@
-type AuthStateType = typeof initState
+type AuthStateType = typeof initialState
 
+const initialState = {
 
-const initState = {};
+}
 
-const authReducer = (state = initState, action: any): AuthStateType => {
+const authReducer = (state = initialState, action: any): AuthStateType => {
 	switch (action.type) {
 		default:
 			return { ...state };
