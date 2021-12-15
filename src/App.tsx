@@ -11,11 +11,13 @@ import AuthLogin from './assets/Components/auth/auth-login/AuthLogin';
 const App = () => (
 	<div>
 		{/*<Register/>*/ }
-		{/*<AuthLogin/>*/ }
-		<Register/>
-		{/*<Routes>*/}
-		{/*	<Route path="login" element={<AuthLogin/>}/>*/}
-		{/*</Routes>*/}
+		{/*<AuthLogin/>*/}
+		<Routes>
+			<Route path="/login" element={<AuthLogin/>}/>
+			<Route path="*" element={<Navigate to="/register"/>}/>
+			<Route path="/register" element={<Register/>}/>
+
+		</Routes>
 	</div>
 );
 
