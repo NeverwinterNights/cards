@@ -1,5 +1,5 @@
 import React, { FormEvent, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { TextField } from '@mui/material';
 import s from './CreatNewPass.module.scss';
@@ -18,7 +18,7 @@ function CreatNewPass() {
 		dispatch(createNewPasswordTC(text, id));
 		setText('');
 	};
-	console.log(Status.loading === status.status);
+	if (Status.ready === status.status) return <Navigate to='login' />;
 	return (
 		<div className={s.login}>
 			<div className={s.wrap}>
