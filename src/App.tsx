@@ -12,12 +12,12 @@ const App = () => (
 	<div>
 		{/*<Register/>*/ }
 		{/*<AuthLogin/>*/}
-		<Routes>
-			<Route path="/login" element={<AuthLogin/>}/>
-			<Route path="*" element={<Navigate to="/register"/>}/>
-			<Route path="/register" element={<Register/>}/>
+		{/*<Routes>*/}
+		{/*	<Route path="/login" element={<AuthLogin/>}/>*/}
+		{/*	<Route path="*" element={<Navigate to="/register"/>}/>*/}
+		{/*	<Route path="/register" element={<Register/>}/>*/}
 
-		</Routes>
+		{/*</Routes>*/}
 	</div>
 );
 
