@@ -12,13 +12,14 @@ export const MyRoutes = () => {
 		<Routes>
 			<Route path="/" element={ <Main/> }/>
 
-			<Route path='/change-password' element={ <ForgotPassword/> }/>
-			<Route path='/login' element={ <AuthLogin/> }/>
-			{/*<Route path="/profile" element={ <Profile/> }/>*/ }
-			<Route path='/recover' element={ <CreatNewPass/> }/>
-			<Route path='/registration' element={ <Register/> }/>
+			<Route path='/change-password' element={<ForgotPassword />} />
+			<Route path='/login' element={<AuthLogin />} />
+			<Route path='/set-new-password/:id' element={<CreatNewPass />} />
+			{/*<Route path="/profile" element={ <Profile/> }/>*/}
+			<Route path='/recover' element={<CreatNewPass />} />
+			<Route path='/registration' element={<Register />} />
 
-			{/*<Route path="*" element={ <Error404/> }/>*/ }
+			{/*<Route path="*" element={ <Error404/> }/>*/}
 		</Routes>
 	);
 };

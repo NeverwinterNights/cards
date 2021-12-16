@@ -3,13 +3,11 @@ import './App.css';
 import { MyRoutes } from './assets/Components/common/MyRoutes';
 
 
-const App = () => {
-	return (
-		<div>
-			{/*<Register/>*/ }
-			{/*<AuthLogin/>*/ }
-			<MyRoutes/>
-		</div>
-	);
-};
+
+const App = () => (
+	<div>
+		<MyRoutes/>
+	</div>
+);
+
 export default App;

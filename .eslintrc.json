@@ -52,6 +52,8 @@
     "prettier"
   ],
   "rules": {
+    "import/no-useless-path-segments": 1,
+    "react/react-in-jsx-scope": 1,
     "jsx-a11y/label-has-associated-control": 1,
     "@typescript-eslint/default-param-last": 0,
     "@typescript-eslint/no-unused-expressions": 0,
