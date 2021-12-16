@@ -1,8 +1,9 @@
 import { TypedUseSelectorHook, useSelector } from 'react-redux';
-import { forgotReducer } from '../assets/Components/auth/forgot-password/forgot-reducer';
-import { newPasswordReducer } from '../assets/Components/auth/creat-new-pass/new-password-reducer';
 import { AnyAction, applyMiddleware, combineReducers, createStore } from 'redux';
 import thunk, { ThunkAction } from 'redux-thunk';
+
+import { forgotReducer } from '../assets/Components/auth/forgot-password/forgot-reducer';
+import { newPasswordReducer } from '../assets/Components/auth/creat-new-pass/new-password-reducer';
 import auth from './authReducer';
 import { registerReducer } from './register-reducer';
 

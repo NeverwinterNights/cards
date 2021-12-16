@@ -1,6 +1,6 @@
 import React, { ChangeEvent, FormEventHandler, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Navigate } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import Checkbox from '@mui/material/Checkbox';
 
 import SuperTextField from '../../mui/text-field/SuperTextField';
@@ -27,7 +27,8 @@ function AuthLogin() {
 		dispatch( setError( { passwordError: errorMessage, emailError: errorMessage } ) );
 	};
 
-	const onSubmitHandler: FormEventHandler<HTMLFormElement> = () => {
+	const onSubmitHandler: FormEventHandler<HTMLFormElement> = e => {
+		e.preventDefault()
 		if (!checkEmailValidity( email )) {
 			dispatch( setError( { emailError: 'not valid email' } ) );
 			return;
@@ -88,21 +89,21 @@ function AuthLogin() {
 							<Checkbox checked={ rememberMe } onChange={ onCheckboxClickHandler }/>
 							<p className={ s.checkboxText }>remember me</p>
 						</div>
-						<a className={ s.linkNewPass } href="#">
+						<Link className={ s.linkNewPass } to='/change-password'>
 							Forgot Password
-						</a>
+						</Link>
 					</div>
 					{/*<CircularProgress />*/ }
 					<button className={ s.btn } disabled={ !email || !password }>Login
 					</button>
 				</form>
 				<div className={ s.wrapLink }>
-					<a className={ s.linkNewAcc } href='#'>
+					<span className={ s.linkNewAcc }  >
 						Don’t have an account?
-					</a>
-					<a className={ s.linkReg } href='#'>
+					</span>
+					<Link className={ s.linkReg } to='/registration'>
 						Sign Up
-					</a>
+					</Link>
 				</div>
 			</div>
 		</div>

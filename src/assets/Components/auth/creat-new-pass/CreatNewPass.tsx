@@ -5,7 +5,7 @@ import { TextField } from '@mui/material';
 import s from './CreatNewPass.module.scss';
 import { createNewPasswordTC, NewPasswordType } from './new-password-reducer';
 import { useAppSelector } from '../../../../redux/store';
-import { Status } from '../../../../API/change-password-API';
+import { Status } from '../../../../api/change-password-API';
 
 function CreatNewPass() {
 	const dispatch = useDispatch();

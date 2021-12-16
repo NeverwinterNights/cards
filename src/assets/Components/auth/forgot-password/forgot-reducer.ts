@@ -1,5 +1,5 @@
 import { Dispatch } from 'redux';
-import { changePasswordAPI } from '../../../../API/change-password-API';
+import { changePasswordAPI } from '../../../../api/change-password-API';
 import { StatusType } from '../creat-new-pass/new-password-reducer';
 
 type ForgotInitialStateType = ReturnType<typeof SendEmailAC> | ReturnType<typeof SetStatusAC>

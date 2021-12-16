@@ -1,5 +1,5 @@
 import { Dispatch } from 'redux';
-import { changePasswordAPI } from '../../../../API/change-password-API';
+import { changePasswordAPI } from '../../../../api/change-password-API';
 
 export type StatusType = 'loading' | 'error' | 'ready'
 
@@ -24,6 +24,7 @@ export const ChangeStatus = (status: string) => ({ type: 'CHANGE_STATUS', status
 export const createNewPasswordTC = (password: string, token: string) => async (dispatch: Dispatch<ActionType>) => {
 	dispatch(ChangeStatus('loading'));
 	try {
+		console.log('dsf');
 		const { data } = await changePasswordAPI.newPassword(password, token);
 		dispatch(ChangeStatus('ready'));
 		console.log(data);
