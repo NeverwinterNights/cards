@@ -53,7 +53,7 @@ export const changePasswordAPI = {
 		return axiosInstance.post<SendMessageType>('auth/forgot', {
 			email,
 			from: 'test-front-admin <t9371100211@gmail.com>',
-			message: `<div><h1><a href='http://localhost:3000/#/set-new-password/$token$'>change password</h1></div>`,
+			message: `<div><h1><a href='https://alfilip.github.io/cards/#/set-new-password/$token$'>change password</h1></div>`,
 		});
 	},
 	newPassword(password: string, token: string) {
