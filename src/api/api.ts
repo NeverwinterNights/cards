@@ -4,7 +4,8 @@ import { RegistrationRequestType, RegistrationResponseType } from '../redux/regi
 
 
 const axiosConfig = {
-	baseURL: 'http://localhost:7542/2.0/',
+	// baseURL: 'http://localhost:7542/2.0/',
+	baseURL: 'https://neko-back.herokuapp.com/2.0/',
 	withCredentials: true,
 };
 

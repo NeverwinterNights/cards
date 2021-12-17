@@ -3,8 +3,6 @@ import s from './PackList.module.scss';
 import RangeSlider from '../../mui/range-slider/RangeSlider';
 import DenseTable from '../../mui/table/Table';
 import PaginationSize from '../../mui/pagination/Pagination';
-import DeletePack from '../../common/modal-windows/delete-pack/DeletePack';
-import AddNewPack from '../../common/modal-windows/add-new-pack/AddNewPack';
 
 // import ButtonForTable from "./../../../Components/common/button/ButtonForTable";
 
@@ -33,8 +31,8 @@ function PackList() {
 					</div>
 				</div>
 			</div>
-			<DeletePack/>
-			<AddNewPack/>
+			{/*<DeletePack/>*/ }
+			{/*<AddNewPack/>*/ }
 		</div>
 	);
 }
