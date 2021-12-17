@@ -8,7 +8,7 @@ import { useAppSelector } from '../../../../redux/store';
 import { SendEmailTC } from './forgot-reducer';
 import CheckEmail from '../chek-email/CheckEmail';
 import { StatusType } from '../creat-new-pass/new-password-reducer';
-import { Status } from '../../../../api/change-password-API';
+import { Status } from '../../../../api/api';
 
 
 function ForgotPassword() {

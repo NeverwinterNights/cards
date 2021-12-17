@@ -5,8 +5,9 @@ import Checkbox from '@mui/material/Checkbox';
 
 import SuperTextField from '../../mui/text-field/SuperTextField';
 import { makeLogin, OptionalStringType, setError } from '../../../../redux/authReducer';
-import { selectEmailError, selectIsAuth, selectPasswordError, useAppSelector } from '../../../selectors/authSelectors';
+import { selectEmailError, selectIsAuth, selectPasswordError } from '../../../selectors/authSelectors';
 import s from './AuthLogin.module.scss';
+import { useAppSelector } from '../../../../redux/store';
 
 
 const checkEmailValidity = (value: string) => {

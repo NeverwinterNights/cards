@@ -7,7 +7,8 @@ import packs from '../../images/main/packs.svg';
 import profile from '../../images/main/profile.svg';
 import PackList from './packs-list/PacksList';
 import { makeLogout } from '../../../redux/authReducer';
-import { selectIsAuth, useAppSelector } from '../../selectors/authSelectors';
+import { selectIsAuth } from '../../selectors/authSelectors';
+import { useAppSelector } from '../../../redux/store';
 
 
 function Main() {
@@ -16,7 +17,7 @@ function Main() {
 	const onLogoutClickHandler = () => {
 		dispatch( makeLogout() );
 	};
-	console.log('main');
+	console.log( 'main' );
 	if (!isAuth) {
 		return <Navigate to='/login'/>;
 	}

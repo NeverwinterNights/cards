@@ -1,5 +1,6 @@
 import { Dispatch } from 'redux';
-import { changePasswordAPI } from '../../../../api/change-password-API';
+import { changePasswordAPI } from '../../../../api/api';
+
 
 export type StatusType = 'loading' | 'error' | 'ready'
 
@@ -19,16 +20,16 @@ export const newPasswordReducer = (state = initialState, action: ActionType) => 
 	}
 };
 
-export const ChangeStatus = (status: string) => ({ type: 'CHANGE_STATUS', status }as const);
+export const ChangeStatus = (status: string) => ( { type: 'CHANGE_STATUS', status } as const );
 
 export const createNewPasswordTC = (password: string, token: string) => async (dispatch: Dispatch<ActionType>) => {
-	dispatch(ChangeStatus('loading'));
+	dispatch( ChangeStatus( 'loading' ) );
 	try {
-		const { data } = await changePasswordAPI.newPassword(password, token);
-		dispatch(ChangeStatus('ready'));
-		console.log(data);
+		const { data } = await changePasswordAPI.newPassword( password, token );
+		dispatch( ChangeStatus( 'ready' ) );
+		console.log( data );
 	} catch (e) {
-		dispatch(ChangeStatus('error'));
-		console.log(e);
+		dispatch( ChangeStatus( 'error' ) );
+		console.log( e );
 	}
 };

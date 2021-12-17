@@ -3,8 +3,9 @@ import { useDispatch } from 'react-redux';
 
 import './App.css';
 import { MyRoutes } from './assets/Components/common/MyRoutes';
-import { selectIsAuth, useAppSelector } from './assets/selectors/authSelectors';
+import { selectIsAuth } from './assets/selectors/authSelectors';
 import { checkAuth } from './redux/authReducer';
+import { useAppSelector } from './redux/store';
 
 
 const App = () => {
