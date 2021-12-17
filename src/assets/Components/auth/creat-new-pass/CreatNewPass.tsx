@@ -11,7 +11,7 @@ function CreatNewPass() {
 	const dispatch = useDispatch();
 	const status = useAppSelector<NewPasswordType>(state => state.newPasswordReducer);
 	const [text, setText] = useState('');
-	const id = useParams();
+	const { id } = useParams();
 	const onSubmit = (e: FormEvent) => {
 		e.preventDefault();
 		// @ts-ignore

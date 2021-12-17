@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
+	// baseURL: 'http://localhost:7542/2.0/',
 	baseURL: 'https://neko-back.herokuapp.com/2.0/',
 	withCredentials: true,
 });
@@ -9,7 +10,7 @@ export const changePasswordAPI = {
 	sendMessagePassword(email: string) {
 		return instance.post<SendMessageType>('auth/forgot', {
 			email,
-			from: 'test-front-admin <ai73a@yandex.by>',
+			from: 'test-front-admin <t9371100211@gmail.com>',
 			message: `<div><h1><a href='http://localhost:3000/set-new-password/$token$'>change password</h1></div>`,
 		});
 	},

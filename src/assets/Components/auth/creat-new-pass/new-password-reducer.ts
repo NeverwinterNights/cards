@@ -24,7 +24,6 @@ export const ChangeStatus = (status: string) => ({ type: 'CHANGE_STATUS', status
 export const createNewPasswordTC = (password: string, token: string) => async (dispatch: Dispatch<ActionType>) => {
 	dispatch(ChangeStatus('loading'));
 	try {
-		console.log('dsf');
 		const { data } = await changePasswordAPI.newPassword(password, token);
 		dispatch(ChangeStatus('ready'));
 		console.log(data);
