@@ -5,6 +5,7 @@ import ForgotPassword from '../auth/forgot-password/ForgotPassword';
 import CreatNewPass from '../auth/creat-new-pass/CreatNewPass';
 import { Register } from '../auth/register/Register';
 import Main from '../main/Main';
+import Error404 from './error/Error404';
 
 
 export const MyRoutes = () => {
@@ -19,7 +20,7 @@ export const MyRoutes = () => {
 			{/*<Route path='/recover' element={<CreatNewPass />} />*/}
 			<Route path='/registration' element={<Register />} />
 
-			{/*<Route path="*" element={ <Error404/> }/>*/}
+			<Route path="*" element={ <Error404/> }/>
 		</Routes>
 	);
 };
