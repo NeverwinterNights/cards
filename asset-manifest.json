@@ -1,17 +1,18 @@
 {
   "files": {
-    "main.css": "/cards/static/css/main.468b5e78.chunk.css",
-    "main.js": "/cards/static/js/main.8798d5b2.chunk.js",
-    "main.js.map": "/cards/static/js/main.8798d5b2.chunk.js.map",
-    "runtime-main.js": "/cards/static/js/runtime-main.942ca1d7.js",
-    "runtime-main.js.map": "/cards/static/js/runtime-main.942ca1d7.js.map",
-    "static/js/2.e4a68bc7.chunk.js": "/cards/static/js/2.e4a68bc7.chunk.js",
-    "static/js/2.e4a68bc7.chunk.js.map": "/cards/static/js/2.e4a68bc7.chunk.js.map",
-    "static/js/3.b6efdf47.chunk.js": "/cards/static/js/3.b6efdf47.chunk.js",
-    "static/js/3.b6efdf47.chunk.js.map": "/cards/static/js/3.b6efdf47.chunk.js.map",
+    "main.css": "/cards/static/css/main.3b5af06a.chunk.css",
+    "main.js": "/cards/static/js/main.f7e76304.chunk.js",
+    "main.js.map": "/cards/static/js/main.f7e76304.chunk.js.map",
+    "runtime-main.js": "/cards/static/js/runtime-main.f63f5b2e.js",
+    "runtime-main.js.map": "/cards/static/js/runtime-main.f63f5b2e.js.map",
+    "static/js/2.fb31c60f.chunk.js": "/cards/static/js/2.fb31c60f.chunk.js",
+    "static/js/2.fb31c60f.chunk.js.map": "/cards/static/js/2.fb31c60f.chunk.js.map",
+    "static/js/3.aad210f0.chunk.js": "/cards/static/js/3.aad210f0.chunk.js",
+    "static/js/3.aad210f0.chunk.js.map": "/cards/static/js/3.aad210f0.chunk.js.map",
     "index.html": "/cards/index.html",
-    "static/css/main.468b5e78.chunk.css.map": "/cards/static/css/main.468b5e78.chunk.css.map",
-    "static/js/2.e4a68bc7.chunk.js.LICENSE.txt": "/cards/static/js/2.e4a68bc7.chunk.js.LICENSE.txt",
+    "static/css/main.3b5af06a.chunk.css.map": "/cards/static/css/main.3b5af06a.chunk.css.map",
+    "static/js/2.fb31c60f.chunk.js.LICENSE.txt": "/cards/static/js/2.fb31c60f.chunk.js.LICENSE.txt",
+    "static/media/404girl.449c1390.jpg": "/cards/static/media/404girl.449c1390.jpg",
     "static/media/eye.109a1739.svg": "/cards/static/media/eye.109a1739.svg",
     "static/media/letter.bc3a4042.svg": "/cards/static/media/letter.bc3a4042.svg",
     "static/media/packs.eb946c6a.svg": "/cards/static/media/packs.eb946c6a.svg",
@@ -20,9 +21,9 @@
     "static/media/Register.module.scss": "/cards/static/media/sf-semibold.99450184.otf"
   },
   "entrypoints": [
-    "static/js/runtime-main.942ca1d7.js",
-    "static/js/2.e4a68bc7.chunk.js",
-    "static/css/main.468b5e78.chunk.css",
-    "static/js/main.8798d5b2.chunk.js"
+    "static/js/runtime-main.f63f5b2e.js",
+    "static/js/2.fb31c60f.chunk.js",
+    "static/css/main.3b5af06a.chunk.css",
+    "static/js/main.f7e76304.chunk.js"
   ]
 }
