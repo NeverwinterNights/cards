@@ -3,7 +3,6 @@
 
 .wrapper {
   max-width: 1008px;
-  max-height: 636px;
   width: 100%;
   height: 100%;
   margin: 0 auto;
@@ -75,4 +74,28 @@
 }
 .table {
   margin-top: 24px;
+}
+.wrapBottom {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 28px;
+}
+.wrapSelect {
+  display: flex;
+  align-items: center;
+  margin-left: 30px;
+}
+.textBottom {
+  @include text(12px, 400, 14px, #2d2e46);
+  font-family: Lato;
+  padding: 0 5px 0 5px;
+}
+.select {
+  padding: 3px;
+  border-radius: 2px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  -o-border-radius: 2px;
 }

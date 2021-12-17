@@ -28,7 +28,20 @@ function PackList() {
           </div>
           <div className={s.table}>
             <DenseTable />
-            <PaginationSize />
+            <div className={s.wrapBottom}>
+              <PaginationSize />
+              <div className={s.wrapSelect}>
+                <p className={s.textBottom}>Show </p>
+                <select className={s.select}>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5</option>
+                </select>
+                <p className={s.textBottom}> Cards per Page</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>

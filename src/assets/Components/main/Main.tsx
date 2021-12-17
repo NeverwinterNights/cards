@@ -3,6 +3,7 @@ import packs from "./../../images/main/packs.svg";
 import profile from "./../../images/main/profile.svg";
 import PackList from "./packs-list/PacksList";
 import PackListNew from "./packs-list/PacksListNew";
+import CardInfo from "./packs-list/CardInfo";
 
 function Main() {
   return (
@@ -25,6 +26,7 @@ function Main() {
       <section className={s.content}>
         <PackList />
         <PackListNew />
+        <CardInfo />
       </section>
     </div>
   );
