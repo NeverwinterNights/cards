@@ -6,6 +6,7 @@ import { forgotReducer } from '../assets/Components/auth/forgot-password/forgot-
 import { newPasswordReducer } from '../assets/Components/auth/creat-new-pass/new-password-reducer';
 import auth from './authReducer';
 import { registerReducer } from './register-reducer';
+import { errorReducer } from './errorReducer';
 
 
 const rootReducer = combineReducers( {
@@ -13,6 +14,7 @@ const rootReducer = combineReducers( {
 	registerReducer,
 	forgotReducer,
 	newPasswordReducer,
+	errorReducer,
 } );
 
 export type AppStoreType = ReturnType<typeof rootReducer>
