@@ -22,13 +22,14 @@ function AuthLogin() {
 	const emailError = useAppSelector<OptionalStringType>( selectEmailError );
 	const passwordError = useAppSelector<OptionalStringType>( selectPasswordError );
 	const dispatch = useDispatch();
+	console.log( 'login' );
 
 	const setAllErrors = (errorMessage: OptionalStringType) => {
 		dispatch( setError( { passwordError: errorMessage, emailError: errorMessage } ) );
 	};
 
 	const onSubmitHandler: FormEventHandler<HTMLFormElement> = e => {
-		e.preventDefault()
+		e.preventDefault();
 		if (!checkEmailValidity( email )) {
 			dispatch( setError( { emailError: 'not valid email' } ) );
 			return;
@@ -98,7 +99,7 @@ function AuthLogin() {
 					</button>
 				</form>
 				<div className={ s.wrapLink }>
-					<span className={ s.linkNewAcc }  >
+					<span className={ s.linkNewAcc }>
 						Don’t have an account?
 					</span>
 					<Link className={ s.linkReg } to='/registration'>
