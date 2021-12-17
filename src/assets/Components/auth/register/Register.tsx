@@ -8,6 +8,7 @@ import TextField from '@mui/material/TextField';
 import { registerTC, RequestStatusType, SetStatusAC } from '../../../../redux/register-reducer';
 import styles from './Register.module.scss';
 import { useAppSelector } from '../../../../redux/store';
+import { ErrorSnackbar } from '../../common/error/ErrorSnackbar';
 
 
 export const Register = React.memo( () => {
@@ -171,6 +172,7 @@ export const Register = React.memo( () => {
 					</button>
 				</div>
 			</div>
+			<ErrorSnackbar/>
 		</div>
 	);
 } );

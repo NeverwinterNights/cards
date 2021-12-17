@@ -2,6 +2,7 @@ import { Dispatch } from 'redux';
 
 import { RootState } from './store';
 import { api } from '../api/api';
+import { setErrorAC } from './errorReducer';
 
 
 const initialState: InitialStateType = {
@@ -84,8 +85,9 @@ export const registerTC = (email: string, password: string) => (dispatch: Dispat
 
 
 		})
-		.catch(() => {
-			console.log('Incorrect pair email/password');
+		.catch((error) => {
+			dispatch(setErrorAC('Incorrect pair email/password'))
+
 		})
 		.finally(() => {
 			// dispatch(SetLoadingStatusAC(false));
