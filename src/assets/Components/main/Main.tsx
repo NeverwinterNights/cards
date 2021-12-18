@@ -9,7 +9,7 @@ import PackList from './packs-list/PacksList';
 import { makeLogout } from '../../../redux/authReducer';
 import { selectIsAuth } from '../../selectors/authSelectors';
 import { useAppSelector } from '../../../redux/store';
-
+// import CardInfo from "./packs-list/CardInfo";
 
 function Main() {
 	const isAuth = useAppSelector<boolean>( selectIsAuth );
@@ -45,6 +45,7 @@ function Main() {
 			<section className={ s.content }>
 				<PackList/>
 				{/*<PackListNew />*/ }
+              {/*<CardInfo />*/ }
 			</section>
 		</div>
 	);
