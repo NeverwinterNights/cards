@@ -95,5 +95,3 @@ export const registerTC = (email: string, password: string) => (dispatch: Dispat
 
 };
 
-
-// const makeLogin = (loginData: LoginValuesType): AppThunk => async (dispatch) =>

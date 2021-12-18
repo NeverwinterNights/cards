@@ -1,30 +1,24 @@
-import {Dispatch} from "redux";
-
-
-
 const initialState: InitialStateType = {
-    error:  null,
-}
+	error: null,
+};
 
 export const errorReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
-    switch (action.type) {
+	switch (action.type) {
 
-        case 'APP/SET-ERROR':
-            return {...state, error: action.error}
+		case 'APP/SET-ERROR':
+			return { ...state, error: action.error };
 
-        default:
-            return {...state}
-    }
-}
-
+		default:
+			return state;
+	}
+};
 
 
 export type InitialStateType = {
-    error: string | null
+	error: string | null
 }
 
-export const setErrorAC = (error: string | null) => ({type: 'APP/SET-ERROR', error} as const)
-
+export const setErrorAC = (error: string | null) => ( { type: 'APP/SET-ERROR', error } as const );
 
 
 export type SetErrorActionType = ReturnType<typeof setErrorAC>

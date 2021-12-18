@@ -1,4 +1,5 @@
 import axios from 'axios';
+
 import { AppThunk } from './store';
 import { api } from '../api/api';
 
@@ -61,7 +62,7 @@ const authReducer = (state = initState, action: AuthReducerActionTypes): AuthSta
 				isAuth: action.isAuth,
 			};
 		default:
-			return { ...state };
+			return state;
 	}
 };
 
@@ -97,12 +98,6 @@ export const makeLogin = (loginData: LoginValuesType): AppThunk => async dispatc
 		const { data: { email, _id, avatar, name, publicCardPacksCount } } = await api.login( loginData );
 		dispatch( setLoginData( { email, _id, avatar, name, publicCardPacksCount } ) );
 	} catch (error) {
-		// let errorMessage = '';
-		// if (axios.isAxiosError( error ) && error.response) {
-		// 	errorMessage = error.response.data.error;
-		// } else if (error instanceof Error) {
-		// 	errorMessage = error.message;
-		// }
 		const errorMessage = 'Incorrect pair email/password';
 		dispatch( setError( { passwordError: errorMessage, emailError: errorMessage } ) );
 	}
@@ -110,9 +105,8 @@ export const makeLogin = (loginData: LoginValuesType): AppThunk => async dispatc
 
 export const checkAuth = (): AppThunk => async dispatch => {
 	try {
-		const { status, data: { email, _id, avatar, name, publicCardPacksCount } } = await api.authMe();
-		status === 200
-		&& dispatch( setLoginData( { email, _id, avatar, name, publicCardPacksCount } ) );
+		const { data: { email, _id, avatar, name, publicCardPacksCount } } = await api.authMe();
+		dispatch( setLoginData( { email, _id, avatar, name, publicCardPacksCount } ) );
 	} catch (e) {
 		console.log( e );
 	}
@@ -120,7 +114,7 @@ export const checkAuth = (): AppThunk => async dispatch => {
 
 export const makeLogout = (): AppThunk => async dispatch => {
 	try {
-		const { status, data: { error, info } } = await api.logOut();
+		const { data: { error, info } } = await api.logOut();
 		dispatch( setLoginData( { email: null, _id: null, avatar: null, name: null, publicCardPacksCount: null } ) );
 		dispatch( setIsAuth( false ) );
 		console.log( { error, info } );
