@@ -106,11 +106,24 @@ type getCardsResponseType = {
 
 
 export const cardsApi = {
-	getCards(payload: getCardsPayloadType) {
+	getPacks(payload: getCardsPayloadType) {
 		return axiosInstance.get<getCardsResponseType>( `cards/pack`, {
 			params: {
 				...payload,
 			},
 		} );
 	},
+
 };
+
+
+
+
+
+
+
+
+
+
+
+
