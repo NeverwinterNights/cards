@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 import { RegistrationRequestType, RegistrationResponseType } from '../redux/register-reducer';
 
+
 export enum Status {
 	loading = 'loading',
 	error = 'error',
@@ -50,16 +51,66 @@ export const api = {
 };
 export const changePasswordAPI = {
 	sendMessagePassword(email: string) {
-		return axiosInstance.post<SendMessageType>('auth/forgot', {
+		return axiosInstance.post<SendMessageType>( 'auth/forgot', {
 			email,
 			from: 'test-front-admin <t9371100211@gmail.com>',
 			message: `<div><h1><a href='https://alfilip.github.io/cards/#/set-new-password/$token$'>change password</h1></div>`,
-		});
+		} );
 	},
 	newPassword(password: string, token: string) {
-		return axiosInstance.post(`auth/set-new-password`, {
+		return axiosInstance.post( `auth/set-new-password`, {
 			password,
 			resetPasswordToken: token,
-		});
+		} );
+	},
+};
+
+type getCardsPayloadType = {
+	packName?: string
+	min?: number
+	max?: number
+	sortPacks?: string
+	page?: number
+	pageCount?: number
+	user_id?: string
+}
+
+type packType = {
+	_id: string
+	user_id: string
+	user_name: string
+	private: false,
+	name: string
+	path: string
+	grade: number
+	shots: number
+	cardsCount: number
+	type: string
+	rating: number
+	created: string
+	updated: string
+	more_id: string
+	__v: number
+}
+
+type getCardsResponseType = {
+	cardPacks: packType[],
+	page: number
+	pageCount: number
+	cardPacksTotalCount: number
+	minCardsCount: number
+	maxCardsCount: number
+	token: string
+	tokenDeathTime: number
+}
+
+
+export const cardsApi = {
+	getCards(payload: getCardsPayloadType) {
+		return axiosInstance.get<getCardsResponseType>( `cards/pack`, {
+			params: {
+				...payload,
+			},
+		} );
 	},
 };
