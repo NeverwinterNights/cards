@@ -4,6 +4,7 @@ import DenseTable from "./../../mui/table/Table";
 import PaginationSize from "./../../mui/pagination/Pagination";
 import DeletePack from "./../../common/modal-windows/delete-pack/DeletePack";
 import AddNewPack from "./../../common/modal-windows/add-new-pack/AddNewPack";
+import ButtonForTable from "./../../common/button/ButtonForTable";
 
 // import ButtonForTable from "./../../../Components/common/button/ButtonForTable";
 
@@ -30,6 +31,7 @@ function PackList() {
             <DenseTable />
             <div className={s.wrapBottom}>
               <PaginationSize />
+
               <div className={s.wrapSelect}>
                 <p className={s.textBottom}>Show </p>
                 <select className={s.select}>
@@ -41,6 +43,7 @@ function PackList() {
                 </select>
                 <p className={s.textBottom}> Cards per Page</p>
               </div>
+              <ButtonForTable />
             </div>
           </div>
         </div>

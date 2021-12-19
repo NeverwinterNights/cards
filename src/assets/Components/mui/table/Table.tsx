@@ -32,16 +32,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-const rows = [
-  createData("Pack Name", 4, "18.03.2021", "Ivan Ivanov", 4.0),
-  createData("Name Pack", 37, "19.03.2021", "Petr Petrov", 4.3),
-  createData("Pack Name", 18, "19.03.2021", "Petr Petrov", 6.0),
-  createData("Name Pack", 0, "20.03.2021", "Ivan Ivanov", 4.3),
-  createData("Pack Name", 11, "20.03.2021", "Petr Petrov", 3.9),
-  createData("Name Pack", 9, "20.03.2021", "Ivan Ivanov", 3.9),
-  createData("Pack Name", 8, "21.03.2021", "Petr Petrov", 3.9),
-  createData("Name Pack", 0, "21.03.2021", "Ivan Ivanov", 3.9),
-];
+const rows = [createData("Pack Name", 4, "18.03.2021", "Ivan Ivanov", 4.0)];
 
 export default function DenseTable() {
   return (
