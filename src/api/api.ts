@@ -96,9 +96,11 @@ type packType = {
 	rating: number
 	created: string
 	updated: string
-	more_id: string
+	// more_id: string
 	__v: number
 }
+
+
 // объект с массивом паков и пр
 type getPacksResponseType = {
 	cardPacks: packType[],
