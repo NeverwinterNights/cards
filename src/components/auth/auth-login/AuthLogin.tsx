@@ -17,8 +17,8 @@ const checkEmailValidity = (value: string) => {
 
 function AuthLogin() {
 	const isAuth = useAppSelector<boolean>( selectIsAuth );
-	const [email, setEmail] = useState( 'nya-admin@nya.nya' );
-	const [password, setPassword] = useState( '1qazxcvBG' );
+	const [email, setEmail] = useState( 't9371100211@gmail.com' );
+	const [password, setPassword] = useState( '12345678' );
 	const [rememberMe, setRememberMe] = useState( false );
 	const emailError = useAppSelector<OptionalStringType>( selectEmailError );
 	const passwordError = useAppSelector<OptionalStringType>( selectPasswordError );
