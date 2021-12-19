@@ -1,5 +1,5 @@
 import { Dispatch } from 'redux';
-import { RootState } from './store';
+import { AppThunk, RootState } from './store';
 import { cardsApi } from '../api/api';
 
 
@@ -48,9 +48,9 @@ export const packsReducer = (state: InitialStateType = initialState, action: Act
 		case 'PACKS/GET-PACKS': {
 			return { ...state, cardPacks: action.packs };
 		}
-		case 'PACKS/POST-PACK': {
-			return { ...state, cardPacks: [action.pack, ...state.cardPacks] };
-		}
+		// case 'PACKS/POST-PACK': {
+		// 	return { ...state, cardPacks: [action.pack, ...state.cardPacks] };
+		// }
 
 		default:
 			return state;
@@ -81,7 +81,6 @@ type ActionsType = GetPacksActionType | PostPacksActionType
 export const getPack = () => (dispatch: Dispatch, getState: () => RootState) => {
 	cardsApi.getPacks()
 		.then((res) => {
-			dispatch(GetPackAC(res.data.cardPacks));
 		})
 		.catch((error) => {
 			console.log(error);
@@ -91,10 +90,10 @@ export const getPack = () => (dispatch: Dispatch, getState: () => RootState) => 
 };
 
 
-export const postPack = (name: string) => (dispatch: Dispatch, getState: () => RootState) => {
+export const postPack = (name: string):AppThunk => (dispatch) => {
 	cardsApi.createPack({ name })
 		.then((res) => {
-			dispatch(PostPackAC(res.data));
+			getPack();
 		});
 };
 
