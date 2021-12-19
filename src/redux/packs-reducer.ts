@@ -69,14 +69,40 @@ export const PostPackAC = (pack: cardsUserPack) => ({
 		pack,
 	} as const
 );
+export const DeletePackAc = (pack: cardsUserPack) => ({
+		type: 'PACKS/POST-PACK',
+		pack,
+	} as const
+);
 
 
 export type PostPacksActionType = ReturnType<typeof PostPackAC>
 export type GetPacksActionType = ReturnType<typeof GetPackAC>
-
-
 type ActionsType = GetPacksActionType | PostPacksActionType
 
+
+export const deletePackTC = (idPack: string): AppThunk => async (dispatch) => {
+	try {
+		await cardsApi.deleteCard(idPack);
+		getPack();
+	} catch (err) {
+		console.log(err);
+	}
+};
+export const updatePackTC = (idPack: string, value: string): AppThunk => async (dispatch, getState: () => RootState) => {
+	const pack = getState().packsReducer.cardPacks.find(item => item._id === idPack);
+	if (!pack) {
+		throw new Error('Pack not found in the state');
+		return;
+	}
+	const updatePack = { ...pack, name: value };
+	try {
+		await cardsApi.updatePack(updatePack);
+		getPack();
+	} catch (err) {
+		console.log(err);
+	}
+};
 
 export const getPack = () => (dispatch: Dispatch, getState: () => RootState) => {
 	cardsApi.getPacks()
@@ -85,12 +111,10 @@ export const getPack = () => (dispatch: Dispatch, getState: () => RootState) => 
 		.catch((error) => {
 			console.log(error);
 		});
-
-
 };
 
 
-export const postPack = (name: string):AppThunk => (dispatch) => {
+export const postPack = (name: string): AppThunk => (dispatch) => {
 	cardsApi.createPack({ name })
 		.then((res) => {
 			getPack();
