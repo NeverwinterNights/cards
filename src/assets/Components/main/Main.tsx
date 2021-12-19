@@ -5,6 +5,7 @@ import PackList from "./packs-list/PacksList";
 import PackListNew from "./packs-list/PacksListNew";
 import CardInfo from "./packs-list/CardInfo";
 import ListCard from "./packs-list/ListCard";
+import Profile from "./packs-list/Profile";
 
 function Main() {
   return (
@@ -29,6 +30,7 @@ function Main() {
         <PackListNew />
         <CardInfo />
         <ListCard />
+        <Profile />
       </section>
     </div>
   );
