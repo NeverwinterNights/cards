@@ -64,6 +64,8 @@ export const changePasswordAPI = {
 		} );
 	},
 };
+
+
 // объект с необязательными параметрами
 type getPacksPayloadType = {
 	packName?: string
@@ -149,14 +151,87 @@ type getCardsPayloadType = {
 }
 
 
+type createPackParamsType = {
+	name?: string
+	path?: string
+	grade?: number
+	shots?: number
+	rating?: number
+	// url or base64
+	deckCover?: string
+	private?: boolean
+	type?: string
+}
+
+type createCardParamsType = {
+	cardsPack_id: string
+	question?: string
+	answer?: string
+	grade?: number
+	shots?: number
+	rating?: number
+	// url or base64
+	answerImg?: string
+	// url or base64
+	questionImg?: string
+	// url or base64
+	questionVideo?: string
+	// url or base64
+	answerVideo?: string
+	type?: string
+}
+
+type updatePackPayloadType = {
+	// id пака
+	_id: string
+	private?: boolean,
+	name?: string
+	path?: string
+	rating?: number
+	grade?: number
+	shots?: number
+}
+
+type updateCardPayloadType = {
+	// id карты
+	_id: string
+	question?: string
+	answer?: string
+	shots?: number
+	rating?: number
+	grade?: number
+	// url or base64
+	answerImg?: string
+	// url or base64
+	questionImg?: string
+	// url or base64
+	questionVideo?: string
+	// url or base64
+	answerVideo?: string
+	type?: string
+	comments?: string
+}
+
 export const cardsApi = {
 	// возвращает промис с паками
-	getPacks(payload: getPacksPayloadType) {
+	getPacks(payload = {} as getPacksPayloadType) {
 		return axiosInstance.get<getPacksResponseType>( `cards/pack`, {
 			params: {
 				...payload,
 			},
 		} );
+	},
+	// возвращает промис c новым паком. Сделай новый запрос паков после этого запроса
+	createPack(payload = {} as createPackParamsType) {
+		return axiosInstance.post( 'cards/pack', { cardsPack: payload } );
+	},
+	// возвращает промис с удаленным паком. Сделай новый запрос паков после этого запроса
+	deletePack(packId: string) {
+		return axiosInstance.delete( 'cards/pack', { params: { id: packId } } );
+	},
+	// возвращает промис с обновленным паком. Сделай новый запрос паков после этого запроса
+	updatePack(payload: updatePackPayloadType) {
+		return axiosInstance.put( 'cards/pack', { cardsPack: { ...payload } } );
 	},
 	// возвращает промис с карточками
 	getCards(payload: getCardsPayloadType) {
@@ -166,4 +241,17 @@ export const cardsApi = {
 			},
 		} );
 	},
+	// возвращает промис c новой картой. Сделай новый запрос карт после этого запроса
+	createCard(payload = {} as createCardParamsType) {
+		return axiosInstance.post( 'cards/card', { card: payload } );
+	},
+	// возвращает промис с удаленной картой. Сделай новый запрос карт после этого запроса
+	deleteCard(cardId: string) {
+		return axiosInstance.delete( 'cards/card', { params: { id: cardId } } );
+	},
+	// возвращает промис с обновленной картой. Сделай новый запрос карт после этого запроса
+	updateCard(payload: updateCardPayloadType) {
+		return axiosInstance.put( 'cards/card', { card: { ...payload } } );
+	},
+
 };
