@@ -6,6 +6,8 @@ import PackListNew from "./packs-list/PacksListNew";
 import CardInfo from "./packs-list/CardInfo";
 import ListCard from "./packs-list/ListCard";
 import Profile from "./packs-list/Profile";
+import Learn from "./packs-list/Learn";
+import LearnQuestionAnswer from "./packs-list/LearnQuestionAnswer";
 
 function Main() {
   return (
@@ -31,6 +33,8 @@ function Main() {
         <CardInfo />
         <ListCard />
         <Profile />
+        <Learn />
+        <LearnQuestionAnswer />
       </section>
     </div>
   );
