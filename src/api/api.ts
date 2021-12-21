@@ -141,7 +141,7 @@ type getCardsResponseType = {
 }
 
 // объект с одним обязательным параметром cardsPack_id и кучей необязательных параметров
-type getCardsPayloadType = {
+export type getCardsPayloadType = {
 	cardsPack_id: string
 	cardAnswer?: string
 	cardQuestion?: string
