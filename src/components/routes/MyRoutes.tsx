@@ -12,7 +12,9 @@ import { Test } from '../common/test/Test';
 export const MyRoutes = () => {
 	return (
 		<Routes>
-			<Route path="/" element={ <Main/> }/>
+			<Route path="/" element={ <Main/> }>
+				<Route path="/:currentUserId" element={ <Main/> }/>
+			</Route>
 
 			<Route path='/change-password' element={ <ForgotPassword/> }/>
 			<Route path='/login' element={ <AuthLogin/> }/>
