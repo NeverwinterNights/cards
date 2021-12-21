@@ -32,6 +32,10 @@
     background: #9a91c8;
     color: #ffffff;
   }
+  &.activeBtn{
+    color: #ffffff;
+    background: #21268f;
+  }
 }
 .subtitle,
 .subtitleSlid {
@@ -63,8 +67,8 @@
   width: 184px;
   height: 36px;
   background: #21268f;
-  box-shadow: 0px 4px 18px rgba(33, 38, 143, 0.35),
-    inset 0px 1px 0px rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 18px rgba(33, 38, 143, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
   border-radius: 30px;
   @include text(16, 500, 19px, #ffffff);
   margin-left: 24px;

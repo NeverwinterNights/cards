@@ -67,7 +67,7 @@ export const changePasswordAPI = {
 
 
 // объект с необязательными параметрами
-type getPacksPayloadType = {
+export type getPacksPayloadType = {
 	packName?: string
 	min?: number
 	max?: number
@@ -80,12 +80,12 @@ type getPacksPayloadType = {
 	user_id?: string
 }
 // объект пака
-type packType = {
+type domainPackType = {
 	// id пака
 	_id: string
 	user_id: string
 	user_name: string
-	private: false,
+	private: boolean,
 	name: string
 	path: string
 	grade: number
@@ -102,8 +102,8 @@ type packType = {
 
 
 // объект с массивом паков и пр
-type getPacksResponseType = {
-	cardPacks: packType[],
+export type getPacksResponseType = {
+	cardPacks: domainPackType[],
 	page: number
 	pageCount: number
 	cardPacksTotalCount: number
@@ -113,7 +113,7 @@ type getPacksResponseType = {
 	tokenDeathTime: number
 }
 // объект карточки
-type cardType = {
+type domainCardType = {
 	_id: string
 	cardsPack_id: string
 	user_id: string
@@ -129,7 +129,7 @@ type cardType = {
 }
 // объект с массивом карточек и прочей инфой
 type getCardsResponseType = {
-	cards: cardType[]
+	cards: domainCardType[]
 	cardsTotalCount: number
 	maxGrade: number
 	minGrade: number
