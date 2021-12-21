@@ -40,7 +40,7 @@ export type cardsType = {
 // tokenDeathTime: number
 
 
-export const cardsReducer = (state: cardsUserType | {} = initialState, action: ActionsType): cardsUserType | {} => {
+export const cardsReducer = (state: cardsUserType | {} = initialState, action: any): cardsUserType | {} => {
 	switch (action.type) {
 
 		default:

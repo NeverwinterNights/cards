@@ -58,18 +58,18 @@ export const packsReducer = (state: InitialStateType = initialState, action: Act
 };
 
 
-export const GetPackAC = (packs: Array<cardsUserPack>) => ({
+export const GetPackAC = (packs: Array<cardsUserPack>) => ( {
 		type: 'PACKS/GET-PACKS',
 		packs,
 	} as const
 );
 
-export const PostPackAC = (pack: cardsUserPack) => ({
+export const PostPackAC = (pack: cardsUserPack) => ( {
 		type: 'PACKS/POST-PACK',
 		pack,
 	} as const
 );
-export const DeletePackAc = (pack: cardsUserPack) => ({
+export const DeletePackAc = (pack: cardsUserPack) => ( {
 		type: 'PACKS/POST-PACK',
 		pack,
 	} as const
@@ -80,45 +80,44 @@ export type PostPacksActionType = ReturnType<typeof PostPackAC>
 export type GetPacksActionType = ReturnType<typeof GetPackAC>
 type ActionsType = GetPacksActionType | PostPacksActionType
 
+export const getPack = () => (dispatch: Dispatch, getState: () => RootState) => {
+	cardsApi.getPacks()
+		.then( (res) => {
+		} )
+		.catch( (error) => {
+			console.log( error );
+		} );
+};
 
 export const deletePackTC = (idPack: string): AppThunk => async (dispatch) => {
 	try {
-		await cardsApi.deleteCard(idPack);
-		getPack();
+		await cardsApi.deleteCard( idPack );
+		dispatch(getPack())
 	} catch (err) {
-		console.log(err);
+		console.log( err );
 	}
 };
-export const updatePackTC = (idPack: string, value: string): AppThunk => async (dispatch, getState: () => RootState) => {
-	const pack = getState().packsReducer.cardPacks.find(item => item._id === idPack);
-	if (!pack) {
-		throw new Error('Pack not found in the state');
-		return;
-	}
-	const updatePack = { ...pack, name: value };
+export const updatePackTC = (idPack: string, payload: cardsUserPack): AppThunk => async (dispatch, getState: () => RootState) => {
 	try {
-		await cardsApi.updatePack(updatePack);
-		getPack();
+		const pack = getState().packsReducer.cardPacks.find( item => item._id === idPack );
+		if (!pack) {
+			throw new Error( 'Pack not found in the state' );
+		}
+		const updatePack = { ...pack, ...payload };
+		await cardsApi.updatePack( updatePack );
+		dispatch(getPack())
 	} catch (err) {
-		console.log(err);
+		console.log( err );
 	}
 };
 
-export const getPack = () => (dispatch: Dispatch, getState: () => RootState) => {
-	cardsApi.getPacks()
-		.then((res) => {
-		})
-		.catch((error) => {
-			console.log(error);
-		});
-};
 
 
 export const postPack = (name: string): AppThunk => (dispatch) => {
-	cardsApi.createPack({ name })
-		.then((res) => {
+	cardsApi.createPack( { name } )
+		.then( (res) => {
 			getPack();
-		});
+		} );
 };
 
 
