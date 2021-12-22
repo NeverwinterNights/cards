@@ -37,6 +37,9 @@ export default function DenseTable() {
 	const [sortName, setSortName] = useState<string>('0name');
 	const [sortUpdated, setSortUpdated] = useState<string>('0updated');
 	const [sortCreated, setSortCreated] = useState<string>('0created');
+	const [showArrow, setShowArrow] = useState(false);
+	const [show2Arrow, set2ShowArrow] = useState(false);
+	const [show3Arrow, set3ShowArrow] = useState(false);
 
 
 	const rows = packs.map(m => (
@@ -56,33 +59,51 @@ export default function DenseTable() {
 		const test = sortName === '0name' ? '1name' : '0name';
 		setSortName(test);
 		dispatch(getPacks({ user_id: currentUserId, sortPacks: test }));
+		setShowArrow(true)
+		set2ShowArrow(false)
+		set3ShowArrow(false)
 	};
-	console.log(sortUpdated);
 	const onSortUpdatedClickHandler = () => {
 		const test = sortUpdated === '0updated' ? '1updated' : '0updated';
 		setSortUpdated(test);
 		dispatch(getPacks({ user_id: currentUserId, sortPacks: test }));
+		set2ShowArrow(true)
+		setShowArrow(false)
+		set3ShowArrow(false)
 	};
 
 	const onSortCreatedClickHandler = () => {
 		const test = sortCreated === '0created' ? '1created' : '0created';
 		setSortCreated(test);
 		dispatch(getPacks({ user_id: currentUserId, sortPacks: test }));
+		set3ShowArrow(true)
+		setShowArrow(false)
+		set2ShowArrow(false)
 	};
-
 
 	return (
 		<TableContainer component={Paper}>
 			<Table sx={{ minWidth: 650 }} size='small' aria-label='a dense table'>
 				<TableHead className={s.tableHead}>
 					<StyledTableRow>
-						<TableCell onClick={onSortNameClickHandler}>Name <img className={s.arrow} src={arrow} alt='' /></TableCell>
+						<TableCell onClick={onSortNameClickHandler}>Name <img className={showArrow ? s.arrow : s.displayNone}
+																																	style={sortName === '0name' ? {transform: "rotate(180deg)"} : undefined}
+																																	src={arrow}
+																																	alt='' /></TableCell>
 
 						<TableCell align='right'>Cards</TableCell>
 						<TableCell onClick={onSortUpdatedClickHandler} align='right'>Last
-							Updated</TableCell>
+							Updated <img className={show2Arrow ? s.arrow : s.displayNone}
+													 style={sortUpdated === '0updated' ? {transform: "rotate(180deg)"} : undefined}
+													 src={arrow}
+													 alt='' /></TableCell>
 						<TableCell onClick={onSortCreatedClickHandler} align='right'>Created
-							by</TableCell>
+							by
+							<img className={show3Arrow ? s.arrow : s.displayNone}
+									 style={sortCreated === '0created' ? {transform: "rotate(180deg)"} : undefined}
+									 src={arrow}
+									 alt='' />
+						</TableCell>
 						<TableCell align='right'>Actions</TableCell>
 					</StyledTableRow>
 				</TableHead>
