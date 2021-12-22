@@ -43,8 +43,8 @@ export default function DenseTable() {
 										sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
 			<TableCell component='th' scope='row'>{m.name}</TableCell>
 			<TableCell align='right'>{m.cardsCount}</TableCell>
-			<TableCell align='right'>{m.updated}</TableCell>
-			<TableCell align='right'>{m.created}</TableCell>
+			<TableCell align="right">{ new Date(m.updated).getUTCDate() }</TableCell>
+			<TableCell align='right'>{ new Date(m.created).getUTCDate() }</TableCell>
 			<TableCell align='right'>
 				<span>update</span>
 				<span onClick={() => dispatch(deletePackTC(m._id, currentUserId))}>delete</span>
@@ -60,15 +60,18 @@ export default function DenseTable() {
 		}
 		dispatch(getPacks({ user_id: currentUserId, sortPacks: sortName }));
 	};
-
+console.log (sortUpdated)
 	const onSortUpdatedClickHandler = () => {
-		if (sortUpdated === '0updated') {
-			setSortUpdated('1updated');
-		}
-		if (sortUpdated === '1updated') {
-			setSortUpdated('0updated');
-		}
-		dispatch(getPacks({ user_id: currentUserId, sortPacks: sortUpdated }));
+	const test =sortUpdated === '0updated' ? "1updated" : "0updated"
+		setSortUpdated(test);
+		// if (sortUpdated === '0updated') {
+		// 	setSortUpdated('1updated');
+		// }
+		// if (sortUpdated === '1updated') {
+		// 	setSortUpdated('0updated');
+		// }
+		console.log(sortUpdated);
+		dispatch(getPacks({ user_id: currentUserId, sortPacks: test }));
 	};
 
 	const onSortCreatedClickHandler = () => {
