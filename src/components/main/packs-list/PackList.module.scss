@@ -49,6 +49,10 @@
   @include text(22px, 600, 33px, #2d2e46);
   margin-bottom: 15px;
 }
+.wrapForm {
+  margin-bottom: 5px;  // раздвинул инпуты можно убрать
+}
+
 .wrapRight {
   padding: 24px 48px 28px;
 }
@@ -102,4 +106,8 @@
   -moz-border-radius: 2px;
   -ms-border-radius: 2px;
   -o-border-radius: 2px;
+}
+
+.select__pag {
+  height: 30px;  // высота селекта
 }

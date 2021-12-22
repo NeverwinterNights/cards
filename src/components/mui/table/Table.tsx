@@ -43,8 +43,8 @@ export default function DenseTable() {
 										sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
 			<TableCell component='th' scope='row'>{m.name}</TableCell>
 			<TableCell align='right'>{m.cardsCount}</TableCell>
-			<TableCell align="right">{ new Date(m.updated).getUTCDate() }</TableCell>
-			<TableCell align='right'>{ new Date(m.created).getUTCDate() }</TableCell>
+			<TableCell align='right'>{new Date(m.updated).toLocaleDateString()}</TableCell>
+			<TableCell align='right'>{new Date(m.created).toLocaleDateString()}</TableCell>
 			<TableCell align='right'>
 				<span>update</span>
 				<span onClick={() => dispatch(deletePackTC(m._id, currentUserId))}>delete</span>
@@ -52,37 +52,21 @@ export default function DenseTable() {
 		</StyledTableRow>));
 
 	const onSortNameClickHandler = () => {
-		if (sortName === '0name') {
-			setSortName('1name');
-		}
-		if (sortName === '1name') {
-			setSortName('0name');
-		}
-		dispatch(getPacks({ user_id: currentUserId, sortPacks: sortName }));
+		const test = sortName === '0name' ? '1name' : '0name';
+		setSortName(test);
+		dispatch(getPacks({ user_id: currentUserId, sortPacks: test }));
 	};
-console.log (sortUpdated)
+	console.log(sortUpdated);
 	const onSortUpdatedClickHandler = () => {
-	const test =sortUpdated === '0updated' ? "1updated" : "0updated"
+		const test = sortUpdated === '0updated' ? '1updated' : '0updated';
 		setSortUpdated(test);
-		// if (sortUpdated === '0updated') {
-		// 	setSortUpdated('1updated');
-		// }
-		// if (sortUpdated === '1updated') {
-		// 	setSortUpdated('0updated');
-		// }
-		console.log(sortUpdated);
 		dispatch(getPacks({ user_id: currentUserId, sortPacks: test }));
 	};
 
 	const onSortCreatedClickHandler = () => {
-		if (sortCreated === '0created') {
-			setSortCreated('1created');
-		}
-		if (sortCreated === '1created') {
-			setSortCreated('0created');
-		}
-		dispatch(getPacks({ user_id: currentUserId, sortPacks: sortCreated }));
-
+		const test = sortCreated === '0created' ? '1created' : '0created';
+		setSortCreated(test);
+		dispatch(getPacks({ user_id: currentUserId, sortPacks: test }));
 	};
 
 

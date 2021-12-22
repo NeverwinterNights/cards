@@ -35,7 +35,8 @@ export default function PaginationSize() {
 			</Stack>
 			<p className={ s.textBottom }> Show</p>
 			<Select
-				size='small'
+				className={s.select__pag} //класс для задания высоты селекта
+				// size='small'
 				value={ pageSize }
 				onChange={ selectChangeHandler }
 				defaultValue={ 4 }
