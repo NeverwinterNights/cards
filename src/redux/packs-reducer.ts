@@ -1,5 +1,6 @@
 import { AppThunk, RootState } from './store';
 import { cardsApi, getPacksPayloadType, getPacksResponseType } from '../api/api';
+import { setErrorAC } from './errorReducer';
 
 
 export type packType = {
@@ -46,65 +47,70 @@ export const packsReducer = (state = initialState, action: ActionsType): PacksRe
 	}
 };
 
-export const setPacks = (payload: getPacksResponseType) => ( {
+export const setPacks = (payload: getPacksResponseType) => ({
 		type: 'PACKS/SET-PACKS',
 		payload,
 	} as const
 );
-export const setPage = (page: number) => ( {
+export const setPage = (page: number) => ({
 	type: 'PACKS/SET_PAGE', page,
-} as const );
-export const setPageCount = (pageCount: number) => ( {
+} as const);
+export const setPageCount = (pageCount: number) => ({
 	type: 'PACKS/SET_PAGE_COUNT', pageCount,
-} as const );
+} as const);
 
-export const setCurrentUser = (value: string | null) => ( {
+export const setCurrentUser = (value: string | null) => ({
 	type: 'PACKS/SET_IS_OWNER_PACK_SHOW', value,
-} as const );
+} as const);
 
 
 export type setPacksActionType = ReturnType<typeof setPacks>
 export type setPageActionType = ReturnType<typeof setPage>
 export type setPageCountActionType = ReturnType<typeof setPageCount>
 export type setIsOwnerPacksShowActionType = ReturnType<typeof setCurrentUser>
-type ActionsType = setPacksActionType | setPageActionType | setPageCountActionType | setIsOwnerPacksShowActionType
+type ActionsType =
+	setPacksActionType
+	| setPageActionType
+	| setPageCountActionType
+	| setIsOwnerPacksShowActionType
 
 export const getPacks = (payload?: getPacksPayloadType): AppThunk => (dispatch) => {
-	cardsApi.getPacks( payload )
-		.then( (res) => {
-			dispatch( setPacks( res.data ) );
-		} )
-		.catch( (error) => {
-			console.log( error );
-		} );
+	cardsApi.getPacks(payload)
+		.then((res) => {
+			dispatch(setPacks(res.data));
+		})
+		.catch((error) => {
+			console.log(error);
+		});
 };
 
 export const deletePackTC = (idPack: string, user_id?: string): AppThunk => async (dispatch) => {
 	try {
-		await cardsApi.deletePack( idPack );
-		dispatch( getPacks( { user_id } ) );
+		await cardsApi.deletePack(idPack);
+		dispatch(getPacks({ user_id }));
 	} catch (err) {
-		console.log( err );
+		console.log(err);
 	}
 };
 export const updatePackTC = (payload: packType, user_id?: string): AppThunk => async (dispatch, getState: () => RootState) => {
 	try {
-		const pack = getState().packsReducer.cardPacks.find( item => item._id === payload._id );
+		const pack = getState().packsReducer.cardPacks.find(item => item._id === payload._id);
 		if (!pack) {
-			throw new Error( 'Pack not found in the state' );
+			throw new Error('Pack not found in the state');
 		}
 		const updatePack = { ...pack, ...payload };
-		await cardsApi.updatePack( updatePack );
-		dispatch( getPacks( { user_id } ) );
+		await cardsApi.updatePack(updatePack);
+		dispatch(getPacks({ user_id }));
 	} catch (err) {
-		console.log( err );
+		console.log(err);
 	}
 };
 
 
 export const createPack = (name: string, user_id?: string): AppThunk => (dispatch) => {
-	cardsApi.createPack( { name } )
-		.then( () => {
-			dispatch( getPacks( {user_id}) );
-		} );
+	cardsApi.createPack({ name })
+		.then(() => {
+			dispatch(getPacks({ user_id }));
+		});
 };
+

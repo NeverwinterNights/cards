@@ -256,4 +256,5 @@ export const cardsApi = {
 		return axiosInstance.put( 'cards/card', { card: { ...payload } } );
 	},
 
+
 };
