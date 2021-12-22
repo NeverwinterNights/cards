@@ -38,8 +38,8 @@ export default function DenseTable() {
 	const [sortUpdated, setSortUpdated] = useState<string>('0updated');
 	const [sortCreated, setSortCreated] = useState<string>('0created');
 	const [showArrow, setShowArrow] = useState(false);
-	const [show2Arrow, set2ShowArrow] = useState(false);
-	const [show3Arrow, set3ShowArrow] = useState(false);
+	const [showSecondArrow, setSecondShowArrow] = useState(false);
+	const [showThirdArrow, setThirdShowArrow] = useState(false);
 
 
 	const rows = packs.map(m => (
@@ -60,25 +60,25 @@ export default function DenseTable() {
 		setSortName(test);
 		dispatch(getPacks({ user_id: currentUserId, sortPacks: test }));
 		setShowArrow(true)
-		set2ShowArrow(false)
-		set3ShowArrow(false)
+		setSecondShowArrow(false)
+		setThirdShowArrow(false)
 	};
 	const onSortUpdatedClickHandler = () => {
 		const test = sortUpdated === '0updated' ? '1updated' : '0updated';
 		setSortUpdated(test);
 		dispatch(getPacks({ user_id: currentUserId, sortPacks: test }));
-		set2ShowArrow(true)
+		setSecondShowArrow(true)
 		setShowArrow(false)
-		set3ShowArrow(false)
+		setThirdShowArrow(false)
 	};
 
 	const onSortCreatedClickHandler = () => {
 		const test = sortCreated === '0created' ? '1created' : '0created';
 		setSortCreated(test);
 		dispatch(getPacks({ user_id: currentUserId, sortPacks: test }));
-		set3ShowArrow(true)
+		setThirdShowArrow(true)
 		setShowArrow(false)
-		set2ShowArrow(false)
+		setSecondShowArrow(false)
 	};
 
 	return (
@@ -93,13 +93,13 @@ export default function DenseTable() {
 
 						<TableCell align='right'>Cards</TableCell>
 						<TableCell onClick={onSortUpdatedClickHandler} align='right'>Last
-							Updated <img className={show2Arrow ? s.arrow : s.displayNone}
+							Updated <img className={showSecondArrow ? s.arrow : s.displayNone}
 													 style={sortUpdated === '0updated' ? {transform: "rotate(180deg)"} : undefined}
 													 src={arrow}
 													 alt='' /></TableCell>
 						<TableCell onClick={onSortCreatedClickHandler} align='right'>Created
 							by
-							<img className={show3Arrow ? s.arrow : s.displayNone}
+							<img className={showThirdArrow ? s.arrow : s.displayNone}
 									 style={sortCreated === '0created' ? {transform: "rotate(180deg)"} : undefined}
 									 src={arrow}
 									 alt='' />
