@@ -1,55 +1,65 @@
-import s from "./Profile.module.scss";
-import RangeSlider from "../../../mui/range-slider/RangeSlider";
-import DenseTable from "../../../mui/table/Table";
-import PaginationSize from "../../../mui/pagination/Pagination";
-import ButtonForTable from "../../../common/button/ButtonForTable";
-import profile from "./../../../images/main/profilePerson.svg";
+import React, { useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+
+
+import s from './Profile.module.scss';
+import RangeSlider from '../../../mui/range-slider/RangeSlider';
+import DenseTable from '../../../mui/table/Table';
+import PaginationSize from '../../../mui/pagination/Pagination';
+import { useAppSelector } from '../../../../redux/store';
+import { selectLoginData, selectPageNumber, selectPageSize } from '../../../../assets/selectors/authSelectors';
+import { getPacks } from '../../../../redux/packs-reducer';
+
+
+const defaultAva = 'https://via.placeholder.com/150';
 
 // import ButtonForTable from "./../../../Components/common/button/ButtonForTable";
 
 function Profile() {
-  return (
-    <div>
-      <div className={s.wrapper}>
-        <div className={s.wrapLeft}>
-          <div className={s.wrapPerson}>
-            <img className={s.img} src={profile} alt="" />
-            <h3 className={s.subtitle}>Petr Ivanov</h3>
-            <p className={s.text}>Front-end developer</p>
-          </div>
-          <div className={s.wrapSlider}>
-            <h3 className={s.subtitleSlid}>Number of cards</h3>
-            <RangeSlider />
-          </div>
-        </div>
-        <div className={s.wrapRight}>
-          <h2 className={s.title}>Packs list Petr’s</h2>
-          <div className={s.wrapForm}>
-            <input className={s.input} type="text" placeholder="Search..." />
-          </div>
-          <div className={s.table}>
-            <DenseTable />
-            <div className={s.wrapBottom}>
-              <PaginationSize />
+	const { name, avatar, _id } = useAppSelector( selectLoginData );
+	const { currentUserId } = useParams();
+	const dispatch = useDispatch();
+	const page = useAppSelector( selectPageNumber );
+	const pageCount = useAppSelector( selectPageSize );
+	useEffect( () => {
+		_id
+		&& dispatch( getPacks( { user_id: _id, page, pageCount } ) );
+	}, [currentUserId, page, pageCount] );
 
-              <div className={s.wrapSelect}>
-                <p className={s.textBottom}>Show </p>
-                <select className={s.select}>
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                </select>
-                <p className={s.textBottom}> Cards per Page</p>
-              </div>
-              <ButtonForTable />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+
+	return (
+		<div>
+			<div className={ s.wrapper }>
+				<div className={ s.wrapLeft }>
+					<div className={ s.wrapPerson }>
+						<img className={ s.img } src={ avatar ? avatar : defaultAva } alt=""/>
+						<h3 className={ s.subtitle }>{ name }</h3>
+						{
+							_id === currentUserId || !currentUserId
+							&& <Link to={'/edit-profile'}><button className={ s.btnEditProfile}>Edit Profile</button></Link>
+						}
+					</div>
+					<div className={ s.wrapSlider }>
+						<h3 className={ s.subtitleSlid }>Number of cards</h3>
+						<RangeSlider/>
+					</div>
+				</div>
+				<div className={ s.wrapRight }>
+					<h2 className={ s.title }>{ `${ name } Packs list` }</h2>
+					<div className={ s.wrapForm }>
+						<input className={ s.input } type="text" placeholder="Search..."/>
+					</div>
+					<div className={ s.table }>
+						<DenseTable/>
+						<div className={ s.wrapBottom }>
+							<PaginationSize/>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	);
 }
 
 export default Profile;

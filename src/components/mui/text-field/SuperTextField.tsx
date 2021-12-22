@@ -5,7 +5,7 @@ import s from './TextFieldEmail.module.scss';
 import eye from '../../../assets/images/auth-img/eye.svg';
 
 
-type LabelType = 'Password' | 'Email'
+type LabelType = 'Password' | 'Email' | 'Nickname'
 
 type FormPropsType = {
 	callback?: (value: string) => void

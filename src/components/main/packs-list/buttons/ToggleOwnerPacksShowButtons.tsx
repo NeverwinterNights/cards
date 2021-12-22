@@ -12,12 +12,12 @@ export const ToggleOwnerPacksShowButtons = () => {
 
 	return (
 		<div className={ s.wrapBtn }>
-			<Link to={ `/${ userId }` }>
+			<Link to={ `/packs/${ userId }` }>
 				<button className={ `${ s.buttonLeft } ${ currentUserId === userId ? s.activeBtn : '' }` }>
 					My
 				</button>
 			</Link>
-			<Link to={ '/' }>
+			<Link to={ '/packs' }>
 				<button className={ `${ s.buttonRight } ${ !currentUserId ? s.activeBtn : '' }` }>
 					All
 				</button>
