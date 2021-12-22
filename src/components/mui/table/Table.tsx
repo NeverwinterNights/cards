@@ -14,9 +14,10 @@ import s from './Table.module.scss';
 import { useAppSelector } from '../../../redux/store';
 import { deletePackTC, getPacks, packType } from '../../../redux/packs-reducer';
 import arrow from './../../../assets/images/main/sortArrow.svg';
+import ButtonForTable from '../../common/button/ButtonForTable';
 
 
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
+const StyledTableRow = styled( TableRow )( ({ theme }) => ( {
 	'&:nth-of-type(odd)': {
 		backgroundColor: theme.palette.action.hover,
 	},
@@ -27,10 +28,10 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 	'& td': {
 		padding: 16,
 	},
-}));
+} ) );
 
 export default function DenseTable() {
-	const packs = useAppSelector<packType[]>(state => state.packsReducer.cardPacks);
+	const packs = useAppSelector<packType[]>( state => state.packsReducer.cardPacks );
 	const dispatch = useDispatch();
 	const { currentUserId } = useParams();
 
@@ -50,8 +51,7 @@ export default function DenseTable() {
 			<TableCell align='right'>{new Date(m.updated).toLocaleDateString()}</TableCell>
 			<TableCell align='right'>{new Date(m.created).toLocaleDateString()}</TableCell>
 			<TableCell align='right'>
-				<span>update</span>
-				<span onClick={() => dispatch(deletePackTC(m._id, currentUserId))}>delete</span>
+				<ButtonForTable packId={ m._id } ownerId={ m.user_id } callBack={() =>{}} />
 			</TableCell>
 		</StyledTableRow>));
 

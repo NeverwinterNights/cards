@@ -23,6 +23,30 @@ export type AuthDomainDataType = {
 	_id: string
 }
 
+type userDomainType = {
+	_id: string
+	email: string
+	rememberMe: false
+	isAdmin: false
+	name: string
+	verified: false
+	publicCardPacksCount: number
+	created: string
+	updated: string
+	__v: number
+	token: string
+	tokenDeathTime: number
+	avatar: string | null
+}
+
+type updateUserDomainType = {
+	updatedUser: userDomainType,
+	token: string
+	tokenDeathTime: number
+}
+
+export type updateProfilePayloadType = { name?: string, avatar?: string }
+
 const axiosConfig = {
 	// baseURL: 'http://localhost:7542/2.0/',
 	baseURL: 'https://neko-back.herokuapp.com/2.0/',
@@ -34,7 +58,7 @@ const axiosInstance = axios.create( axiosConfig );
 
 export const api = {
 	login(data: any) {
-		return axiosInstance.post<AuthDomainDataType>( 'auth/login', data );
+		return axiosInstance.post<userDomainType>( 'auth/login', data );
 	},
 	registration(body: RegistrationRequestType) {
 		return axiosInstance.post<RegistrationRequestType, AxiosResponse<RegistrationResponseType>>( 'auth/register', {
@@ -43,10 +67,13 @@ export const api = {
 		} );
 	},
 	authMe() {
-		return axiosInstance.post<AuthDomainDataType>( 'auth/me', {} );
+		return axiosInstance.post<userDomainType>( 'auth/me', {} );
 	},
 	logOut() {
 		return axiosInstance.delete<{ info: string, error?: string }>( 'auth/me', {} );
+	},
+	updateProfile(payload: updateProfilePayloadType) {
+		return axiosInstance.put<updateUserDomainType>( 'auth/me', payload );
 	},
 };
 export const changePasswordAPI = {

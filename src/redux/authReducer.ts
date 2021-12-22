@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import { AppThunk } from './store';
-import { api } from '../api/api';
+import { api, updateProfilePayloadType } from '../api/api';
 
 
 export type OptionalStringType = string | null
@@ -12,6 +12,15 @@ export type LoginDataType = {
 	name: OptionalStringType
 	publicCardPacksCount: number | null
 	_id: OptionalStringType
+
+	rememberMe: boolean
+	isAdmin: boolean
+	verified: boolean
+	created: OptionalStringType
+	updated: OptionalStringType
+	__v: number | null
+	token: OptionalStringType
+	tokenDeathTime: number | null
 }
 
 type LoginErrorsStateType = {
@@ -28,6 +37,15 @@ const initState = {
 		name: null,
 		publicCardPacksCount: null,
 		_id: null,
+
+		rememberMe: false,
+		__v: null,
+		created: null,
+		updated: null,
+		verified: false,
+		isAdmin: false,
+		token: null,
+		tokenDeathTime: null,
 	} as LoginDataType,
 	isAuth: false as boolean,
 	errors: {
@@ -56,11 +74,14 @@ const authReducer = (state = initState, action: AuthReducerActionTypes): AuthSta
 					...action.payload,
 				},
 			};
-		case 'SET_IS_AUTH':
+		case 'SET_IS_AUTH': {
 			return {
 				...state,
 				isAuth: action.isAuth,
 			};
+		}
+		case 'CLEAR_AUTH_DATA':
+			return action.initState;
 		default:
 			return state;
 	}
@@ -69,10 +90,12 @@ const authReducer = (state = initState, action: AuthReducerActionTypes): AuthSta
 export type AuthReducerActionTypes = SetLoginDataActionType
 	| SetErrorActionType
 	| SetIsAuthActionType
+	| ClearAuthDataActionType
 
 type SetLoginDataActionType = ReturnType<typeof setLoginData>
 type SetErrorActionType = ReturnType<typeof setError>
 type SetIsAuthActionType = ReturnType<typeof setIsAuth>
+type ClearAuthDataActionType = ReturnType<typeof clearAuthData>
 
 const setLoginData = (payload: LoginDataType) => ( {
 	type: 'SET_LOGIN_DATA', payload,
@@ -82,10 +105,15 @@ const setIsAuth = (isAuth: boolean) => ( {
 	type: 'SET_IS_AUTH', isAuth,
 } as const );
 
+export const clearAuthData = () => ( {
+	type: 'CLEAR_AUTH_DATA', initState,
+} as const );
+
 export const setError = (payload: Partial<LoginErrorsStateType>) => ( {
 	type: 'SET_ERROR',
 	payload,
 } as const );
+
 
 type LoginValuesType = {
 	email: string
@@ -95,8 +123,8 @@ type LoginValuesType = {
 
 export const makeLogin = (loginData: LoginValuesType): AppThunk => async dispatch => {
 	try {
-		const { data: { email, _id, avatar, name, publicCardPacksCount } } = await api.login( loginData );
-		dispatch( setLoginData( { email, _id, avatar, name, publicCardPacksCount } ) );
+		const { data } = await api.login( loginData );
+		dispatch( setLoginData( data ) );
 	} catch (error) {
 		const errorMessage = 'Incorrect pair email/password';
 		dispatch( setError( { passwordError: errorMessage, emailError: errorMessage } ) );
@@ -105,8 +133,8 @@ export const makeLogin = (loginData: LoginValuesType): AppThunk => async dispatc
 
 export const checkAuth = (): AppThunk => async dispatch => {
 	try {
-		const { data: { email, _id, avatar, name, publicCardPacksCount } } = await api.authMe();
-		dispatch( setLoginData( { email, _id, avatar, name, publicCardPacksCount } ) );
+		const { data } = await api.authMe();
+		dispatch( setLoginData( data ) );
 	} catch (e) {
 		console.log( e );
 	}
@@ -115,9 +143,19 @@ export const checkAuth = (): AppThunk => async dispatch => {
 export const makeLogout = (): AppThunk => async dispatch => {
 	try {
 		const { data: { error, info } } = await api.logOut();
-		dispatch( setLoginData( { email: null, _id: null, avatar: null, name: null, publicCardPacksCount: null } ) );
-		dispatch( setIsAuth( false ) );
+		dispatch( clearAuthData() );
 		console.log( { error, info } );
+	} catch (e) {
+		if (axios.isAxiosError( e ) && e.response) {
+			console.log( e.response.data.error );
+		}
+	}
+};
+
+export const updateProfile = (payload: updateProfilePayloadType): AppThunk => async dispatch => {
+	try {
+		const { data: { updatedUser } } = await api.updateProfile( payload );
+		dispatch( setLoginData( updatedUser ) );
 	} catch (e) {
 		if (axios.isAxiosError( e ) && e.response) {
 			console.log( e.response.data.error );

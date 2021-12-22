@@ -1,6 +1,8 @@
+import axios from 'axios';
+
 import { AppThunk, RootState } from './store';
 import { cardsApi, getPacksPayloadType, getPacksResponseType } from '../api/api';
-import { setErrorAC } from './errorReducer';
+import { clearAuthData } from './authReducer';
 
 
 export type packType = {
@@ -25,8 +27,8 @@ export type PacksReducerStateType = typeof initialState
 const initialState = {
 	cardPacks: [] as packType[],
 	cardPacksTotalCount: 1 as number,
-	maxCardsCount: null as null | number,
-	minCardsCount: null as null | number,
+	maxCardsCount: Infinity as number,
+	minCardsCount: 0 as number,
 	page: 1 as number,
 	pageCount: 4 as number,
 	token: null as null | string,
@@ -47,70 +49,72 @@ export const packsReducer = (state = initialState, action: ActionsType): PacksRe
 	}
 };
 
-export const setPacks = (payload: getPacksResponseType) => ({
+export const setPacks = (payload: getPacksResponseType) => ( {
 		type: 'PACKS/SET-PACKS',
 		payload,
 	} as const
 );
-export const setPage = (page: number) => ({
+export const setPage = (page: number) => ( {
 	type: 'PACKS/SET_PAGE', page,
-} as const);
-export const setPageCount = (pageCount: number) => ({
+} as const );
+export const setPageCount = (pageCount: number) => ( {
 	type: 'PACKS/SET_PAGE_COUNT', pageCount,
-} as const);
+} as const );
 
-export const setCurrentUser = (value: string | null) => ({
+export const setCurrentUser = (value: string | null) => ( {
 	type: 'PACKS/SET_IS_OWNER_PACK_SHOW', value,
-} as const);
+} as const );
 
 
 export type setPacksActionType = ReturnType<typeof setPacks>
 export type setPageActionType = ReturnType<typeof setPage>
 export type setPageCountActionType = ReturnType<typeof setPageCount>
 export type setIsOwnerPacksShowActionType = ReturnType<typeof setCurrentUser>
-type ActionsType =
-	setPacksActionType
-	| setPageActionType
-	| setPageCountActionType
-	| setIsOwnerPacksShowActionType
+type ActionsType = setPacksActionType | setPageActionType | setPageCountActionType | setIsOwnerPacksShowActionType
 
-export const getPacks = (payload?: getPacksPayloadType): AppThunk => (dispatch) => {
-	cardsApi.getPacks(payload)
-		.then((res) => {
-			dispatch(setPacks(res.data));
-		})
-		.catch((error) => {
-			console.log(error);
-		});
+export const getPacks = (payload?: getPacksPayloadType): AppThunk => (dispatch, getState) => {
+	const { page, pageCount, maxCardsCount, minCardsCount } = getState().packsReducer;
+	cardsApi.getPacks( { min: minCardsCount, max: maxCardsCount, page, pageCount, ...payload } )
+		.then( (res) => {
+			dispatch( setPacks( res.data ) );
+		} )
+		.catch( (e) => {
+			if (axios.isAxiosError( e ) && e.response && e.response.status === 401) {
+				dispatch( clearAuthData() );
+			}
+		} );
 };
 
 export const deletePackTC = (idPack: string, user_id?: string): AppThunk => async (dispatch) => {
 	try {
-		await cardsApi.deletePack(idPack);
-		dispatch(getPacks({ user_id }));
-	} catch (err) {
-		console.log(err);
+		await cardsApi.deletePack( idPack );
+		dispatch( getPacks( { user_id } ) );
+	} catch (e) {
+		if (axios.isAxiosError( e ) && e.response) {
+			console.log( e.response.data.error );
+		}
 	}
 };
 export const updatePackTC = (payload: packType, user_id?: string): AppThunk => async (dispatch, getState: () => RootState) => {
 	try {
-		const pack = getState().packsReducer.cardPacks.find(item => item._id === payload._id);
+		const pack = getState().packsReducer.cardPacks.find( item => item._id === payload._id );
 		if (!pack) {
-			throw new Error('Pack not found in the state');
+			throw new Error( 'Pack not found in the state' );
 		}
 		const updatePack = { ...pack, ...payload };
-		await cardsApi.updatePack(updatePack);
-		dispatch(getPacks({ user_id }));
-	} catch (err) {
-		console.log(err);
+		await cardsApi.updatePack( updatePack );
+		dispatch( getPacks( { user_id } ) );
+	} catch (e) {
+		if (axios.isAxiosError( e ) && e.response) {
+			console.log( e.response.data.error );
+		}
 	}
 };
 
 
 export const createPack = (name: string, user_id?: string): AppThunk => (dispatch) => {
-	cardsApi.createPack({ name })
-		.then(() => {
-			dispatch(getPacks({ user_id }));
-		});
+	cardsApi.createPack( { name } )
+		.then( () => {
+			dispatch( getPacks( { user_id } ) );
+		} );
 };
-
