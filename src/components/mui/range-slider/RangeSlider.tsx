@@ -1,32 +1,31 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
-import { styled } from "@mui/material/styles";
+import {useDispatch} from "react-redux";
+import {useAppSelector} from "../../../redux/store";
+import {SetRangeCardsAC} from "../../../redux/cards-reducer";
 
 function valuetext(value: number) {
-  return `${value}°C`;
+    return `${value}°C`;
 }
 
 export default function RangeSlider() {
-  const [value, setValue] = React.useState<number[]>([4, 37]);
+    const dispatch = useDispatch()
+    const rangeValue = useAppSelector<number | number[]>(state => state.cardsReducer.rangeCards)
 
-  const handleChange = (event: Event, newValue: number | number[]) => {
-    setValue(newValue as number[]);
-  };
+    const handleChange = (event: Event, newValue: number | number[]) => {
+        dispatch(SetRangeCardsAC(newValue))
+    };
 
-  const AirbnbSlider = styled(Slider)(({ theme }) => ({
-    color: "#21268F",
-  }));
-
-  return (
-    <Box sx={{ width: 196 }}>
-      <AirbnbSlider
-        getAriaLabel={() => "Temperature range"}
-        value={value}
-        onChange={handleChange}
-        valueLabelDisplay="auto"
-        getAriaValueText={valuetext}
-      />
-    </Box>
-  );
+    return (
+        <Box sx={{width: 196}}>
+            <Slider style={{color: '#21268F'}}
+                    getAriaLabel={() => "Temperature range"}
+                    value={rangeValue}
+                    onChange={handleChange}
+                    valueLabelDisplay="auto"
+                    getAriaValueText={valuetext}
+            />
+        </Box>
+    );
 }

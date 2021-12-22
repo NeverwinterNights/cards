@@ -8,6 +8,7 @@ import auth from './authReducer';
 import { registerReducer } from './register-reducer';
 import { errorReducer } from './errorReducer';
 import { packsReducer } from './packs-reducer';
+import {cardsReducer} from "./cards-reducer";
 
 
 const rootReducer = combineReducers( {
@@ -16,7 +17,8 @@ const rootReducer = combineReducers( {
 	forgotReducer,
 	newPasswordReducer,
 	errorReducer,
-	packsReducer
+	packsReducer,
+	cardsReducer
 } );
 
 export type AppStoreType = ReturnType<typeof rootReducer>

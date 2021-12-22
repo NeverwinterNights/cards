@@ -1,90 +1,98 @@
+import {Dispatch} from "redux";
+import {cardsApi, getCardsPayloadType} from "../api/api";
+import {RootState} from "./store";
 
-
-
-const initialState: cardsUserType | {} = {};
-
-export type cardsUserType = {
-	cards: cardsType[]
-	cardsTotalCount: number
-	maxGrade: number
-	minGrade: number
-	page: number
-	pageCount: number
-	packUserId: string
-}
-
-
-export type cardsType = {
-	answer: string
-	question: string
-	cardsPack_id: string
-	grade: number
-	rating?: number
-	shots: number
-	type?: string
-	user_id: string
-	created: string
-	updated: string
-	__v?: number
-	_id: string
-}
-
-
-// cardPacks: packType[],
-// 	page: number
-// pageCount: number
-// cardPacksTotalCount: number
-// minCardsCount: number
-// maxCardsCount: number
-// token: string
-// tokenDeathTime: number
-
-
-export const cardsReducer = (state: cardsUserType | {} = initialState, action: any): cardsUserType | {} => {
-	switch (action.type) {
-
-		default:
-			return state;
-	}
+const initialState: cardsUserType = {
+    cards: [],
+    cardsTotalCount: 0,
+    maxGrade: 0,
+    minGrade: 0,
+    page: 0,
+    pageCount: 0,
+    packUserId: '',
+    rangeCards: [0, 50]
 };
 
+export type cardsUserType = {
+    cards: Array<cardsType>
+    cardsTotalCount: number
+    maxGrade: number
+    minGrade: number
+    page: number
+    pageCount: number
+    packUserId: string
+    rangeCards: number | number[]
+}
 
-// export const SetStatusAC = (status: RequestStatusType) => ({
-// 	type: 'REGISTER/SET-STATUS',
-// 	status,
-// } as const);
+export type cardsType = {
+    answer: string
+    question: string
+    cardsPack_id: string
+    grade: number
+    rating?: number
+    shots: number
+    type?: string
+    user_id: string
+    created: string
+    updated: string
+    __v?: number
+    _id: string
+}
+
+export  type ActionCardsType = ReturnType<typeof AddCardsAC> | ReturnType<typeof SetRangeCardsAC>
 
 
-// export type SetStatusActionType = ReturnType<typeof SetStatusAC>
+export const cardsReducer = (state = initialState, action: ActionCardsType): cardsUserType => {
+    switch (action.type) {
+        case "ADD_CARDS":
+            return {...state, cards: [...action.cards]}
+        case "SET_CARDS_RANGE":
+            return {...state, rangeCards: action.range}
 
+        default:
+            return state;
+    }
+};
 
-// type ActionsType =
+export const AddCardsAC = (cards: Array<cardsType>) => ({type: 'ADD_CARDS', cards} as const)
+export const SetRangeCardsAC = (range: number | number[]) => ({type: 'SET_CARDS_RANGE', range} as const)
 
+export const AddCardsTC = (payload: getCardsPayloadType) => async (dispatch: Dispatch<ActionCardsType>) => {
+    try {
+        const {data} = await cardsApi.getCards(payload)
+        dispatch(AddCardsAC(data.cards))
 
-// export type RegistrationRequestType = {
-// 	email: string
-// 	password: string
-//
-// }
+    } catch (err) {
+        console.log(err)
+    }
+}
 
+export const CreateCardTC = (payload: getCardsPayloadType) => async (dispatch: Dispatch<ActionCardsType>) => {
+    try {
+        const {data} = await cardsApi.createCard(payload)
+        dispatch(AddCardsAC(data.cards))
+    } catch (err) {
+        console.log(err)
+    }
+}
 
-// export const registerTC = (email: string, password: string) => (dispatch: Dispatch, getState: () => RootState) => {
-// 	// dispatch(SetLoadingStatusAC(true));
-//
-// 	api.registration({ email, password })
-// 		.then((res) => {
-// 			dispatch(SetRegisteredStatusAC(true));
-// 			console.log(res.data);
-//
-//
-// 		})
-// 		.catch((error) => {
-// 			dispatch(setErrorAC('Incorrect pair email/password'))
-//
-// 		})
-// 		.finally(() => {
-// 			// dispatch(SetLoadingStatusAC(false));
-// 		});
-//
-// };
+export const DeleteCardTC = (cardID: string) => async (dispatch: Dispatch<ActionCardsType>) => {
+    try {
+        const {data} = await cardsApi.deleteCard(cardID)
+        dispatch(AddCardsAC(data.cards))
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+export const UpdateCardTC = (payload: cardsType) => async (dispatch: Dispatch<ActionCardsType>, getState: () => RootState) => {
+    const card = getState().cardsReducer.cards.find(item => item._id === payload._id)
+    const updateCard = {...card, ...payload}
+    try {
+        const {data} = await cardsApi.updatePack(updateCard)
+        dispatch(AddCardsAC(data.cards))
+    } catch (err) {
+        console.log(err)
+    }
+}
 
