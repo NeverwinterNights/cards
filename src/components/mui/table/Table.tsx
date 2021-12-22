@@ -13,6 +13,7 @@ import Paper from '@mui/material/Paper';
 import s from './Table.module.scss';
 import { useAppSelector } from '../../../redux/store';
 import { deletePackTC, getPacks, packType } from '../../../redux/packs-reducer';
+import arrow from './../../../assets/images/main/sortArrow.svg';
 
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
@@ -75,7 +76,8 @@ export default function DenseTable() {
 			<Table sx={{ minWidth: 650 }} size='small' aria-label='a dense table'>
 				<TableHead className={s.tableHead}>
 					<StyledTableRow>
-						<TableCell onClick={onSortNameClickHandler}>Name</TableCell>
+						<TableCell onClick={onSortNameClickHandler}>Name <img className={s.arrow} src={arrow} alt='' /></TableCell>
+
 						<TableCell align='right'>Cards</TableCell>
 						<TableCell onClick={onSortUpdatedClickHandler} align='right'>Last
 							Updated</TableCell>
