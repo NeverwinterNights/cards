@@ -1,0 +1,12 @@
+@import "../../../assets/styles/vars";
+@import "../../../assets/styles/mixins";
+
+.btn {
+  border-radius: 2px;
+  height: 24px;
+  @include text(12px, 400, 16px, $accentColor);
+  background: #d7d8ef;
+  margin: 0 3px;
+  padding: 0 3px;
+  font-family: SF UI Display;
+}

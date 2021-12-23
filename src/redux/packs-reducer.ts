@@ -33,6 +33,7 @@ const initialState = {
 	pageCount: 4 as number,
 	token: null as null | string,
 	tokenDeathTime: null as null | number,
+	currentPack: null as null | packType,
 };
 
 export const packsReducer = (state = initialState, action: ActionsType): PacksReducerStateType => {
@@ -44,6 +45,8 @@ export const packsReducer = (state = initialState, action: ActionsType): PacksRe
 			return { ...state, page: action.page };
 		case 'PACKS/SET_PAGE_COUNT':
 			return { ...state, pageCount: action.pageCount };
+		case 'PACKS/SET_CURRENT_PACK':
+			return { ...state, currentPack: action.pack };
 		default:
 			return state;
 	}
@@ -61,16 +64,20 @@ export const setPageCount = (pageCount: number) => ( {
 	type: 'PACKS/SET_PAGE_COUNT', pageCount,
 } as const );
 
-export const setCurrentUser = (value: string | null) => ( {
-	type: 'PACKS/SET_IS_OWNER_PACK_SHOW', value,
+export const setCurrentPack = (pack: packType) => ( {
+	type: 'PACKS/SET_CURRENT_PACK', pack,
 } as const );
 
 
 export type setPacksActionType = ReturnType<typeof setPacks>
 export type setPageActionType = ReturnType<typeof setPage>
 export type setPageCountActionType = ReturnType<typeof setPageCount>
-export type setIsOwnerPacksShowActionType = ReturnType<typeof setCurrentUser>
-type ActionsType = setPacksActionType | setPageActionType | setPageCountActionType | setIsOwnerPacksShowActionType
+export type setCurrentPackActionType = ReturnType<typeof setCurrentPack>
+type ActionsType =
+	setPacksActionType
+	| setPageActionType
+	| setPageCountActionType
+	| setCurrentPackActionType
 
 export const getPacks = (payload?: getPacksPayloadType): AppThunk => (dispatch, getState) => {
 	const { page, pageCount, maxCardsCount, minCardsCount } = getState().packsReducer;

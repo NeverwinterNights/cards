@@ -5,19 +5,21 @@ import { useDispatch } from 'react-redux';
 import { setErrorAC } from '../../../redux/errorReducer';
 import { useAppSelector } from '../../../redux/store';
 
-
-const Alert = React.forwardRef<HTMLDivElement, AlertProps>((
-	props, ref) => <MuiAlert elevation={6} ref={ref} variant='filled' {...props} />);
-
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>((props, ref) => (
+	<MuiAlert elevation={6} ref={ref} variant='filled' {...props} />
+));
 
 export function ErrorSnackbar() {
-
-	const error = useAppSelector<string | null>(state => state.errorReducer.error);
+	const error = useAppSelector<string | null>(
+		(state) => state.errorReducer.error,
+	);
 
 	const dispatch = useDispatch();
 
-
-	const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
+	const handleClose = (
+		event?: React.SyntheticEvent | Event,
+		reason?: string,
+	) => {
 		if (reason === 'clickaway') {
 			return;
 		}
@@ -25,7 +27,11 @@ export function ErrorSnackbar() {
 	};
 
 	return (
-		<Snackbar open={error !== null} autoHideDuration={5000} onClose={handleClose}>
+		<Snackbar
+			open={error !== null}
+			autoHideDuration={5000}
+			onClose={handleClose}
+		>
 			<Alert onClose={handleClose} severity='error' sx={{ width: '100%' }}>
 				{error}
 			</Alert>

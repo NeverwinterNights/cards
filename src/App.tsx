@@ -5,16 +5,15 @@ import './App.css';
 import { MyRoutes } from './components/routes/MyRoutes';
 import { checkAuth } from './redux/authReducer';
 
-
 const App = () => {
 	const dispatch = useDispatch();
-	console.log( 'app' );
-	useEffect( () => {
-		dispatch( checkAuth() );
-	}, [] );
+	console.log('app');
+	useEffect(() => {
+		dispatch(checkAuth());
+	}, []);
 	return (
 		<div>
-			<MyRoutes/>
+			<MyRoutes />
 		</div>
 	);
 };

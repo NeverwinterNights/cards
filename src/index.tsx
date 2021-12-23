@@ -1,12 +1,11 @@
 import React from 'react';
-import { BrowserRouter, HashRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { store } from './redux/store';
 import './index.css';
-
 
 
 ReactDOM.render(
