@@ -1,7 +1,30 @@
-import s from 'CardInfo.module.scss';
+import React, { useState } from 'react';
+
+import s from './CardInfo.module.scss';
+
 // import arrow from "../../../images/main/arrow.svg";
 
-function CardInfo() {
+export type confirmPayloadType = { answer: string; question: string };
+
+type CardInfoPropsType = {
+	question?: string;
+	answer?: string;
+	confirm: (payload: confirmPayloadType) => void;
+	cancel: () => void;
+};
+
+export const CardInfo: React.FC<CardInfoPropsType> = ({
+	answer,
+	question,
+	cancel,
+	confirm,
+}) => {
+	const [questionFieldValue, setQuestionFieldValue] = useState(question || '');
+	const [answerFieldValue, setAnswerFieldValue] = useState(answer || '');
+	const onSaveClickHandler = () => {
+		confirm({ answer: answerFieldValue, question: questionFieldValue });
+	};
+
 	return (
 		<div>
 			<div className={s.wrapper}>
@@ -14,6 +37,8 @@ function CardInfo() {
 							type='text'
 							className={s.input}
 							placeholder='How This works in JavaScript?'
+							value={questionFieldValue}
+							onChange={(e) => setQuestionFieldValue(e.currentTarget.value)}
 						/>
 
 						<div className={s.dada}>
@@ -28,6 +53,8 @@ function CardInfo() {
 							type='text'
 							className={s.input}
 							placeholder='This is how This works in JavaScript?'
+							value={answerFieldValue}
+							onChange={(e) => setAnswerFieldValue(e.currentTarget.value)}
 						/>
 						<div className={s.dada}>
 							<label htmlFor='myfile2' className={s.chous}>
@@ -36,14 +63,16 @@ function CardInfo() {
 							<input type='file' className={s.my} id='myfile2' name='myfile2' />
 						</div>
 						<div className={s.wrapBtn}>
-							<button className={s.btnCancel}>Cancel</button>
-							<button className={s.btnSave}>Save</button>
+							<button className={s.btnCancel} onClick={cancel}>
+								Cancel
+							</button>
+							<button className={s.btnSave} onClick={onSaveClickHandler}>
+								Save
+							</button>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	);
-}
-
-export default CardInfo;
+};

@@ -26,6 +26,7 @@ export const MyRoutes = () => {
 					<Route path='/cards:cardsPack_id' element={<CardsList />} />
 				</Route>
 			</Route>
+
 			<Route path='edit-profile' element={<EditProfile />} />
 			<Route path='change-password' element={<ForgotPassword />} />
 			<Route path='login' element={<AuthLogin />} />

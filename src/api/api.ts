@@ -192,7 +192,7 @@ type createPackParamsType = {
 	type?: string
 }
 
-type createCardParamsType = {
+export type createCardParamsType = {
 	cardsPack_id: string
 	question?: string
 	answer?: string

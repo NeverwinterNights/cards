@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { cardsApi, getCardsPayloadType } from '../api/api';
+import { cardsApi, createCardParamsType, getCardsPayloadType } from '../api/api';
 import { AppThunk } from './store';
 import { clearAuthData } from './authReducer';
 
@@ -71,17 +71,17 @@ export const setCardsPage = (page: number) => ( { type: 'SET_CARDS_PAGE', page }
 export const setCardsPageCount = (pageCount: number) => ( { type: 'SET_CARDS_PAGE_COUNT', pageCount } as const );
 export const setCardsState = (state: cardsUserType) => ( { type: 'SET_CARDS_STATE', state } as const );
 
-export const getCards = (payload: getCardsPayloadType): AppThunk => async dispatch => {
-	try {
-		const { data } = await cardsApi.getCards( payload );
-		dispatch( setCardsState( data ) );
+// export const getCards = (payload: getCardsPayloadType): AppThunk => async dispatch => {
+// 	try {
+// 		const { data } = await cardsApi.getCards( payload );
+// 		dispatch( setCardsState( data ) );
+//
+// 	} catch (err) {
+// 		console.log( err );
+// 	}
+// };
 
-	} catch (err) {
-		console.log( err );
-	}
-};
-
-export const getCards2 = (payload: getCardsPayloadType): AppThunk => (dispatch, getState) => {
+export const getCards = (payload: getCardsPayloadType): AppThunk => (dispatch, getState) => {
 	const { page, pageCount } = getState().cardsReducer;
 	cardsApi.getCards( { page, pageCount, ...payload } )
 		.then( (res) => {
@@ -94,10 +94,10 @@ export const getCards2 = (payload: getCardsPayloadType): AppThunk => (dispatch, 
 		} );
 };
 
-export const CreateCardTC = (payload: getCardsPayloadType): AppThunk => async dispatch => {
+export const CreateCardTC = (payload: createCardParamsType): AppThunk => async dispatch => {
 	try {
-		const { data } = await cardsApi.createCard( payload );
-		dispatch( AddCardsAC( data.cards ) );
+		await cardsApi.createCard( payload );
+		dispatch( getCards( { cardsPack_id: payload.cardsPack_id } ) );
 	} catch (err) {
 		console.log( err );
 	}
