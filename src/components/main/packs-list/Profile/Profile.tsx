@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
@@ -7,7 +7,7 @@ import RangeSlider from '../../../mui/range-slider/RangeSlider';
 import { DenseTable } from '../../../mui/table/Table';
 import { useAppSelector } from '../../../../redux/store';
 import { selectLoginData, selectPacksPageNumber, selectPacksPageSize } from '../../../../assets/selectors/authSelectors';
-import { getPacks } from '../../../../redux/packs-reducer';
+import { createPack, getPacks } from '../../../../redux/packs-reducer';
 import { PaginationPacksContainer } from '../../../mui/pagination/PaginationPacksContainer';
 
 
@@ -21,6 +21,11 @@ function Profile() {
 	const dispatch = useDispatch();
 	const page = useAppSelector( selectPacksPageNumber );
 	const pageCount = useAppSelector( selectPacksPageSize );
+
+	const [addPackValue, setAddPackValue] = useState( '' );
+	const [search, setSearch] = useState<string>( '' );
+
+
 	useEffect( () => {
 		_id &&
 		dispatch(
@@ -31,6 +36,25 @@ function Profile() {
 			} ),
 		);
 	}, [currentUserId, page, pageCount] );
+
+
+
+
+	const addNewPackClickHandler = (e: FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		addPackValue && dispatch( createPack( addPackValue, currentUserId ) );
+		setAddPackValue( '' );
+	};
+	const searching = () => {
+		dispatch( getPacks( {user_id: currentUserId,  packName: search } ) );
+	};
+
+	const handlerSearch = (e: ChangeEvent<HTMLInputElement>) => {
+		setSearch( e.currentTarget.value );
+	};
+
+
+
 
 	return (
 		<div>
@@ -54,7 +78,27 @@ function Profile() {
 				<div className={ s.wrapRight }>
 					<h2 className={ s.title }>{ `${ name } Packs list` }</h2>
 					<div className={ s.wrapForm }>
-						<input className={ s.input } type='text' placeholder='Search...'/>
+						<form className={ s.wrapForm } onSubmit={ addNewPackClickHandler }>
+						<input
+							className={ s.input }
+							value={ addPackValue }
+							onChange={ (e) => setAddPackValue( e.currentTarget.value ) }
+							placeholder='Type here'
+						/>
+						<button className={ s.button }>Add new pack</button>
+					</form>
+					<div className={ s.wrapForm }>
+						<input
+							className={ s.input }
+							value={ search }
+							onChange={ handlerSearch }
+							type='text'
+							placeholder='Search...'
+						/>
+						<button className={ s.button } onClick={ searching }>
+							Search
+						</button>
+					</div>
 					</div>
 					<div className={ s.table }>
 						<DenseTable/>

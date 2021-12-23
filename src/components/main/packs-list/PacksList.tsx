@@ -33,7 +33,7 @@ function PackList() {
 	};
 
 	const searching = () => {
-		dispatch( getPacks( { packName: search } ) );
+		dispatch( getPacks( {user_id: currentUserId,  packName: search } ) );
 	};
 
 	return (

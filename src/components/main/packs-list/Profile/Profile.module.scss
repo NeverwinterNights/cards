@@ -32,6 +32,10 @@
   align-items: center;
 }
 
+.wrapForm {
+  margin-bottom: 5px;
+}
+
 .img {
   margin-top: 24px;
   margin-bottom: 4px;
@@ -75,9 +79,10 @@
   border: 1px solid #635d80;
   box-sizing: border-box;
   border-radius: 2px;
-  width: 700px;
+  //width: 700px;
   height: 36px;
   padding-left: 40px;
+  width: 460px;
 }
 
 .button {
