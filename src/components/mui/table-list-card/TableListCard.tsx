@@ -19,6 +19,7 @@ import { CustomizedRating } from '../rating/Rating';
 import { cutDate } from '../table/Table';
 import { ActionButton } from '../../common/button/ActionButton';
 import { DeleteCardTC } from '../../../redux/cards-reducer';
+import { PaginationCardsContainer } from '../pagination/PaginationCardsContainer';
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
 	'&:nth-of-type(even)': {

@@ -57,10 +57,10 @@ export const setPacks = (payload: getPacksResponseType) => ( {
 		payload,
 	} as const
 );
-export const setPage = (page: number) => ( {
+export const setPacksPage = (page: number) => ( {
 	type: 'PACKS/SET_PAGE', page,
 } as const );
-export const setPageCount = (pageCount: number) => ( {
+export const setPacksPageCount = (pageCount: number) => ( {
 	type: 'PACKS/SET_PAGE_COUNT', pageCount,
 } as const );
 
@@ -70,8 +70,8 @@ export const setCurrentPack = (pack: packType) => ( {
 
 
 export type setPacksActionType = ReturnType<typeof setPacks>
-export type setPageActionType = ReturnType<typeof setPage>
-export type setPageCountActionType = ReturnType<typeof setPageCount>
+export type setPageActionType = ReturnType<typeof setPacksPage>
+export type setPageCountActionType = ReturnType<typeof setPacksPageCount>
 export type setCurrentPackActionType = ReturnType<typeof setCurrentPack>
 type ActionsType =
 	setPacksActionType

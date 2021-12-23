@@ -17,11 +17,14 @@ export const selectPasswordError = (state: RootState): OptionalStringType => sta
 
 // packs selectors
 
-export const selectPageNumber = (state: RootState): number => state.packsReducer.page;
-export const selectPageSize = (state: RootState): number => state.packsReducer.pageCount;
-export const selectCardPacksTotalCount = (state: RootState): number => state.packsReducer.cardPacksTotalCount;
+export const selectPacksPageNumber = (state: RootState): number => state.packsReducer.page;
+export const selectPacksPageSize = (state: RootState): number => state.packsReducer.pageCount;
+export const selectPacksTotalCount = (state: RootState): number => state.packsReducer.cardPacksTotalCount;
 export const selectCurrentPack = (state: RootState): null | packType => state.packsReducer.currentPack;
 
 // cards selectors
 
 export const selectCards = (state: RootState): cardsType[] => state.cardsReducer.cards;
+export const selectCardsPageNumber = (state: RootState): number => state.cardsReducer.page;
+export const selectCardsPageSize = (state: RootState): number => state.cardsReducer.pageCount;
+export const selectCardsTotalCount = (state: RootState): number => state.cardsReducer.cardsTotalCount;

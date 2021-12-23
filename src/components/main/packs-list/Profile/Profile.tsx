@@ -5,10 +5,10 @@ import { useDispatch } from 'react-redux';
 import s from './Profile.module.scss';
 import RangeSlider from '../../../mui/range-slider/RangeSlider';
 import { DenseTable } from '../../../mui/table/Table';
-import PaginationSize from '../../../mui/pagination/Pagination';
 import { useAppSelector } from '../../../../redux/store';
-import { selectLoginData, selectPageNumber, selectPageSize } from '../../../../assets/selectors/authSelectors';
+import { selectLoginData, selectPacksPageNumber, selectPacksPageSize } from '../../../../assets/selectors/authSelectors';
 import { getPacks } from '../../../../redux/packs-reducer';
+import { PaginationPacksContainer } from '../../../mui/pagination/PaginationPacksContainer';
 
 
 const defaultAva = 'https://via.placeholder.com/150';
@@ -19,8 +19,8 @@ function Profile() {
 	const { name, avatar, _id } = useAppSelector( selectLoginData );
 	const { currentUserId } = useParams();
 	const dispatch = useDispatch();
-	const page = useAppSelector( selectPageNumber );
-	const pageCount = useAppSelector( selectPageSize );
+	const page = useAppSelector( selectPacksPageNumber );
+	const pageCount = useAppSelector( selectPacksPageSize );
 	useEffect( () => {
 		_id &&
 		dispatch(
@@ -59,7 +59,7 @@ function Profile() {
 					<div className={ s.table }>
 						<DenseTable/>
 						<div className={ s.wrapBottom }>
-							<PaginationSize/>
+							<PaginationPacksContainer/>
 						</div>
 					</div>
 				</div>

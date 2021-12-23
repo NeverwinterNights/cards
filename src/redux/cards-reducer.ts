@@ -1,5 +1,7 @@
+import axios from 'axios';
 import { cardsApi, getCardsPayloadType } from '../api/api';
 import { AppThunk } from './store';
+import { clearAuthData } from './authReducer';
 
 
 const initialState: cardsUserType = {
@@ -7,10 +9,9 @@ const initialState: cardsUserType = {
 	cardsTotalCount: 0,
 	maxGrade: 0,
 	minGrade: 0,
-	page: 0,
-	pageCount: 0,
+	page: 1,
+	pageCount: 4,
 	packUserId: '',
-	rangeCards: [0, 50],
 };
 
 export type cardsUserType = {
@@ -21,7 +22,6 @@ export type cardsUserType = {
 	page: number
 	pageCount: number
 	packUserId: string
-	rangeCards: number | number[]
 }
 
 export type cardsType = {
@@ -39,32 +39,59 @@ export type cardsType = {
 	_id: string
 }
 
-export  type ActionCardsType = ReturnType<typeof AddCardsAC> | ReturnType<typeof SetRangeCardsAC>
-
 
 export const cardsReducer = (state = initialState, action: ActionCardsType): cardsUserType => {
 	switch (action.type) {
 		case 'ADD_CARDS':
 			return { ...state, cards: action.cards };
-		case 'SET_CARDS_RANGE':
-			return { ...state, rangeCards: action.range };
-
+		case 'SET_CARDS_PAGE':
+			return { ...state, page: action.page };
+		case 'SET_CARDS_PAGE_COUNT':
+			return { ...state, pageCount: action.pageCount };
+		case 'SET_CARDS_STATE':
+			return action.state;
 		default:
 			return state;
 	}
 };
 
+export  type ActionCardsType = AddCardsActionType
+	| setCardsStateActionType
+	| setCardsPageActionType
+	| setCardsPageCountActionType
+
+
+type AddCardsActionType = ReturnType<typeof AddCardsAC>
+type setCardsStateActionType = ReturnType<typeof setCardsState>
+type setCardsPageActionType = ReturnType<typeof setCardsPage>
+type setCardsPageCountActionType = ReturnType<typeof setCardsPageCount>
+
 export const AddCardsAC = (cards: Array<cardsType>) => ( { type: 'ADD_CARDS', cards } as const );
-export const SetRangeCardsAC = (range: number | number[]) => ( { type: 'SET_CARDS_RANGE', range } as const );
+export const setCardsPage = (page: number) => ( { type: 'SET_CARDS_PAGE', page } as const );
+export const setCardsPageCount = (pageCount: number) => ( { type: 'SET_CARDS_PAGE_COUNT', pageCount } as const );
+export const setCardsState = (state: cardsUserType) => ( { type: 'SET_CARDS_STATE', state } as const );
 
 export const getCards = (payload: getCardsPayloadType): AppThunk => async dispatch => {
 	try {
 		const { data } = await cardsApi.getCards( payload );
-		dispatch( AddCardsAC( data.cards ) );
+		dispatch( setCardsState( data ) );
 
 	} catch (err) {
 		console.log( err );
 	}
+};
+
+export const getCards2 = (payload: getCardsPayloadType): AppThunk => (dispatch, getState) => {
+	const { page, pageCount } = getState().cardsReducer;
+	cardsApi.getCards( { page, pageCount, ...payload } )
+		.then( (res) => {
+			dispatch( setCardsState( res.data ) );
+		} )
+		.catch( (e) => {
+			if (axios.isAxiosError( e ) && e.response && e.response.status === 401) {
+				dispatch( clearAuthData() );
+			}
+		} );
 };
 
 export const CreateCardTC = (payload: getCardsPayloadType): AppThunk => async dispatch => {
