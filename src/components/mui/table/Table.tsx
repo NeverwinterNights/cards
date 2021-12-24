@@ -51,7 +51,7 @@ export default function DenseTable() {
 			<TableCell align='right'>{new Date(m.updated).toLocaleDateString()}</TableCell>
 			<TableCell align='right'>{new Date(m.created).toLocaleDateString()}</TableCell>
 			<TableCell align='right'>
-				<ButtonForTable packId={ m._id } ownerId={ m.user_id } callBack={() =>{}} />
+				<ButtonForTable packId={ m._id } ownerId={ m.user_id }  m={m} />
 			</TableCell>
 		</StyledTableRow>));
 

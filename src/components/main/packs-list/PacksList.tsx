@@ -9,7 +9,7 @@ import PaginationSize from '../../mui/pagination/Pagination';
 import {ToggleOwnerPacksShowButtons} from './buttons/ToggleOwnerPacksShowButtons';
 import {useAppSelector} from '../../../redux/store';
 import {selectPageNumber, selectPageSize} from '../../../assets/selectors/authSelectors';
-import {createPack, getPacks} from '../../../redux/packs-reducer';
+import {createPack, getPacks, packType} from '../../../redux/packs-reducer';
 import {cardsApi} from "../../../api/api";
 
 

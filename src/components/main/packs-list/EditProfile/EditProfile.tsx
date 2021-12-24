@@ -19,6 +19,7 @@ export const EditProfile = () => {
 		navigate( '/profile' );
 	};
 
+
 	return (
 		<form onSubmit={ clickHandler }>
 			<SuperTextField type={ 'Nickname' } value={ name } callback={ setName }/>
