@@ -22,7 +22,7 @@ export default function RangeSlider() {
 
 	useEffect(() => {
 		dispatch(SetRangeCardsAC(value[0], value[1]));
-	});
+	},[value]);
 
 
 	return (
