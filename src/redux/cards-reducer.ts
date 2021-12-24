@@ -50,6 +50,9 @@ export const cardsReducer = (state = initialState, action: ActionCardsType): car
 			return { ...state, pageCount: action.pageCount };
 		case 'SET_CARDS_STATE':
 			return action.state;
+		case 'SET_NEW_RANGE': {
+			return {...state, minGrade: action.minGrade, maxGrade: action.maxGrade}
+		}
 		default:
 			return state;
 	}
@@ -59,67 +62,84 @@ export  type ActionCardsType = AddCardsActionType
 	| setCardsStateActionType
 	| setCardsPageActionType
 	| setCardsPageCountActionType
+	| setRangeActionType
 
 
 type AddCardsActionType = ReturnType<typeof AddCardsAC>
 type setCardsStateActionType = ReturnType<typeof setCardsState>
 type setCardsPageActionType = ReturnType<typeof setCardsPage>
 type setCardsPageCountActionType = ReturnType<typeof setCardsPageCount>
+type setRangeActionType = ReturnType<typeof SetRangeCardsAC>
 
-export const AddCardsAC = (cards: Array<cardsType>) => ( { type: 'ADD_CARDS', cards } as const );
-export const setCardsPage = (page: number) => ( { type: 'SET_CARDS_PAGE', page } as const );
-export const setCardsPageCount = (pageCount: number) => ( { type: 'SET_CARDS_PAGE_COUNT', pageCount } as const );
-export const setCardsState = (state: cardsUserType) => ( { type: 'SET_CARDS_STATE', state } as const );
+export const AddCardsAC = (cards: Array<cardsType>) => ({
+	type: 'ADD_CARDS',
+	cards,
+} as const);
+export const setCardsPage = (page: number) => ({ type: 'SET_CARDS_PAGE', page } as const);
+export const setCardsPageCount = (pageCount: number) => ({
+	type: 'SET_CARDS_PAGE_COUNT',
+	pageCount,
+} as const);
+export const setCardsState = (state: cardsUserType) => ({
+	type: 'SET_CARDS_STATE',
+	state,
+} as const);
+export const SetRangeCardsAC = (minGrade: number, maxGrade: number) => ({
+	type: 'SET_NEW_RANGE',
+	minGrade,
+	maxGrade
+} as const);
+
 
 export const getCards = (payload: getCardsPayloadType): AppThunk => async dispatch => {
 	try {
-		const { data } = await cardsApi.getCards( payload );
-		dispatch( setCardsState( data ) );
+		const { data } = await cardsApi.getCards(payload);
+		dispatch(setCardsState(data));
 
 	} catch (err) {
-		console.log( err );
+		console.log(err);
 	}
 };
 
 export const getCards2 = (payload: getCardsPayloadType): AppThunk => (dispatch, getState) => {
 	const { page, pageCount } = getState().cardsReducer;
-	cardsApi.getCards( { page, pageCount, ...payload } )
-		.then( (res) => {
-			dispatch( setCardsState( res.data ) );
-		} )
-		.catch( (e) => {
-			if (axios.isAxiosError( e ) && e.response && e.response.status === 401) {
-				dispatch( clearAuthData() );
+	cardsApi.getCards({ page, pageCount, ...payload })
+		.then((res) => {
+			dispatch(setCardsState(res.data));
+		})
+		.catch((e) => {
+			if (axios.isAxiosError(e) && e.response && e.response.status === 401) {
+				dispatch(clearAuthData());
 			}
-		} );
+		});
 };
 
 export const CreateCardTC = (payload: getCardsPayloadType): AppThunk => async dispatch => {
 	try {
-		const { data } = await cardsApi.createCard( payload );
-		dispatch( AddCardsAC( data.cards ) );
+		const { data } = await cardsApi.createCard(payload);
+		dispatch(AddCardsAC(data.cards));
 	} catch (err) {
-		console.log( err );
+		console.log(err);
 	}
 };
 
 export const DeleteCardTC = (cardID: string, cardsPack_id: string): AppThunk => async dispatch => {
 	try {
-		await cardsApi.deleteCard( cardID );
-		dispatch( getCards( { cardsPack_id } ) );
+		await cardsApi.deleteCard(cardID);
+		dispatch(getCards({ cardsPack_id }));
 	} catch (err) {
-		console.log( err );
+		console.log(err);
 	}
 };
 
 export const UpdateCardTC = (payload: cardsType): AppThunk => async (dispatch, getState) => {
-	const card = getState().cardsReducer.cards.find( item => item._id === payload._id );
+	const card = getState().cardsReducer.cards.find(item => item._id === payload._id);
 	const updateCard = { ...card, ...payload };
 	try {
-		const { data } = await cardsApi.updatePack( updateCard );
-		dispatch( AddCardsAC( data.cards ) );
+		const { data } = await cardsApi.updatePack(updateCard);
+		dispatch(AddCardsAC(data.cards));
 	} catch (err) {
-		console.log( err );
+		console.log(err);
 	}
 };
 
