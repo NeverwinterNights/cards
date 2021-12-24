@@ -112,12 +112,10 @@ export const DeleteCardTC = (cardID: string, cardsPack_id: string): AppThunk => 
 	}
 };
 
-export const UpdateCardTC = (payload: cardsType): AppThunk => async (dispatch, getState) => {
-	const card = getState().cardsReducer.cards.find( item => item._id === payload._id );
-	const updateCard = { ...card, ...payload };
+export const UpdateCardTC = (payload: cardsType): AppThunk => async (dispatch) => {
 	try {
-		const { data } = await cardsApi.updatePack( updateCard );
-		dispatch( AddCardsAC( data.cards ) );
+		await cardsApi.updateCard( payload );
+		dispatch( getCards( { cardsPack_id: payload.cardsPack_id } ) );
 	} catch (err) {
 		console.log( err );
 	}
