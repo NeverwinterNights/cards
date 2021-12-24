@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
 import { useDispatch } from 'react-redux';
-import { useAppSelector } from '../../../redux/store';
 import { SetRangeCardsAC } from '../../../redux/cards-reducer';
 
 function valuetext(value: number) {
@@ -10,12 +9,8 @@ function valuetext(value: number) {
 }
 
 
-
-
-
-
 export default function RangeSlider() {
-	 const dispatch = useDispatch();
+	const dispatch = useDispatch();
 
 
 	const [value, setValue] = React.useState<number[]>([0, 100]);
@@ -27,8 +22,7 @@ export default function RangeSlider() {
 
 	useEffect(() => {
 		dispatch(SetRangeCardsAC(value[0], value[1]));
-	}, );
-
+	});
 
 
 	return (
