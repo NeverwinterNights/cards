@@ -50,9 +50,7 @@ export const cardsReducer = (state = initialState, action: ActionCardsType): car
 			return { ...state, pageCount: action.pageCount };
 		case 'SET_CARDS_STATE':
 			return action.state;
-		case 'SET_NEW_RANGE': {
-			return {...state, minGrade: action.minGrade, maxGrade: action.maxGrade}
-		}
+
 		default:
 			return state;
 	}
@@ -62,14 +60,14 @@ export  type ActionCardsType = AddCardsActionType
 	| setCardsStateActionType
 	| setCardsPageActionType
 	| setCardsPageCountActionType
-	| setRangeActionType
+
 
 
 type AddCardsActionType = ReturnType<typeof AddCardsAC>
 type setCardsStateActionType = ReturnType<typeof setCardsState>
 type setCardsPageActionType = ReturnType<typeof setCardsPage>
 type setCardsPageCountActionType = ReturnType<typeof setCardsPageCount>
-type setRangeActionType = ReturnType<typeof SetRangeCardsAC>
+
 
 export const AddCardsAC = (cards: Array<cardsType>) => ({
 	type: 'ADD_CARDS',
@@ -84,11 +82,7 @@ export const setCardsState = (state: cardsUserType) => ({
 	type: 'SET_CARDS_STATE',
 	state,
 } as const);
-export const SetRangeCardsAC = (minGrade: number, maxGrade: number) => ({
-	type: 'SET_NEW_RANGE',
-	minGrade,
-	maxGrade
-} as const);
+
 
 
 export const getCards = (payload: getCardsPayloadType): AppThunk => async dispatch => {
