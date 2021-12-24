@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -11,13 +11,15 @@ import { styled } from '@mui/material/styles';
 
 import s from './TableListCard.module.scss';
 import { useAppSelector } from '../../../redux/store';
-import { selectAutorisedUserId, selectCards } from '../../../assets/selectors/authSelectors';
+import { selectAutorisedUserId, selectCards, selectCurrentPackId } from '../../../assets/selectors/authSelectors';
 import { CustomizedRating } from '../rating/Rating';
 import { cutDate } from '../table/Table';
 import { ActionButton } from '../../common/button/ActionButton';
-import { cardsType, DeleteCardTC, UpdateCardTC } from '../../../redux/cards-reducer';
+import { cardsType, DeleteCardTC, getCards, UpdateCardTC } from '../../../redux/cards-reducer';
 import { CardInfo, confirmPayloadType } from '../../main/packs-list/CardInfo/CardInfo';
 
+
+type  sortDirectionsType = 'question' | 'answer' | 'updated' | 'grade';
 
 const StyledTableRow = styled( TableRow )( ({ theme }) => ( {
 	'&:nth-of-type(even)': {
@@ -35,9 +37,14 @@ const StyledTableRow = styled( TableRow )( ({ theme }) => ( {
 export function DenseTableList() {
 	const cards = useAppSelector( selectCards );
 	const autorisedUserId = useAppSelector( selectAutorisedUserId );
+	const cardsPack_id = useAppSelector( selectCurrentPackId );
 	const dispatch = useDispatch();
 	const [editMode, setEditMode] = useState( false );
 	const [editableCard, setEditableCard] = useState<cardsType | null>( null );
+
+
+	const [sortField, setSortField] = useState( 'updated' );
+	const [sortDirection, setSortDirection] = useState<0 | 1>( 0 );
 
 	const rows = cards.map( (m) => {
 		const onDeleteClickHandler = () =>
@@ -80,6 +87,25 @@ export function DenseTableList() {
 		setEditMode( false );
 	};
 
+	const toggleDirection = () => {
+		setSortDirection( sortDirection ? 0 : 1 );
+	};
+	const clickHandler = (e: React.SyntheticEvent<{ dataset: {} }>) => {
+		// @ts-ignore
+		const field = e.target.dataset.sortField;
+		if (!field) return;
+		if (field === sortField) {
+			toggleDirection();
+			return;
+		}
+		setSortField( field );
+		setSortDirection( 0 );
+	};
+
+	useEffect( () => {
+		cardsPack_id
+		&& dispatch( getCards( { cardsPack_id, sortCards: sortDirection + sortField } ) );
+	}, [sortField, sortDirection] );
 	return (
 		<>
 			{ editMode && (
@@ -91,11 +117,11 @@ export function DenseTableList() {
 			<TableContainer component={ Paper }>
 				<Table sx={ { minWidth: 650 } } size='small' aria-label='a dense table'>
 					<TableHead className={ s.tableHead }>
-						<StyledTableRow>
-							<TableCell>Question</TableCell>
-							<TableCell align='right'>Answer</TableCell>
-							<TableCell align='right'>Last Updated</TableCell>
-							<TableCell align='right'>Grade</TableCell>
+						<StyledTableRow onClick={ clickHandler }>
+							<TableCell data-sort-field='question'>Question</TableCell>
+							<TableCell align='right' data-sort-field='answer'>Answer</TableCell>
+							<TableCell align='right' data-sort-field='updated'>Last Updated</TableCell>
+							<TableCell align='right' data-sort-field='grade'>Grade</TableCell>
 							<TableCell align='right'>Actions</TableCell>
 						</StyledTableRow>
 					</TableHead>

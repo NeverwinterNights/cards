@@ -155,7 +155,7 @@ type domainCardType = {
 	__v: number
 }
 // объект с массивом карточек и прочей инфой
-type getCardsResponseType = {
+export type getCardsResponseType = {
 	cards: domainCardType[]
 	cardsTotalCount: number
 	maxGrade: number
