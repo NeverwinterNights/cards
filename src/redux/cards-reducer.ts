@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { cardsApi, createCardParamsType, getCardsPayloadType, getCardsResponseType } from '../api/api';
+import { cardsApi, getCardsPayloadType, getCardsResponseType } from '../api/api';
 import { AppThunk } from './store';
 import { clearAuthData } from './authReducer';
 
@@ -54,6 +54,10 @@ export const cardsReducer = (state = initialState, action: ActionCardsType): car
 			return { ...state, ...action.state };
 		case 'SET_CARDS_SORT':
 			return { ...state, sortCards: action.sortCards };
+			return action.state;
+		case 'SET_NEW_RANGE': {
+			return {...state, minGrade: action.minGrade, maxGrade: action.maxGrade}
+		}
 		default:
 			return state;
 	}
@@ -64,6 +68,7 @@ export  type ActionCardsType = AddCardsActionType
 	| setCardsPageActionType
 	| setCardsPageCountActionType
 	| setCardsSortActionType
+	| setRangeActionType
 
 
 type AddCardsActionType = ReturnType<typeof AddCardsAC>
@@ -71,22 +76,13 @@ type setCardsStateActionType = ReturnType<typeof setCardsState>
 type setCardsPageActionType = ReturnType<typeof setCardsPage>
 type setCardsPageCountActionType = ReturnType<typeof setCardsPageCount>
 type setCardsSortActionType = ReturnType<typeof setCardsSort>
+type setRangeActionType = ReturnType<typeof SetRangeCardsAC>
 
 export const AddCardsAC = (cards: Array<cardsType>) => ( { type: 'ADD_CARDS', cards } as const );
 export const setCardsPage = (page: number) => ( { type: 'SET_CARDS_PAGE', page } as const );
 export const setCardsPageCount = (pageCount: number) => ( { type: 'SET_CARDS_PAGE_COUNT', pageCount } as const );
 export const setCardsState = (state: getCardsResponseType) => ( { type: 'SET_CARDS_STATE', state } as const );
 export const setCardsSort = (sortCards: string) => ( { type: 'SET_CARDS_SORT', sortCards } as const );
-
-// export const getCards = (payload: getCardsPayloadType): AppThunk => async dispatch => {
-// 	try {
-// 		const { data } = await cardsApi.getCards( payload );
-// 		dispatch( setCardsState( data ) );
-//
-// 	} catch (err) {
-// 		console.log( err );
-// 	}
-// };
 
 export const getCards = (payload: getCardsPayloadType): AppThunk => (dispatch, getState) => {
 	const { page, pageCount } = getState().cardsReducer;
@@ -101,6 +97,7 @@ export const getCards = (payload: getCardsPayloadType): AppThunk => (dispatch, g
 		} );
 };
 
+
 export const CreateCardTC = (payload: createCardParamsType): AppThunk => async dispatch => {
 	try {
 		await cardsApi.createCard( payload );
@@ -112,10 +109,10 @@ export const CreateCardTC = (payload: createCardParamsType): AppThunk => async d
 
 export const DeleteCardTC = (cardID: string, cardsPack_id: string): AppThunk => async dispatch => {
 	try {
-		await cardsApi.deleteCard( cardID );
-		dispatch( getCards( { cardsPack_id } ) );
+		await cardsApi.deleteCard(cardID);
+		dispatch(getCards({ cardsPack_id }));
 	} catch (err) {
-		console.log( err );
+		console.log(err);
 	}
 };
 
@@ -124,7 +121,7 @@ export const UpdateCardTC = (payload: cardsType): AppThunk => async (dispatch) =
 		await cardsApi.updateCard( payload );
 		dispatch( getCards( { cardsPack_id: payload.cardsPack_id } ) );
 	} catch (err) {
-		console.log( err );
+		console.log(err);
 	}
 };
 
