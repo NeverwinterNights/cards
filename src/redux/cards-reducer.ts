@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { cardsApi, getCardsPayloadType, getCardsResponseType } from '../api/api';
+import { cardsApi, createCardParamsType, getCardsPayloadType, getCardsResponseType } from '../api/api';
 import { AppThunk } from './store';
 import { clearAuthData } from './authReducer';
 
@@ -54,7 +54,6 @@ export const cardsReducer = (state = initialState, action: ActionCardsType): car
 			return { ...state, ...action.state };
 		case 'SET_CARDS_SORT':
 			return { ...state, sortCards: action.sortCards };
-			return action.state;
 		case 'SET_NEW_RANGE': {
 			return {...state, minGrade: action.minGrade, maxGrade: action.maxGrade}
 		}
@@ -83,9 +82,14 @@ export const setCardsPage = (page: number) => ( { type: 'SET_CARDS_PAGE', page }
 export const setCardsPageCount = (pageCount: number) => ( { type: 'SET_CARDS_PAGE_COUNT', pageCount } as const );
 export const setCardsState = (state: getCardsResponseType) => ( { type: 'SET_CARDS_STATE', state } as const );
 export const setCardsSort = (sortCards: string) => ( { type: 'SET_CARDS_SORT', sortCards } as const );
+export const SetRangeCardsAC = (minGrade: number, maxGrade: number) => ({
+	type: 'SET_NEW_RANGE',
+	minGrade,
+	maxGrade
+} as const);
 
 export const getCards = (payload: getCardsPayloadType): AppThunk => (dispatch, getState) => {
-	const { page, pageCount } = getState().cardsReducer;
+	const { page, pageCount,  } = getState().cardsReducer;
 	cardsApi.getCards( { page, pageCount, ...payload } )
 		.then( (res) => {
 			dispatch( setCardsState( res.data ) );
