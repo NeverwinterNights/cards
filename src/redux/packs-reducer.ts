@@ -36,7 +36,6 @@ const initialState = {
 };
 
 export const packsReducer = (state = initialState, action: ActionsType): PacksReducerStateType => {
-    debugger
     switch (action.type) {
         case 'PACKS/SET-PACKS': {
             return {...state, ...action.payload};
@@ -74,9 +73,12 @@ export type setIsOwnerPacksShowActionType = ReturnType<typeof setCurrentUser>
 type ActionsType = setPacksActionType | setPageActionType | setPageCountActionType | setIsOwnerPacksShowActionType
 
 export const getPacks = (payload?: getPacksPayloadType): AppThunk => (dispatch, getState) => {
+    console.log(getState().packsReducer)
     const {page, pageCount, maxCardsCount, minCardsCount} = getState().packsReducer;
-    cardsApi.getPacks({min:minCardsCount, max: maxCardsCount, page, pageCount, ...payload})
+    console.log(maxCardsCount, minCardsCount)
+    cardsApi.getPacks({min: minCardsCount, max: maxCardsCount, page, pageCount, ...payload})
         .then((res) => {
+            console.log(res.data)
             dispatch(setPacks(res.data));
         })
         .catch((e) => {
@@ -96,7 +98,7 @@ export const deletePackTC = (idPack: string, user_id?: string): AppThunk => asyn
         }
     }
 };
-export const updatePackTC = (payload: packType, newName: string, user_id?: string,): AppThunk => async (dispatch, getState: () => RootState) => {
+export const updatePackTC = (payload: packType, newName: string, page: number, pageCount: number, user_id?: string,): AppThunk => async (dispatch, getState: () => RootState) => {
     try {
         const pack = getState().packsReducer.cardPacks.find(item => item._id === payload._id);
         if (!pack) {
@@ -104,7 +106,7 @@ export const updatePackTC = (payload: packType, newName: string, user_id?: strin
         }
         const updatePack = {...pack, ...payload, name: newName};
         await cardsApi.updatePack(updatePack);
-        dispatch(getPacks({user_id}));
+        dispatch(getPacks({user_id, page, pageCount}));
     } catch (e) {
         if (axios.isAxiosError(e) && e.response) {
             console.log(e.response.data.error);

@@ -15,6 +15,7 @@ export const EditProfile = () => {
 	const navigate = useNavigate();
 	const clickHandler: FormEventHandler<HTMLFormElement> = async e => {
 		e.preventDefault();
+
 		await dispatch( updateProfile( { name } ) );
 		navigate( '/profile' );
 	};

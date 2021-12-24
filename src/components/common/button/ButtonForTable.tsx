@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {TextField} from "@mui/material";
+import {useParams} from "react-router-dom";
 
 import s from './ButtonForTable.module.scss';
 import {useAppSelector} from '../../../redux/store';
-import {selectAutorisedUserId} from '../../../assets/selectors/authSelectors';
+import {selectAutorisedUserId, selectPageNumber, selectPageSize} from '../../../assets/selectors/authSelectors';
 import {deletePackTC, packType, updatePackTC} from '../../../redux/packs-reducer';
 
 
@@ -21,13 +22,17 @@ function ButtonForTable({
                         }: ButtonForTablePropsType) {
     const autorisedUserId = useAppSelector(selectAutorisedUserId);
     const dispatch = useDispatch();
+    const page = useAppSelector(selectPageNumber);
+    const pageCount = useAppSelector(selectPageSize);
     const [isEdit, setIsEdit] = useState<boolean>(false)
     const [value, setValue] = useState<string>('')
+    const {currentUserId} = useParams();
     const deleteHandler = () => {
         dispatch(deletePackTC(packId, ownerId));
     };
     const setNewName = () => {
-        dispatch(updatePackTC(m, value, packId))
+        dispatch(updatePackTC(m, value, page, pageCount, currentUserId))
+        setIsEdit(false)
     }
 
     return (
