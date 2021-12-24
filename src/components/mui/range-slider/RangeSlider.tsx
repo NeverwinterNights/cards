@@ -29,9 +29,7 @@ export default function RangeSlider() {
 		dispatch(SetRangeCardsAC(value[0], value[1]));
 	}, );
 
-	const rangeValue1 = useAppSelector<number>(
-		(state) => state.cardsReducer.minGrade,
-	);
+
 
 	return (
 		<Box sx={{ width: 196 }}>
