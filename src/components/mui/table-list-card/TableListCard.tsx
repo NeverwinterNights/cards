@@ -22,14 +22,22 @@ import {
 import { CustomizedRating } from '../rating/Rating';
 import { cutDate } from '../table/Table';
 import { ActionButton } from '../../common/button/ActionButton';
-import { cardsType, DeleteCardTC, getCards, setCardsSort, UpdateCardTC } from '../../../redux/cards-reducer';
-import { CardInfo, confirmPayloadType } from '../../main/packs-list/CardInfo/CardInfo';
+import {
+	cardsType,
+	DeleteCardTC,
+	getCards,
+	setCardsSort,
+	UpdateCardTC,
+} from '../../../redux/cards-reducer';
+import {
+	CardInfo,
+	confirmPayloadType,
+} from '../../main/packs-list/CardInfo/CardInfo';
 import arrow from '../../../assets/images/main/sortArrow.svg';
-
 
 type sortDirectionsType = 'question' | 'answer' | 'updated' | 'grade';
 
-const StyledTableRow = styled( TableRow )( ({ theme }) => ( {
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
 	'&:nth-of-type(even)': {
 		backgroundColor: theme.palette.action.hover,
 	},
@@ -40,44 +48,50 @@ const StyledTableRow = styled( TableRow )( ({ theme }) => ( {
 	'& td': {
 		padding: 16,
 	},
-} ) );
+}));
 
 export function DenseTableList() {
-	const cards = useAppSelector( selectCards );
-	const autorisedUserId = useAppSelector( selectAutorisedUserId );
-	const cardsPack_id = useAppSelector( selectCurrentPackId );
-	const page = useAppSelector( selectCardsPageNumber );
-	const pageCount = useAppSelector( selectCardsPageSize );
+	const cards = useAppSelector(selectCards);
+	const autorisedUserId = useAppSelector(selectAutorisedUserId);
+	const cardsPack_id = useAppSelector(selectCurrentPackId);
+	const page = useAppSelector(selectCardsPageNumber);
+	const pageCount = useAppSelector(selectCardsPageSize);
 	const dispatch = useDispatch();
-	const [editMode, setEditMode] = useState( false );
-	const [editableCard, setEditableCard] = useState<cardsType | null>( null );
+	const [editMode, setEditMode] = useState(false);
+	const [editableCard, setEditableCard] = useState<cardsType | null>(null);
 
-	const sortCards = useAppSelector( selectSortCards );
+	const sortCards = useAppSelector(selectSortCards);
 	const sortDirection = +sortCards[0];
-	const sortField = sortCards.slice( 1 );
+	const sortField = sortCards.slice(1);
 
 	const editCard = (payload: confirmPayloadType) => {
 		editableCard?._id &&
-		dispatch( UpdateCardTC( { ...editableCard, ...payload } ) );
-		setEditMode( false );
+			dispatch(UpdateCardTC({ ...editableCard, ...payload }));
+		setEditMode(false);
 	};
 
-	const clickHandler: MouseEventHandler = e => {
-		const field = ( e.target as unknown as { dataset: { sortField: string } } ).dataset.sortField;
+	const clickHandler: MouseEventHandler = (e) => {
+		const field = (e.target as unknown as { dataset: { sortField: string } })
+			.dataset.sortField;
 		if (!field) return;
 		if (field === sortField) {
-			dispatch(setCardsSort((sortDirection ? 0 : 1) + sortField))
+			dispatch(setCardsSort((sortDirection ? 0 : 1) + sortField));
 			return;
 		}
-		dispatch(setCardsSort(1 + field))
+		dispatch(setCardsSort(1 + field));
 	};
 
-	useEffect( () => {
+	useEffect(() => {
 		cardsPack_id &&
-		dispatch(
-			getCards( { cardsPack_id, page, pageCount, sortCards: sortDirection + sortField } ),
-		);
-	}, [cardsPack_id, page, pageCount, sortField, sortDirection] );
+			dispatch(
+				getCards({
+					cardsPack_id,
+					page,
+					pageCount,
+					sortCards: sortDirection + sortField,
+				}),
+			);
+	}, [cardsPack_id, page, pageCount, sortField, sortDirection]);
 
 	const getArrowStyle = (fieldName: string) => {
 		if (fieldName !== sortField) return { display: 'none' };
@@ -85,90 +99,96 @@ export function DenseTableList() {
 		return {};
 	};
 
-	const rows = cards.map( (m) => {
+	const rows = cards.map((m) => {
 		const onDeleteClickHandler = () =>
-			dispatch( DeleteCardTC( m._id, m.cardsPack_id ) );
+			dispatch(DeleteCardTC(m._id, m.cardsPack_id));
 		const onEditClickHandler = () => {
-			setEditableCard( m );
-			setEditMode( true );
+			setEditableCard(m);
+			setEditMode(true);
 		};
 		return (
 			<StyledTableRow
-				key={ m._id }
-				sx={ { '&:last-child td, &:last-child th': { border: 0 } } }
+				key={m._id}
+				sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
 			>
 				<TableCell component='th' scope='row'>
-					{ m.question }
+					{m.question}
 				</TableCell>
-				<TableCell align='right'>{ m.answer }</TableCell>
-				<TableCell align='right'>{ cutDate( m.updated ) }</TableCell>
+				<TableCell align='right'>{m.answer}</TableCell>
+				<TableCell align='right'>{cutDate(m.updated)}</TableCell>
 				<TableCell align='right'>
-					<CustomizedRating value={ Math.round( m.grade ) }/>
+					<CustomizedRating value={Math.round(m.grade)} />
 				</TableCell>
 				<TableCell align='right'>
-					{ m.user_id === autorisedUserId && (
+					{m.user_id === autorisedUserId && (
 						<>
 							<ActionButton
 								title='Delete'
-								style={ { background: '#f1453d', color: '#fff' } }
-								callBack={ onDeleteClickHandler }
+								style={{ background: '#f1453d', color: '#fff' }}
+								callBack={onDeleteClickHandler}
 							/>
-							<ActionButton title='Edit' callBack={ onEditClickHandler }/>
+							<ActionButton title='Edit' callBack={onEditClickHandler} />
 						</>
-					) }
+					)}
 				</TableCell>
 			</StyledTableRow>
 		);
-	} );
+	});
 
 	return (
 		<>
-			{ editMode && (
+			{editMode && (
 				<CardInfo
-					confirm={ editCard }
-					cancel={ () => setEditMode( false ) }
-					answer={ editableCard?.answer }
-					question={ editableCard?.question }
+					confirm={editCard}
+					cancel={() => setEditMode(false)}
+					answer={editableCard?.answer}
+					question={editableCard?.question}
 				/>
-			) }
-			<TableContainer component={ Paper }>
-				<Table sx={ { minWidth: 650 } } size='small' aria-label='a dense table'>
-					<TableHead className={ s.tableHead }>
-						<StyledTableRow onClick={ clickHandler }>
-							<TableCell data-sort-field='question'>Question
-								<img className={ s.arrow }
-									 style={ getArrowStyle( 'question' ) }
-									 src={ arrow }
-									 alt=''
-								/></TableCell>
+			)}
+			<TableContainer component={Paper}>
+				<Table sx={{ minWidth: 650 }} size='small' aria-label='a dense table'>
+					<TableHead className={s.tableHead}>
+						<StyledTableRow onClick={clickHandler}>
+							<TableCell data-sort-field='question'>
+								Question
+								<img
+									className={s.arrow}
+									style={getArrowStyle('question')}
+									src={arrow}
+									alt=''
+								/>
+							</TableCell>
 							<TableCell align='right' data-sort-field='answer'>
 								Answer
-								<img className={ s.arrow }
-									 style={ getArrowStyle( 'answer' ) }
-									 src={ arrow }
-									 alt=''
+								<img
+									className={s.arrow}
+									style={getArrowStyle('answer')}
+									src={arrow}
+									alt=''
 								/>
 							</TableCell>
 							<TableCell align='right' data-sort-field='updated'>
 								Last Updated
-								<img className={ s.arrow }
-									 style={ getArrowStyle( 'updated' ) }
-									 src={ arrow }
-									 alt=''
+								<img
+									className={s.arrow}
+									style={getArrowStyle('updated')}
+									src={arrow}
+									alt=''
 								/>
 							</TableCell>
 							<TableCell align='right' data-sort-field='grade'>
 								Grade
-								<img className={ s.arrow }
-									 style={ getArrowStyle( 'grade' ) }
-									 src={ arrow }
-									 alt=''
+								<img
+									className={s.arrow}
+									style={getArrowStyle('grade')}
+									src={arrow}
+									alt=''
 								/>
 							</TableCell>
 							<TableCell align='right'>Actions</TableCell>
 						</StyledTableRow>
 					</TableHead>
-					<TableBody className={ s.tableBody }>{ rows }</TableBody>
+					<TableBody className={s.tableBody}>{rows}</TableBody>
 				</Table>
 			</TableContainer>
 		</>
