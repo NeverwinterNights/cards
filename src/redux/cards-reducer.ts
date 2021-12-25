@@ -89,8 +89,8 @@ export const SetRangeCardsAC = (minGrade: number, maxGrade: number) => ({
 } as const);
 
 export const getCards = (payload: getCardsPayloadType): AppThunk => (dispatch, getState) => {
-	const { page, pageCount,  } = getState().cardsReducer;
-	cardsApi.getCards( { page, pageCount, ...payload } )
+	const { page, pageCount, sortCards  } = getState().cardsReducer;
+	cardsApi.getCards( { page, pageCount, sortCards, ...payload } )
 		.then( (res) => {
 			dispatch( setCardsState( res.data ) );
 		} )

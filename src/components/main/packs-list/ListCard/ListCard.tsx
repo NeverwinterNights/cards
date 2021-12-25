@@ -23,8 +23,6 @@ export function CardsList() {
 	const { cardsPack_id } = useParams();
 	const dispatch = useDispatch();
 	const currentPack = useAppSelector(selectCurrentPack);
-	const page = useAppSelector(selectCardsPageNumber);
-	const pageCount = useAppSelector(selectCardsPageSize);
 	const [searchFieldValue, setSearchFieldValue] = useState('');
 	const [addingMode, setAddingMode] = useState(false);
 	const addCard = async (payload: confirmPayloadType) => {
@@ -37,9 +35,6 @@ export function CardsList() {
 		e.preventDefault();
 	};
 
-	useEffect(() => {
-		cardsPack_id && dispatch(getCards({ cardsPack_id, page, pageCount }));
-	}, [cardsPack_id, page, pageCount]);
 	useEffect(
 		() => () => {
 			dispatch(AddCardsAC([]));
