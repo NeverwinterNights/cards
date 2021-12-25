@@ -47,6 +47,9 @@ export const packsReducer = (state = initialState, action: ActionsType): PacksRe
 			return { ...state, pageCount: action.pageCount };
 		case 'PACKS/SET_CURRENT_PACK':
 			return { ...state, currentPack: action.pack };
+		case 'SET_NEW_RANGE': {
+			return {...state, minCardsCount: action.minCardsCount, maxCardsCount: action.maxCardsCount}
+		}
 		default:
 			return state;
 	}
@@ -67,8 +70,13 @@ export const setPacksPageCount = (pageCount: number) => ( {
 export const setCurrentPack = (pack: packType) => ( {
 	type: 'PACKS/SET_CURRENT_PACK', pack,
 } as const );
+export const SetRangeCardsAC = (minCardsCount: number, maxCardsCount: number) => ({
+	type: 'SET_NEW_RANGE',
+	minCardsCount,
+	maxCardsCount
+} as const);
 
-
+type setRangeActionType = ReturnType<typeof SetRangeCardsAC>
 export type setPacksActionType = ReturnType<typeof setPacks>
 export type setPageActionType = ReturnType<typeof setPacksPage>
 export type setPageCountActionType = ReturnType<typeof setPacksPageCount>
@@ -78,6 +86,7 @@ type ActionsType =
 	| setPageActionType
 	| setPageCountActionType
 	| setCurrentPackActionType
+	| setRangeActionType
 
 export const getPacks = (payload?: getPacksPayloadType): AppThunk => (dispatch, getState) => {
 	const { page, pageCount, maxCardsCount, minCardsCount } = getState().packsReducer;

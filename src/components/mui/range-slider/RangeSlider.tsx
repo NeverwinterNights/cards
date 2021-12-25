@@ -2,7 +2,8 @@ import React, { useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
 import { useDispatch } from 'react-redux';
-import { SetRangeCardsAC } from '../../../redux/cards-reducer';
+import { SetRangeCardsAC } from '../../../redux/packs-reducer';
+
 
 function valuetext(value: number) {
 	return `${value}°C`;
@@ -31,8 +32,8 @@ export default function RangeSlider() {
 				style={{ color: '#21268F' }}
 				getAriaLabel={() => 'Temperature range'}
 				value={value}
+				valueLabelDisplay="on"
 				onChange={handleChange}
-				valueLabelDisplay='auto'
 				getAriaValueText={valuetext}
 			/>
 		</Box>
