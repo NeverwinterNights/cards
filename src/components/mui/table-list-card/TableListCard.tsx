@@ -11,17 +11,28 @@ import { styled } from '@mui/material/styles';
 
 import s from './TableListCard.module.scss';
 import { useAppSelector } from '../../../redux/store';
-import { selectAutorisedUserId, selectCards, selectCurrentPackId } from '../../../assets/selectors/authSelectors';
+import {
+	selectAutorisedUserId,
+	selectCards,
+	selectCurrentPackId,
+} from '../../../assets/selectors/authSelectors';
 import { CustomizedRating } from '../rating/Rating';
 import { cutDate } from '../table/Table';
 import { ActionButton } from '../../common/button/ActionButton';
-import { cardsType, DeleteCardTC, getCards, UpdateCardTC } from '../../../redux/cards-reducer';
-import { CardInfo, confirmPayloadType } from '../../main/packs-list/CardInfo/CardInfo';
+import {
+	cardsType,
+	DeleteCardTC,
+	getCards,
+	UpdateCardTC,
+} from '../../../redux/cards-reducer';
+import {
+	CardInfo,
+	confirmPayloadType,
+} from '../../main/packs-list/CardInfo/CardInfo';
 
+type sortDirectionsType = 'question' | 'answer' | 'updated' | 'grade';
 
-type  sortDirectionsType = 'question' | 'answer' | 'updated' | 'grade';
-
-const StyledTableRow = styled( TableRow )( ({ theme }) => ( {
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
 	'&:nth-of-type(even)': {
 		backgroundColor: theme.palette.action.hover,
 	},
@@ -32,63 +43,62 @@ const StyledTableRow = styled( TableRow )( ({ theme }) => ( {
 	'& td': {
 		padding: 16,
 	},
-} ) );
+}));
 
 export function DenseTableList() {
-	const cards = useAppSelector( selectCards );
-	const autorisedUserId = useAppSelector( selectAutorisedUserId );
-	const cardsPack_id = useAppSelector( selectCurrentPackId );
+	const cards = useAppSelector(selectCards);
+	const autorisedUserId = useAppSelector(selectAutorisedUserId);
+	const cardsPack_id = useAppSelector(selectCurrentPackId);
 	const dispatch = useDispatch();
-	const [editMode, setEditMode] = useState( false );
-	const [editableCard, setEditableCard] = useState<cardsType | null>( null );
+	const [editMode, setEditMode] = useState(false);
+	const [editableCard, setEditableCard] = useState<cardsType | null>(null);
 
+	const [sortField, setSortField] = useState('updated');
+	const [sortDirection, setSortDirection] = useState<0 | 1>(0);
 
-	const [sortField, setSortField] = useState( 'updated' );
-	const [sortDirection, setSortDirection] = useState<0 | 1>( 0 );
-
-	const rows = cards.map( (m) => {
+	const rows = cards.map((m) => {
 		const onDeleteClickHandler = () =>
-			dispatch( DeleteCardTC( m._id, m.cardsPack_id ) );
+			dispatch(DeleteCardTC(m._id, m.cardsPack_id));
 		const onEditClickHandler = () => {
-			setEditableCard( m );
-			setEditMode( true );
+			setEditableCard(m);
+			setEditMode(true);
 		};
 		return (
 			<StyledTableRow
-				key={ m._id }
-				sx={ { '&:last-child td, &:last-child th': { border: 0 } } }
+				key={m._id}
+				sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
 			>
 				<TableCell component='th' scope='row'>
-					{ m.question }
+					{m.question}
 				</TableCell>
-				<TableCell align='right'>{ m.answer }</TableCell>
-				<TableCell align='right'>{ cutDate( m.updated ) }</TableCell>
+				<TableCell align='right'>{m.answer}</TableCell>
+				<TableCell align='right'>{cutDate(m.updated)}</TableCell>
 				<TableCell align='right'>
-					<CustomizedRating value={ Math.round( m.grade ) }/>
+					<CustomizedRating value={Math.round(m.grade)} />
 				</TableCell>
 				<TableCell align='right'>
-					{ m.user_id === autorisedUserId && (
+					{m.user_id === autorisedUserId && (
 						<>
 							<ActionButton
 								title='Delete'
-								style={ { background: '#f1453d', color: '#fff' } }
-								callBack={ onDeleteClickHandler }
+								style={{ background: '#f1453d', color: '#fff' }}
+								callBack={onDeleteClickHandler}
 							/>
-							<ActionButton title='Edit' callBack={ onEditClickHandler }/>
+							<ActionButton title='Edit' callBack={onEditClickHandler} />
 						</>
-					) }
+					)}
 				</TableCell>
 			</StyledTableRow>
 		);
-	} );
+	});
 	const editCard = (payload: confirmPayloadType) => {
-		editableCard?._id
-		&& dispatch( UpdateCardTC( { ...editableCard, ...payload } ) );
-		setEditMode( false );
+		editableCard?._id &&
+			dispatch(UpdateCardTC({ ...editableCard, ...payload }));
+		setEditMode(false);
 	};
 
 	const toggleDirection = () => {
-		setSortDirection( sortDirection ? 0 : 1 );
+		setSortDirection(sortDirection ? 0 : 1);
 	};
 	const clickHandler = (e: React.SyntheticEvent<{ dataset: {} }>) => {
 		// @ts-ignore
@@ -98,34 +108,44 @@ export function DenseTableList() {
 			toggleDirection();
 			return;
 		}
-		setSortField( field );
-		setSortDirection( 0 );
+		setSortField(field);
+		setSortDirection(0);
 	};
 
-	useEffect( () => {
-		cardsPack_id
-		&& dispatch( getCards( { cardsPack_id, sortCards: sortDirection + sortField } ) );
-	}, [sortField, sortDirection] );
+	useEffect(() => {
+		cardsPack_id &&
+			dispatch(
+				getCards({ cardsPack_id, sortCards: sortDirection + sortField }),
+			);
+	}, [sortField, sortDirection]);
 	return (
 		<>
-			{ editMode && (
-				<CardInfo confirm={ editCard }
-						  cancel={ () => setEditMode( false ) }
-						  answer={ editableCard?.answer }
-						  question={ editableCard?.question }/>
-			) }
-			<TableContainer component={ Paper }>
-				<Table sx={ { minWidth: 650 } } size='small' aria-label='a dense table'>
-					<TableHead className={ s.tableHead }>
-						<StyledTableRow onClick={ clickHandler }>
+			{editMode && (
+				<CardInfo
+					confirm={editCard}
+					cancel={() => setEditMode(false)}
+					answer={editableCard?.answer}
+					question={editableCard?.question}
+				/>
+			)}
+			<TableContainer component={Paper}>
+				<Table sx={{ minWidth: 650 }} size='small' aria-label='a dense table'>
+					<TableHead className={s.tableHead}>
+						<StyledTableRow onClick={clickHandler}>
 							<TableCell data-sort-field='question'>Question</TableCell>
-							<TableCell align='right' data-sort-field='answer'>Answer</TableCell>
-							<TableCell align='right' data-sort-field='updated'>Last Updated</TableCell>
-							<TableCell align='right' data-sort-field='grade'>Grade</TableCell>
+							<TableCell align='right' data-sort-field='answer'>
+								Answer
+							</TableCell>
+							<TableCell align='right' data-sort-field='updated'>
+								Last Updated
+							</TableCell>
+							<TableCell align='right' data-sort-field='grade'>
+								Grade
+							</TableCell>
 							<TableCell align='right'>Actions</TableCell>
 						</StyledTableRow>
 					</TableHead>
-					<TableBody className={ s.tableBody }>{ rows }</TableBody>
+					<TableBody className={s.tableBody}>{rows}</TableBody>
 				</Table>
 			</TableContainer>
 		</>
