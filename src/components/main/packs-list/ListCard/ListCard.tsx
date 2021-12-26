@@ -8,6 +8,8 @@ import {
 	AddCardsAC,
 	CreateCardTC,
 	getCards,
+	setCardsQuestion,
+	setCardsState,
 } from '../../../../redux/cards-reducer';
 import { useAppSelector } from '../../../../redux/store';
 import {
@@ -33,11 +35,14 @@ export function CardsList() {
 	};
 	const addSearchHandler = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
+		dispatch(setCardsQuestion(searchFieldValue));
+		cardsPack_id && dispatch(getCards({ page: 1, cardsPack_id }));
 	};
 
 	useEffect(
 		() => () => {
 			dispatch(AddCardsAC([]));
+			dispatch(setCardsQuestion(''));
 		},
 		[],
 	);
