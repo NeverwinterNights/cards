@@ -8,13 +8,15 @@ type ActionButtonPropsType = {
     callBack?: () => void;
     style?: CSSProperties;
     addName?: (value: string) => void
+    name?: string
 };
 
 export const ActionButton: FC<ActionButtonPropsType> = ({
                                                             title,
                                                             callBack,
                                                             style,
-                                                            addName
+                                                            addName,
+                                                            name
                                                         }) => {
     const [modal, setModal] = useState<string>('')
     const setModalWindow = (value: string) => {
@@ -30,7 +32,8 @@ export const ActionButton: FC<ActionButtonPropsType> = ({
         }
     }
 
-    if (modal === 'Edit') return <AddNewPack addName={addName} setModal={() => setModal('')}/>
+    if (modal === 'Edit') return <AddNewPack name={name} addName={addName} setModal={() => setModal('')}/>
+
     if (modal === 'Delete') return <DeletePack deleteCallBack={callBack} setModal={() => setModal('')}/>
     return (
         <>

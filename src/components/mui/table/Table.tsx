@@ -83,6 +83,7 @@ export function DenseTable() {
                                 callBack={onDeleteClickHandler}
                             />
                             <ActionButton title='Edit'
+                                          name={m.name}
                                           style={{background: '#f1453d', color: '#fff'}}
                                           addName={onUpdateClickHandler}/>
                         </>
