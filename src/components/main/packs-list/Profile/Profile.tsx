@@ -16,7 +16,6 @@ import {
 import { createPack, getPacks } from '../../../../redux/packs-reducer';
 import { PaginationPacksContainer } from '../../../mui/pagination/PaginationPacksContainer';
 
-
 const defaultAva = 'https://via.placeholder.com/150';
 
 // import ButtonForTable from "./../../../Components/common/button/ButtonForTable";
@@ -33,18 +32,16 @@ function Profile() {
 	const min = useAppSelector(minCardsInPackNumber);
 	const max = useAppSelector(maxCardsInPackNumber);
 
-
 	useEffect(() => {
 		_id &&
-		dispatch(
-			getPacks({
-				user_id: currentUserId ? currentUserId : _id,
-				page,
-				pageCount,
-			}),
-		);
+			dispatch(
+				getPacks({
+					user_id: currentUserId ? currentUserId : _id,
+					page,
+					pageCount,
+				}),
+			);
 	}, [currentUserId, page, pageCount]);
-
 
 	const addNewPackClickHandler = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -53,20 +50,20 @@ function Profile() {
 	};
 	const searching = () => {
 		if (_id) {
-			dispatch(getPacks({
-				user_id: currentUserId ? currentUserId : _id,
-				packName: search,
-				min, // принимает значения для поиска из range slider
-				max // принимает значения для поиска из range slider
-			}));
-
+			dispatch(
+				getPacks({
+					user_id: currentUserId ? currentUserId : _id,
+					packName: search,
+					min, // принимает значения для поиска из range slider
+					max, // принимает значения для поиска из range slider
+				}),
+			);
 		}
 	};
 
 	const handlerSearch = (e: ChangeEvent<HTMLInputElement>) => {
 		setSearch(e.currentTarget.value);
 	};
-
 
 	return (
 		<div>
@@ -76,11 +73,11 @@ function Profile() {
 						<img className={s.img} src={avatar ? avatar : defaultAva} alt='' />
 						<h3 className={s.subtitle}>{name}</h3>
 						{_id === currentUserId ||
-						(!currentUserId && (
-							<Link to={'/edit-profile'}>
-								<button className={s.btnEditProfile}>Edit Profile</button>
-							</Link>
-						))}
+							(!currentUserId && (
+								<Link to={'/edit-profile'}>
+									<button className={s.btnEditProfile}>Edit Profile</button>
+								</Link>
+							))}
 					</div>
 					<div className={s.wrapSlider}>
 						<h3 className={s.subtitleSlid}>Number of cards</h3>

@@ -16,7 +16,6 @@ import {
 import { createPack, getPacks } from '../../../redux/packs-reducer';
 import { PaginationPacksContainer } from '../../mui/pagination/PaginationPacksContainer';
 
-
 function PackList() {
 	const page = useAppSelector(selectPacksPageNumber);
 	const pageCount = useAppSelector(selectPacksPageSize);

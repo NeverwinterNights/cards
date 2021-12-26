@@ -10,28 +10,26 @@ import {
 import { PaginationSize } from './Pagination';
 import { setCardsPage, setCardsPageCount } from '../../../redux/cards-reducer';
 
-
 export function PaginationCardsContainer() {
 	const dispatch = useDispatch();
-	const page = useAppSelector( selectCardsPageNumber );
-	const pageSize = useAppSelector( selectCardsPageSize );
-	const cardsTotalCount = useAppSelector( selectCardsTotalCount );
-	const totalPagesCount = Math.ceil( cardsTotalCount / pageSize );
+	const page = useAppSelector(selectCardsPageNumber);
+	const pageSize = useAppSelector(selectCardsPageSize);
+	const cardsTotalCount = useAppSelector(selectCardsTotalCount);
+	const totalPagesCount = Math.ceil(cardsTotalCount / pageSize);
 	const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
-		dispatch( setCardsPage( value ) );
+		dispatch(setCardsPage(value));
 	};
 	const selectChangeHandler = (e: SelectChangeEvent<number>) => {
-		dispatch( setCardsPageCount( +e.target.value ) );
+		dispatch(setCardsPageCount(+e.target.value));
 	};
 
 	return (
 		<PaginationSize
-			page={ page }
-			pageSize={ pageSize }
-			totalPagesCount={ totalPagesCount }
-			paginationCallback={ handleChange }
-			selectCallback={ selectChangeHandler }
+			page={page}
+			pageSize={pageSize}
+			totalPagesCount={totalPagesCount}
+			paginationCallback={handleChange}
+			selectCallback={selectChangeHandler}
 		/>
-
 	);
 }

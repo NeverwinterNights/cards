@@ -10,33 +10,32 @@ import { selectCurrentPack } from '../../../../assets/selectors/authSelectors';
 import { DenseTableList } from '../../../mui/table-list-card/TableListCard';
 import { PaginationCardsContainer } from '../../../mui/pagination/PaginationCardsContainer';
 
-
 export function CardsList() {
 	const { cardsPack_id } = useParams();
 	const dispatch = useDispatch();
-	const currentPack = useAppSelector( selectCurrentPack );
-	useEffect( () => {
-		cardsPack_id && dispatch( getCards( { cardsPack_id } ) );
+	const currentPack = useAppSelector(selectCurrentPack);
+	useEffect(() => {
+		cardsPack_id && dispatch(getCards({ cardsPack_id }));
 		return () => {
-			dispatch( AddCardsAC( [] ) );
+			dispatch(AddCardsAC([]));
 		};
-	}, [cardsPack_id] );
+	}, [cardsPack_id]);
 	return (
 		<div>
-			<div className={ s.wrapper }>
-				<div className={ s.wrap }>
-					<div className={ s.head }>
-						<Link className={ s.link } to={ `/packs/${ currentPack?.user_id }` }>
-							<img className={ s.img } src={ arrow } alt=''/>
+			<div className={s.wrapper}>
+				<div className={s.wrap}>
+					<div className={s.head}>
+						<Link className={s.link} to={`/packs/${currentPack?.user_id}`}>
+							<img className={s.img} src={arrow} alt='' />
 						</Link>
-						<h2 className={ s.title }>{ currentPack?.name }</h2>
+						<h2 className={s.title}>{currentPack?.name}</h2>
 					</div>
-					<div className={ s.wrapForm }>
-						<input className={ s.input } type='text' placeholder='Search...'/>
+					<div className={s.wrapForm}>
+						<input className={s.input} type='text' placeholder='Search...' />
 					</div>
-					<DenseTableList/>
-					<div className={ s.wrapBottom }>
-						<PaginationCardsContainer/>
+					<DenseTableList />
+					<div className={s.wrapBottom}>
+						<PaginationCardsContainer />
 					</div>
 				</div>
 			</div>
