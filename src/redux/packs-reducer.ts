@@ -34,6 +34,8 @@ const initialState = {
 	token: null as null | string,
 	tokenDeathTime: null as null | number,
 	currentPack: null as null | packType,
+	minRangeSearchSlider: 0 as number,
+	maxRangeSearchSlider: 0 as number,
 };
 
 export const packsReducer = (state = initialState, action: ActionsType): PacksReducerStateType => {
@@ -47,40 +49,47 @@ export const packsReducer = (state = initialState, action: ActionsType): PacksRe
 			return { ...state, pageCount: action.pageCount };
 		case 'PACKS/SET_CURRENT_PACK':
 			return { ...state, currentPack: action.pack };
-		case 'SET_NEW_RANGE': {
-			return {...state, minCardsCount: action.minCardsCount, maxCardsCount: action.maxCardsCount}
+		case 'SET_NEW_SEARCH_RANGE': {
+			return {
+				...state,
+				minRangeSearchSlider: action.minRangeSearchSlider,
+				maxRangeSearchSlider: action.maxRangeSearchSlider,
+			};
 		}
 		default:
 			return state;
 	}
 };
 
-export const setPacks = (payload: getPacksResponseType) => ( {
+export const setPacks = (payload: getPacksResponseType) => ({
 		type: 'PACKS/SET-PACKS',
 		payload,
 	} as const
 );
-export const setPacksPage = (page: number) => ( {
+export const setPacksPage = (page: number) => ({
 	type: 'PACKS/SET_PAGE', page,
-} as const );
-export const setPacksPageCount = (pageCount: number) => ( {
-	type: 'PACKS/SET_PAGE_COUNT', pageCount,
-} as const );
-
-export const setCurrentPack = (pack: packType) => ( {
-	type: 'PACKS/SET_CURRENT_PACK', pack,
-} as const );
-export const SetRangeCardsAC = (minCardsCount: number, maxCardsCount: number) => ({
-	type: 'SET_NEW_RANGE',
-	minCardsCount,
-	maxCardsCount
 } as const);
+export const setPacksPageCount = (pageCount: number) => ({
+	type: 'PACKS/SET_PAGE_COUNT', pageCount,
+} as const);
+
+export const setCurrentPack = (pack: packType) => ({
+	type: 'PACKS/SET_CURRENT_PACK', pack,
+} as const);
+export const SetRangeCardsAC = (minRangeSearchSlider: number, maxRangeSearchSlider: number) => ({
+	type: 'SET_NEW_SEARCH_RANGE',
+	minRangeSearchSlider,
+	maxRangeSearchSlider,
+} as const);
+
 
 type setRangeActionType = ReturnType<typeof SetRangeCardsAC>
 export type setPacksActionType = ReturnType<typeof setPacks>
 export type setPageActionType = ReturnType<typeof setPacksPage>
 export type setPageCountActionType = ReturnType<typeof setPacksPageCount>
 export type setCurrentPackActionType = ReturnType<typeof setCurrentPack>
+// export type SetMaxRangeActionType = ReturnType<typeof SetMaxRangeAC>
+
 type ActionsType =
 	setPacksActionType
 	| setPageActionType
@@ -88,49 +97,55 @@ type ActionsType =
 	| setCurrentPackActionType
 	| setRangeActionType
 
+
 export const getPacks = (payload?: getPacksPayloadType): AppThunk => (dispatch, getState) => {
 	const { page, pageCount, maxCardsCount, minCardsCount } = getState().packsReducer;
-	cardsApi.getPacks( { min: minCardsCount, max: maxCardsCount, page, pageCount, ...payload } )
-		.then( (res) => {
-			dispatch( setPacks( res.data ) );
-		} )
-		.catch( (e) => {
-			if (axios.isAxiosError( e ) && e.response && e.response.status === 401) {
-				dispatch( clearAuthData() );
+	cardsApi.getPacks({
+		min: minCardsCount,
+		max: maxCardsCount,
+		page,
+		pageCount, ...payload,
+	})
+		.then((res) => {
+			dispatch(setPacks(res.data));
+		})
+		.catch((e) => {
+			if (axios.isAxiosError(e) && e.response && e.response.status === 401) {
+				dispatch(clearAuthData());
 			}
-		} );
+		});
 };
 
 export const deletePackTC = (idPack: string, user_id?: string): AppThunk => async (dispatch) => {
 	try {
-		await cardsApi.deletePack( idPack );
-		dispatch( getPacks( { user_id } ) );
+		await cardsApi.deletePack(idPack);
+		dispatch(getPacks({ user_id }));
 	} catch (e) {
-		if (axios.isAxiosError( e ) && e.response) {
-			console.log( e.response.data.error );
+		if (axios.isAxiosError(e) && e.response) {
+			console.log(e.response.data.error);
 		}
 	}
 };
 export const updatePackTC = (payload: packType, user_id?: string): AppThunk => async (dispatch, getState: () => RootState) => {
 	try {
-		const pack = getState().packsReducer.cardPacks.find( item => item._id === payload._id );
+		const pack = getState().packsReducer.cardPacks.find(item => item._id === payload._id);
 		if (!pack) {
-			throw new Error( 'Pack not found in the state' );
+			throw new Error('Pack not found in the state');
 		}
 		const updatePack = { ...pack, ...payload };
-		await cardsApi.updatePack( updatePack );
-		dispatch( getPacks( { user_id } ) );
+		await cardsApi.updatePack(updatePack);
+		dispatch(getPacks({ user_id }));
 	} catch (e) {
-		if (axios.isAxiosError( e ) && e.response) {
-			console.log( e.response.data.error );
+		if (axios.isAxiosError(e) && e.response) {
+			console.log(e.response.data.error);
 		}
 	}
 };
 
 
 export const createPack = (name: string, user_id?: string): AppThunk => (dispatch) => {
-	cardsApi.createPack( { name } )
-		.then( () => {
-			dispatch( getPacks( { user_id } ) );
-		} );
+	cardsApi.createPack({ name })
+		.then(() => {
+			dispatch(getPacks({ user_id }));
+		});
 };

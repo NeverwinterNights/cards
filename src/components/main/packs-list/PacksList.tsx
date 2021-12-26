@@ -8,6 +8,8 @@ import { DenseTable } from '../../mui/table/Table';
 import { ToggleOwnerPacksShowButtons } from './buttons/ToggleOwnerPacksShowButtons';
 import { useAppSelector } from '../../../redux/store';
 import {
+	maxCardsInPackNumber,
+	minCardsInPackNumber,
 	selectPacksPageNumber,
 	selectPacksPageSize,
 } from '../../../assets/selectors/authSelectors';
@@ -20,6 +22,8 @@ function PackList() {
 	const [search, setSearch] = useState<string>('');
 	const dispatch = useDispatch();
 	const { currentUserId } = useParams();
+	const min = useAppSelector(minCardsInPackNumber);
+	const max = useAppSelector(maxCardsInPackNumber);
 	useEffect(() => {
 		dispatch(getPacks({ user_id: currentUserId, page, pageCount }));
 	}, [currentUserId, page, pageCount]);
@@ -35,7 +39,7 @@ function PackList() {
 	};
 
 	const searching = () => {
-		dispatch(getPacks({ user_id: currentUserId, packName: search }));
+		dispatch(getPacks({ user_id: currentUserId, packName: search, min, max }));
 	};
 
 	return (

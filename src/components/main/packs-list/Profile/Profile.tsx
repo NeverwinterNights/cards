@@ -7,6 +7,8 @@ import RangeSlider from '../../../mui/range-slider/RangeSlider';
 import { DenseTable } from '../../../mui/table/Table';
 import { useAppSelector } from '../../../../redux/store';
 import {
+	maxCardsInPackNumber,
+	minCardsInPackNumber,
 	selectLoginData,
 	selectPacksPageNumber,
 	selectPacksPageSize,
@@ -27,6 +29,8 @@ function Profile() {
 
 	const [addPackValue, setAddPackValue] = useState('');
 	const [search, setSearch] = useState<string>('');
+	const min = useAppSelector(minCardsInPackNumber);
+	const max = useAppSelector(maxCardsInPackNumber);
 
 	useEffect(() => {
 		_id &&
@@ -50,6 +54,8 @@ function Profile() {
 				getPacks({
 					user_id: currentUserId ? currentUserId : _id,
 					packName: search,
+					min, // принимает значения для поиска из range slider
+					max, // принимает значения для поиска из range slider
 				}),
 			);
 		}
