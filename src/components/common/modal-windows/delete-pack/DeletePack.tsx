@@ -2,25 +2,32 @@ import React from 'react';
 import s from './DeletePack.module.scss';
 import cross from '../../../../assets/images/modal/cross.png';
 
-function DeletePack() {
-	return (
-		<div className={s.wrapper}>
-			<div className={s.wrap}>
-				<div className={s.header}>
-					<h2 className={s.title}>Delete Pack</h2>
-					<img className={s.img} src={cross} alt='' />
-				</div>
-				<p className={s.text}>
-					Do you really want to remove <strong>Pack Name - Name Pack?</strong>
-					All cards will be excluded from this course.
-				</p>
-				<div className={s.wrapBtn}>
-					<button className={s.btnCancel}>Cancel</button>
-					<button className={s.btnDel}>Delete</button>
-				</div>
-			</div>
-		</div>
-	);
+type DeletePackType = {
+    setModal: () => void
+    deleteCallBack?: () => void
+}
+
+function DeletePack({setModal, deleteCallBack}: DeletePackType) {
+    const deletePack = () => deleteCallBack && deleteCallBack()
+    return (
+        <div className={s.modal} onClick={setModal}>
+            <div className={s.wrapper} onClick={(e) => e.stopPropagation()}>
+                <div className={s.wrap}>
+                    <div className={s.header}>
+                        <h2 className={s.title}>Delete Pack</h2>
+                    </div>
+                    <p className={s.text}>
+                        Do you really want to remove <strong>Pack Name - Name Pack?</strong>
+                        All cards will be excluded from this course.
+                    </p>
+                    <div className={s.wrapBtn}>
+                        <button className={s.btnCancel} onClick={setModal}>Cancel</button>
+                        <button className={s.btnDel} onClick={deletePack}>Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
 }
 
 export default DeletePack;

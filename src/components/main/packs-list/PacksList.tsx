@@ -15,6 +15,7 @@ import {
 } from '../../../assets/selectors/authSelectors';
 import { createPack, getPacks } from '../../../redux/packs-reducer';
 import { PaginationPacksContainer } from '../../mui/pagination/PaginationPacksContainer';
+import AddNewPack from "../../common/modal-windows/add-new-pack/AddNewPack";
 
 function PackList() {
 	const page = useAppSelector(selectPacksPageNumber);
