@@ -28,3 +28,15 @@ export const selectCards = (state: RootState): cardsType[] => state.cardsReducer
 export const selectCardsPageNumber = (state: RootState): number => state.cardsReducer.page;
 export const selectCardsPageSize = (state: RootState): number => state.cardsReducer.pageCount;
 export const selectCardsTotalCount = (state: RootState): number => state.cardsReducer.cardsTotalCount;
+
+
+// search selectors
+
+export const minCardsInPackNumber = (state: RootState): number => state.packsReducer.minRangeSearchSlider;
+export const maxCardsInPackNumber = (state: RootState): number => state.packsReducer.maxRangeSearchSlider;
+export const maxCardsRangeInPackNumber = (state: RootState): number => state.packsReducer.maxCardsCount;
+
+
+
+
+
