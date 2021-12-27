@@ -30,7 +30,6 @@ import {
 
 type sortDirectionsType = 'name' | 'cards' | 'updated' | 'created';
 
-
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
 	'&:nth-of-type(odd)': {
 		backgroundColor: theme.palette.action.hover,
@@ -46,12 +45,11 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 export const cutDate = (date: string) => new Date(date).toLocaleDateString();
 
-
 type ProfilePropsType = {
-	collier?: string
-}
+	user_id?: string;
+};
 
-export function DenseTable(props: ProfilePropsType) {
+export function DenseTable({ user_id }: ProfilePropsType) {
 	const packs = useAppSelector<packType[]>(
 		(state) => state.packsReducer.cardPacks,
 	);
@@ -64,16 +62,18 @@ export function DenseTable(props: ProfilePropsType) {
 	const sortDirection = +sortCards[0];
 	const sortField = sortCards.slice(1);
 
-
 	const rows = packs.map((m) => {
 		const linkClickHandler = () => {
 			dispatch(setCurrentPack(m));
 		};
 		const onDeleteClickHandler = () => dispatch(deletePackTC(m._id, m.user_id));
-		const onUpdateClickHandler = (text: string) => dispatch(updatePackTC({
-			...m,
-			name: text,
-		}));
+		const onUpdateClickHandler = (text: string) =>
+			dispatch(
+				updatePackTC({
+					...m,
+					name: text,
+				}),
+			);
 
 		return (
 			<StyledTableRow
@@ -96,9 +96,11 @@ export function DenseTable(props: ProfilePropsType) {
 								style={{ background: '#f1453d', color: '#fff' }}
 								callBack={onDeleteClickHandler}
 							/>
-							<ActionButton title='Edit'
-														style={{ background: '#f1453d', color: '#fff' }}
-														addName={onUpdateClickHandler} />
+							<ActionButton
+								title='Edit'
+								style={{ background: '#f1453d', color: '#fff' }}
+								addName={onUpdateClickHandler}
+							/>
 						</>
 					)}
 					<ActionButton title='Learn' />
@@ -108,13 +110,13 @@ export function DenseTable(props: ProfilePropsType) {
 	});
 
 	useEffect(() => {
-		console.log(props.collier, currentUserId);
-		dispatch(getPacks({
-			user_id: props.collier ? props.collier : currentUserId,
-			sortPacks: sortDirection + sortField,
-		}));
+		dispatch(
+			getPacks({
+				user_id: user_id ? user_id : currentUserId,
+				sortPacks: sortDirection + sortField,
+			}),
+		);
 	}, [currentUserId, sortDirection, sortField]);
-
 
 	const clickHandler: MouseEventHandler = (e) => {
 		const field = (e.target as unknown as { dataset: { sortField: string } })
@@ -148,7 +150,8 @@ export function DenseTable(props: ProfilePropsType) {
 							/>
 						</TableCell>
 
-						<TableCell align='right' data-sort-field='cards'>Cards
+						<TableCell align='right' data-sort-field='cards'>
+							Cards
 							<img
 								className={s.img}
 								src={arrow}

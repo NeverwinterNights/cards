@@ -7,8 +7,6 @@ export const ToggleOwnerPacksShowButtons = () => {
 	const userId = useAppSelector((state) => state.auth.loginData._id);
 	const { currentUserId } = useParams();
 
-
-
 	return (
 		<div className={s.wrapBtn}>
 			<Link to={`/packs/${userId}`}>

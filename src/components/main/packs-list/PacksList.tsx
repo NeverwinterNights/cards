@@ -16,7 +16,6 @@ import {
 import { createPack, getPacks } from '../../../redux/packs-reducer';
 import { PaginationPacksContainer } from '../../mui/pagination/PaginationPacksContainer';
 
-
 function PackList() {
 	const page = useAppSelector(selectPacksPageNumber);
 	const pageCount = useAppSelector(selectPacksPageSize);
@@ -29,7 +28,6 @@ function PackList() {
 	// useEffect(() => {
 	// 	dispatch(getPacks({ user_id: currentUserId, page, pageCount }));
 	// }, [currentUserId, page, pageCount]);
-
 
 	const [addPackValue, setAddPackValue] = useState('');
 	const addNewPackClickHandler = (e: FormEvent<HTMLFormElement>) => {

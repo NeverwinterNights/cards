@@ -20,7 +20,6 @@ const defaultAva = 'https://via.placeholder.com/150';
 
 // import ButtonForTable from "./../../../Components/common/button/ButtonForTable";
 
-
 function Profile() {
 	const { name, avatar, _id } = useAppSelector(selectLoginData);
 	const { currentUserId } = useParams();
@@ -32,7 +31,6 @@ function Profile() {
 	const [search, setSearch] = useState<string>('');
 	const min = useAppSelector(minCardsInPackNumber);
 	const max = useAppSelector(maxCardsInPackNumber);
-
 
 	// useEffect(() => {
 	// 	_id &&
@@ -48,7 +46,8 @@ function Profile() {
 	const addNewPackClickHandler = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		_id &&
-		addPackValue && dispatch(createPack(addPackValue, currentUserId || _id));
+			addPackValue &&
+			dispatch(createPack(addPackValue, currentUserId || _id));
 		setAddPackValue('');
 	};
 	const searching = () => {
@@ -70,7 +69,6 @@ function Profile() {
 
 	const user_id = currentUserId ? currentUserId : _id;
 
-
 	return (
 		<div>
 			<div className={s.wrapper}>
@@ -79,11 +77,11 @@ function Profile() {
 						<img className={s.img} src={avatar ? avatar : defaultAva} alt='' />
 						<h3 className={s.subtitle}>{name}</h3>
 						{_id === currentUserId ||
-						(!currentUserId && (
-							<Link to={'/edit-profile'}>
-								<button className={s.btnEditProfile}>Edit Profile</button>
-							</Link>
-						))}
+							(!currentUserId && (
+								<Link to={'/edit-profile'}>
+									<button className={s.btnEditProfile}>Edit Profile</button>
+								</Link>
+							))}
 					</div>
 					<div className={s.wrapSlider}>
 						<h3 className={s.subtitleSlid}>Number of cards</h3>
@@ -116,7 +114,7 @@ function Profile() {
 						</div>
 					</div>
 					<div className={s.table}>
-						<DenseTable collier={user_id || ''} />
+						<DenseTable user_id={user_id || ''} />
 						<div className={s.wrapBottom}>
 							<PaginationPacksContainer />
 						</div>
