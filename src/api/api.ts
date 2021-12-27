@@ -53,7 +53,7 @@ const axiosConfig = {
 	withCredentials: true,
 };
 
-const axiosInstance = axios.create( axiosConfig );
+export const axiosInstance = axios.create( axiosConfig );
 
 
 export const api = {
