@@ -11,6 +11,7 @@ import Profile from '../main/packs-list/Profile/Profile';
 import PackList from '../main/packs-list/PacksList';
 import { EditProfile } from '../main/packs-list/EditProfile/EditProfile';
 import { CardsList } from '../main/packs-list/ListCard/ListCard';
+import { Learn } from '../main/packs-list/LearnQuestionAnswer/Learn';
 
 export const MyRoutes = () => {
 	return (
@@ -24,6 +25,9 @@ export const MyRoutes = () => {
 				</Route>
 				<Route path='/cards' element={<CardsList />}>
 					<Route path='/cards:cardsPack_id' element={<CardsList />} />
+				</Route>
+				<Route path='/learn' element={<Learn />}>
+					<Route path='/learn:cardsPack_id' element={<Learn />} />
 				</Route>
 			</Route>
 

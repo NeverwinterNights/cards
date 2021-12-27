@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { MouseEventHandler } from 'react';
 import { styled } from '@mui/material/styles';
 import Radio, { RadioProps } from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
@@ -61,36 +61,43 @@ function BpRadio(props: RadioProps) {
 	);
 }
 
-export default function CustomizedRadios() {
+type CustomizedRadiosPropsType = {
+	callback: (grade: number) => void;
+	averageGrade?: number;
+};
+
+export const CustomizedRadios = ({
+	callback,
+	averageGrade,
+}: CustomizedRadiosPropsType) => {
+	const clickHandler: MouseEventHandler = (e) => {
+		const grade = +(e.target as HTMLInputElement).value;
+		grade && callback(grade);
+	};
 	return (
 		<FormControl component='fieldset'>
 			<RadioGroup
-				defaultValue='female'
-				aria-label='gender'
-				name='customized-radios'
+				onClick={clickHandler}
+				defaultValue={averageGrade && Math.ceil(averageGrade)}
 			>
 				<FormControlLabel
-					value='Did not know'
+					value={1}
 					control={<BpRadio />}
 					label='Did not know'
 				/>
-				<FormControlLabel value='Forgot' control={<BpRadio />} label='Male' />
+				<FormControlLabel value={2} control={<BpRadio />} label='Forgot' />
 				<FormControlLabel
-					value='A lot of thought'
+					value={3}
 					control={<BpRadio />}
 					label='A lot of thought'
 				/>
+				<FormControlLabel value={4} control={<BpRadio />} label='Сonfused' />
 				<FormControlLabel
-					value='Сonfused'
-					control={<BpRadio />}
-					label='Сonfused'
-				/>
-				<FormControlLabel
-					value='Knew the answer'
+					value={5}
 					control={<BpRadio />}
 					label='Knew the answer'
 				/>
 			</RadioGroup>
 		</FormControl>
 	);
-}
+};

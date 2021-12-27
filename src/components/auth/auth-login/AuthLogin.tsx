@@ -26,10 +26,10 @@ function AuthLogin() {
 	const isAuth = useAppSelector<boolean>(selectIsAuth);
 	// const [email, setEmail] = useState( 't9371100211@gmail.com' );
 	// const [password, setPassword] = useState( '12345678' );
-	const [email, setEmail] = useState('t9371100211@gmail.comm');
-	const [password, setPassword] = useState('12345678');
-	// const [email, setEmail] = useState('t9371100211@gmail.commm');
+	// const [email, setEmail] = useState('t9371100211@gmail.comm');
 	// const [password, setPassword] = useState('12345678');
+	const [email, setEmail] = useState('t9371100211@gmail.commm');
+	const [password, setPassword] = useState('12345678');
 	const [rememberMe, setRememberMe] = useState(false);
 	const emailError = useAppSelector<OptionalStringType>(selectEmailError);
 	const passwordError = useAppSelector<OptionalStringType>(selectPasswordError);
