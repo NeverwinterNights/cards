@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, FormEvent, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
@@ -15,7 +15,7 @@ import {
 } from '../../../assets/selectors/authSelectors';
 import { createPack, getPacks } from '../../../redux/packs-reducer';
 import { PaginationPacksContainer } from '../../mui/pagination/PaginationPacksContainer';
-import AddNewPack from "../../common/modal-windows/add-new-pack/AddNewPack";
+
 
 function PackList() {
 	const page = useAppSelector(selectPacksPageNumber);
@@ -25,9 +25,11 @@ function PackList() {
 	const { currentUserId } = useParams();
 	const min = useAppSelector(minCardsInPackNumber);
 	const max = useAppSelector(maxCardsInPackNumber);
-	useEffect(() => {
-		dispatch(getPacks({ user_id: currentUserId, page, pageCount }));
-	}, [currentUserId, page, pageCount]);
+
+	// useEffect(() => {
+	// 	dispatch(getPacks({ user_id: currentUserId, page, pageCount }));
+	// }, [currentUserId, page, pageCount]);
+
 
 	const [addPackValue, setAddPackValue] = useState('');
 	const addNewPackClickHandler = (e: FormEvent<HTMLFormElement>) => {

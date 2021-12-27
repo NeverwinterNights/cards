@@ -1,13 +1,10 @@
 import React, { useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
-import { useDispatch } from 'react-redux';
-import { SetRangeCardsAC } from '../../../redux/packs-reducer';
-import { useAppSelector } from '../../../redux/store';
-import {
-	maxCardsInPackNumber,
-	maxCardsRangeInPackNumber,
-} from '../../../assets/selectors/authSelectors';
+import { useDispatch, useSelector } from 'react-redux';
+import { PacksReducerStateType, SetRangeCardsAC } from '../../../redux/packs-reducer';
+import { RootState, useAppSelector } from '../../../redux/store';
+import { maxCardsRangeInPackNumber } from '../../../assets/selectors/authSelectors';
 
 function valuetext(value: number) {
 	return `${value}°C`;
@@ -15,7 +12,6 @@ function valuetext(value: number) {
 
 export default function RangeSlider() {
 	const dispatch = useDispatch();
-	// const RangeMax = useAppSelector(maxRange);
 
 	const maxNumberCards = useAppSelector(maxCardsRangeInPackNumber);
 
@@ -25,10 +21,10 @@ export default function RangeSlider() {
 		setValue(newValue as number[]);
 	};
 
-	// useEffect(() => {
-	// 	dispatch(SetMaxRangeAC(maxNumberCards));
-	//
-	// }, []);
+	useEffect(() => {
+		setValue([0, maxNumberCards])
+	}, [maxNumberCards]);
+
 
 	useEffect(() => {
 		dispatch(SetRangeCardsAC(value[0], value[1]));
