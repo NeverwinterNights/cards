@@ -1,14 +1,20 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import s from './AddNewPack.module.scss';
 import cross from '../../../../assets/images/modal/cross.png';
 
 type AddNewPackType = {
     setModal: () => void
     addName?: (value: string) => void
+    name?: string
 }
 
-function AddNewPack({setModal, addName}: AddNewPackType) {
+function AddNewPack({setModal, addName, name}: AddNewPackType) {
     const [text, setText] = useState('')
+    useEffect(() => {
+        if (name) setText(name)
+        const body = document.querySelector('body')
+        if (body) body.style.overflow = 'hidden'
+    }, [])
     const addNameHandler = () => {
         addName && addName(text)
         setText('')
