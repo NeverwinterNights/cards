@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { MouseEventHandler, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
@@ -17,11 +17,19 @@ import {
 	getPacks,
 	packType,
 	setCurrentPack,
+	setPacksSort,
 	updatePackTC,
 } from '../../../redux/packs-reducer';
 import arrow from './../../../assets/images/main/sortArrow.svg';
 import { ActionButton } from '../../common/button/ActionButton';
-import { selectAutorisedUserId } from '../../../assets/selectors/authSelectors';
+import {
+	selectAutorisedUserId,
+	selectCurrentPackId,
+	selectSortPacks,
+} from '../../../assets/selectors/authSelectors';
+
+type sortDirectionsType = 'name' | 'cards' | 'updated' | 'created';
+
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
 	'&:nth-of-type(odd)': {
@@ -38,7 +46,12 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 export const cutDate = (date: string) => new Date(date).toLocaleDateString();
 
-export function DenseTable() {
+
+type ProfilePropsType = {
+	collier?: string
+}
+
+export function DenseTable(props: ProfilePropsType) {
 	const packs = useAppSelector<packType[]>(
 		(state) => state.packsReducer.cardPacks,
 	);
@@ -46,20 +59,21 @@ export function DenseTable() {
 	const dispatch = useDispatch();
 	const { currentUserId } = useParams();
 
-	const [sortName, setSortName] = useState<string>('0name');
-	const [sortUpdated, setSortUpdated] = useState<string>('0updated');
-	const [sortCreated, setSortCreated] = useState<string>('0created');
-	const [showArrow, setShowArrow] = useState(false);
-	const [showSecondArrow, setSecondShowArrow] = useState(false);
-	const [showThirdArrow, setThirdShowArrow] = useState(false);
+	const cardsPack_id = useAppSelector(selectCurrentPackId);
+	const sortCards = useAppSelector(selectSortPacks);
+	const sortDirection = +sortCards[0];
+	const sortField = sortCards.slice(1);
+
 
 	const rows = packs.map((m) => {
 		const linkClickHandler = () => {
 			dispatch(setCurrentPack(m));
 		};
 		const onDeleteClickHandler = () => dispatch(deletePackTC(m._id, m.user_id));
-		const onUpdateClickHandler = (text: string) =>
-			dispatch(updatePackTC({ ...m, name: text }));
+		const onUpdateClickHandler = (text: string) => dispatch(updatePackTC({
+			...m,
+			name: text,
+		}));
 
 		return (
 			<StyledTableRow
@@ -82,87 +96,82 @@ export function DenseTable() {
 								style={{ background: '#f1453d', color: '#fff' }}
 								callBack={onDeleteClickHandler}
 							/>
-							<ActionButton title='Edit' addName={onUpdateClickHandler} />
+							<ActionButton title='Edit'
+														style={{ background: '#f1453d', color: '#fff' }}
+														addName={onUpdateClickHandler} />
 						</>
 					)}
-					<Link to={`/learn/${m._id}`}>
-						<ActionButton title='Learn' />
-					</Link>
+					<ActionButton title='Learn' />
 				</TableCell>
 			</StyledTableRow>
 		);
 	});
 
-	const onSortNameClickHandler = () => {
-		const test = sortName === '0name' ? '1name' : '0name';
-		setSortName(test);
-		dispatch(getPacks({ user_id: currentUserId, sortPacks: test }));
-		setShowArrow(true);
-		setSecondShowArrow(false);
-		setThirdShowArrow(false);
-	};
-	const onSortUpdatedClickHandler = () => {
-		const test = sortUpdated === '0updated' ? '1updated' : '0updated';
-		setSortUpdated(test);
-		dispatch(getPacks({ user_id: currentUserId, sortPacks: test }));
-		setSecondShowArrow(true);
-		setShowArrow(false);
-		setThirdShowArrow(false);
+	useEffect(() => {
+		console.log(props.collier, currentUserId);
+		dispatch(getPacks({
+			user_id: props.collier ? props.collier : currentUserId,
+			sortPacks: sortDirection + sortField,
+		}));
+	}, [currentUserId, sortDirection, sortField]);
+
+
+	const clickHandler: MouseEventHandler = (e) => {
+		const field = (e.target as unknown as { dataset: { sortField: string } })
+			.dataset.sortField;
+		if (!field) return;
+		if (field === sortField) {
+			dispatch(setPacksSort((sortDirection ? 0 : 1) + sortField));
+			return;
+		}
+		dispatch(setPacksSort(1 + field));
 	};
 
-	const onSortCreatedClickHandler = () => {
-		const test = sortCreated === '0created' ? '1created' : '0created';
-		setSortCreated(test);
-		dispatch(getPacks({ user_id: currentUserId, sortPacks: test }));
-		setThirdShowArrow(true);
-		setShowArrow(false);
-		setSecondShowArrow(false);
+	const getArrowStyle = (fieldName: string) => {
+		if (fieldName !== sortField) return { display: 'none' };
+		if (sortDirection === 0) return { transform: 'rotate(180deg)' };
+		return {};
 	};
 
 	return (
 		<TableContainer component={Paper}>
 			<Table sx={{ minWidth: 650 }} size='small' aria-label='a dense table'>
 				<TableHead className={s.tableHead}>
-					<StyledTableRow>
-						<TableCell onClick={onSortNameClickHandler}>
+					<StyledTableRow onClick={clickHandler}>
+						<TableCell align='left' data-sort-field='name'>
 							Name{' '}
 							<img
-								className={showArrow ? s.arrow : s.displayNone}
-								style={
-									sortName === '0name'
-										? { transform: 'rotate(180deg)' }
-										: undefined
-								}
 								src={arrow}
 								alt=''
+								className={s.img}
+								style={getArrowStyle('name')}
 							/>
 						</TableCell>
 
-						<TableCell align='right'>Cards</TableCell>
-						<TableCell onClick={onSortUpdatedClickHandler} align='right'>
-							Last Updated{' '}
+						<TableCell align='right' data-sort-field='cards'>Cards
 							<img
-								className={showSecondArrow ? s.arrow : s.displayNone}
-								style={
-									sortUpdated === '0updated'
-										? { transform: 'rotate(180deg)' }
-										: undefined
-								}
+								className={s.img}
 								src={arrow}
 								alt=''
+								style={getArrowStyle('cards')}
 							/>
 						</TableCell>
-						<TableCell onClick={onSortCreatedClickHandler} align='right'>
-							Created by
+						<TableCell align='right' data-sort-field='updated'>
+							Last Updated{' '}
 							<img
-								className={showThirdArrow ? s.arrow : s.displayNone}
-								style={
-									sortCreated === '0created'
-										? { transform: 'rotate(180deg)' }
-										: undefined
-								}
+								className={s.img}
 								src={arrow}
 								alt=''
+								style={getArrowStyle('updated')}
+							/>
+						</TableCell>
+						<TableCell align='right' data-sort-field='created'>
+							Created by
+							<img
+								className={s.img}
+								src={arrow}
+								alt=''
+								style={getArrowStyle('created')}
 							/>
 						</TableCell>
 						<TableCell align='right'>Actions</TableCell>

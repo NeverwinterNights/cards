@@ -79,7 +79,7 @@ type AddCardsActionType = ReturnType<typeof AddCardsAC>
 type setCardsStateActionType = ReturnType<typeof setCardsState>
 type setCardsPageActionType = ReturnType<typeof setCardsPage>
 type setCardsPageCountActionType = ReturnType<typeof setCardsPageCount>
-type setCardsSortActionType = ReturnType<typeof setCardsSort>
+export type setCardsSortActionType = ReturnType<typeof setCardsSort>
 type setRangeActionType = ReturnType<typeof SetRangeCardsAC>
 type setCardsQuestionActionType = ReturnType<typeof setCardsQuestion>
 

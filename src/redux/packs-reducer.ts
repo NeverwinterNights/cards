@@ -3,6 +3,7 @@ import axios from 'axios';
 import { AppThunk, RootState } from './store';
 import { cardsApi, getPacksPayloadType, getPacksResponseType } from '../api/api';
 import { clearAuthData } from './authReducer';
+import { setCardsSortActionType } from './cards-reducer';
 
 
 export type packType = {
@@ -36,6 +37,7 @@ const initialState = {
 	currentPack: null as null | packType,
 	minRangeSearchSlider: 0 as number,
 	maxRangeSearchSlider: 0 as number,
+	sortPacks: '0name' as string,
 };
 
 export const packsReducer = (state = initialState, action: ActionsType): PacksReducerStateType => {
@@ -55,6 +57,9 @@ export const packsReducer = (state = initialState, action: ActionsType): PacksRe
 				minRangeSearchSlider: action.minRangeSearchSlider,
 				maxRangeSearchSlider: action.maxRangeSearchSlider,
 			};
+		}
+		case 'SET_PACKS_SORT': {
+			return {...state, sortPacks: action.sortPacks}
 		}
 		default:
 			return state;
@@ -82,13 +87,14 @@ export const SetRangeCardsAC = (minRangeSearchSlider: number, maxRangeSearchSlid
 	maxRangeSearchSlider,
 } as const);
 
+export const setPacksSort = (sortPacks: string) => ( { type: 'SET_PACKS_SORT', sortPacks } as const );
 
 type setRangeActionType = ReturnType<typeof SetRangeCardsAC>
 export type setPacksActionType = ReturnType<typeof setPacks>
 export type setPageActionType = ReturnType<typeof setPacksPage>
 export type setPageCountActionType = ReturnType<typeof setPacksPageCount>
 export type setCurrentPackActionType = ReturnType<typeof setCurrentPack>
-// export type SetMaxRangeActionType = ReturnType<typeof SetMaxRangeAC>
+export type setPacksSortActionType = ReturnType<typeof setPacksSort>
 
 type ActionsType =
 	setPacksActionType
@@ -96,18 +102,24 @@ type ActionsType =
 	| setPageCountActionType
 	| setCurrentPackActionType
 	| setRangeActionType
+	| setPacksSortActionType
 
 
 export const getPacks = (payload?: getPacksPayloadType): AppThunk => (dispatch, getState) => {
-	const { page, pageCount, maxCardsCount, minCardsCount } = getState().packsReducer;
+	const { page, pageCount, maxCardsCount, sortPacks, minCardsCount } = getState().packsReducer;
+
+
 	cardsApi.getPacks({
 		min: minCardsCount,
 		max: maxCardsCount,
 		page,
-		pageCount, ...payload,
+		pageCount,
+		sortPacks,
+		...payload,
 	})
 		.then((res) => {
 			dispatch(setPacks(res.data));
+			// dispatch(SetRangeCardsAC(0, res.data.maxCardsCount));
 		})
 		.catch((e) => {
 			if (axios.isAxiosError(e) && e.response && e.response.status === 401) {

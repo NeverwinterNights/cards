@@ -22,6 +22,8 @@ export const selectPacksPageSize = (state: RootState): number => state.packsRedu
 export const selectPacksTotalCount = (state: RootState): number => state.packsReducer.cardPacksTotalCount;
 export const selectCurrentPack = (state: RootState): null | packType => state.packsReducer.currentPack;
 export const selectCurrentPackId = (state: RootState): string | undefined => state.packsReducer.currentPack?._id;
+export const selectSortPacks = (state: RootState): string => state.packsReducer.sortPacks;
+
 
 // cards selectors
 
