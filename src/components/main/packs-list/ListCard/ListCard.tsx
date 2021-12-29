@@ -9,14 +9,9 @@ import {
 	CreateCardTC,
 	getCards,
 	setCardsQuestion,
-	setCardsState,
 } from '../../../../redux/cards-reducer';
 import { useAppSelector } from '../../../../redux/store';
-import {
-	selectCardsPageNumber,
-	selectCardsPageSize,
-	selectCurrentPack,
-} from '../../../../assets/selectors/authSelectors';
+import { selectCurrentPack } from '../../../../assets/selectors/authSelectors';
 import { DenseTableList } from '../../../mui/table-list-card/TableListCard';
 import { PaginationCardsContainer } from '../../../mui/pagination/PaginationCardsContainer';
 import { CardInfo, confirmPayloadType } from '../CardInfo/CardInfo';

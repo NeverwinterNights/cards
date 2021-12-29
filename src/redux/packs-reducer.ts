@@ -3,7 +3,6 @@ import axios from 'axios';
 import { AppThunk, RootState } from './store';
 import { cardsApi, getPacksPayloadType, getPacksResponseType } from '../api/api';
 import { clearAuthData } from './authReducer';
-import { setCardsSortActionType } from './cards-reducer';
 
 
 export type packType = {
@@ -59,7 +58,7 @@ export const packsReducer = (state = initialState, action: ActionsType): PacksRe
 			};
 		}
 		case 'SET_PACKS_SORT': {
-			return {...state, sortPacks: action.sortPacks}
+			return { ...state, sortPacks: action.sortPacks };
 		}
 		default:
 			return state;
@@ -87,7 +86,10 @@ export const SetRangeCardsAC = (minRangeSearchSlider: number, maxRangeSearchSlid
 	maxRangeSearchSlider,
 } as const);
 
-export const setPacksSort = (sortPacks: string) => ( { type: 'SET_PACKS_SORT', sortPacks } as const );
+export const setPacksSort = (sortPacks: string) => ({
+	type: 'SET_PACKS_SORT',
+	sortPacks,
+} as const);
 
 type setRangeActionType = ReturnType<typeof SetRangeCardsAC>
 export type setPacksActionType = ReturnType<typeof setPacks>
@@ -106,7 +108,13 @@ type ActionsType =
 
 
 export const getPacks = (payload?: getPacksPayloadType): AppThunk => (dispatch, getState) => {
-	const { page, pageCount, maxCardsCount, sortPacks, minCardsCount } = getState().packsReducer;
+	const {
+		page,
+		pageCount,
+		maxCardsCount,
+		sortPacks,
+		minCardsCount,
+	} = getState().packsReducer;
 
 
 	cardsApi.getPacks({
@@ -146,7 +154,9 @@ export const updatePackTC = (payload: packType, user_id?: string): AppThunk => a
 		}
 		const updatePack = { ...pack, ...payload };
 		await cardsApi.updatePack(updatePack);
-		dispatch(getPacks({ user_id }));
+
+		dispatch(getPacks({ ...payload, user_id }));
+
 	} catch (e) {
 		if (axios.isAxiosError(e) && e.response) {
 			console.log(e.response.data.error);

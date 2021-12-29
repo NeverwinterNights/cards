@@ -30,10 +30,7 @@ import {
 	setCardsSort,
 	UpdateCardTC,
 } from '../../../redux/cards-reducer';
-import {
-	CardInfo,
-	confirmPayloadType,
-} from '../../main/packs-list/CardInfo/CardInfo';
+import { CardInfo, confirmPayloadType } from '../../main/packs-list/CardInfo/CardInfo';
 import arrow from '../../../assets/images/main/sortArrow.svg';
 
 type sortDirectionsType = 'question' | 'answer' | 'updated' | 'grade';
@@ -67,7 +64,7 @@ export function DenseTableList() {
 
 	const editCard = (payload: confirmPayloadType) => {
 		editableCard?._id &&
-			dispatch(UpdateCardTC({ ...editableCard, ...payload }));
+		dispatch(UpdateCardTC({ ...editableCard, ...payload }));
 		setEditMode(false);
 	};
 
@@ -84,14 +81,14 @@ export function DenseTableList() {
 
 	useEffect(() => {
 		cardsPack_id &&
-			dispatch(
-				getCards({
-					cardsPack_id,
-					page,
-					pageCount,
-					sortCards: sortDirection + sortField,
-				}),
-			);
+		dispatch(
+			getCards({
+				cardsPack_id,
+				page,
+				pageCount,
+				sortCards: sortDirection + sortField,
+			}),
+		);
 	}, [cardsPack_id, page, pageCount, sortField, sortDirection]);
 
 	const getArrowStyle = (fieldName: string) => {

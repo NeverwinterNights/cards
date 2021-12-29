@@ -34,7 +34,6 @@ function AuthLogin() {
 	const emailError = useAppSelector<OptionalStringType>(selectEmailError);
 	const passwordError = useAppSelector<OptionalStringType>(selectPasswordError);
 	const dispatch = useDispatch();
-	console.log('login');
 
 	const setAllErrors = (errorMessage: OptionalStringType) => {
 		dispatch(

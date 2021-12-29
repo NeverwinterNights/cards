@@ -11,11 +11,11 @@ type ActionButtonPropsType = {
 };
 
 export const ActionButton: FC<ActionButtonPropsType> = ({
-	title,
-	callBack,
-	style,
-	addName,
-}) => {
+																													title,
+																													callBack,
+																													style,
+																													addName,
+																												}) => {
 	const [modal, setModal] = useState<string>('');
 	const setModalWindow = (value: string) => {
 		switch (value) {

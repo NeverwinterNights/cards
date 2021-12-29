@@ -7,7 +7,6 @@ import { checkAuth } from './redux/authReducer';
 
 const App = () => {
 	const dispatch = useDispatch();
-	console.log('app');
 	useEffect(() => {
 		dispatch(checkAuth());
 	}, []);

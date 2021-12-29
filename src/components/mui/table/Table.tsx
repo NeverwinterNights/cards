@@ -24,8 +24,13 @@ import arrow from './../../../assets/images/main/sortArrow.svg';
 import { ActionButton } from '../../common/button/ActionButton';
 import {
 	selectAutorisedUserId,
+	selectCurrentPackId,
+	selectPacksPageNumber,
+	selectPacksPageSize,
 	selectSortPacks,
 } from '../../../assets/selectors/authSelectors';
+
+type sortDirectionsType = 'name' | 'cards' | 'updated' | 'created';
 
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
@@ -43,6 +48,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 export const cutDate = (date: string) => new Date(date).toLocaleDateString();
 
+
 type ProfilePropsType = {
 	user_id?: string;
 };
@@ -51,10 +57,13 @@ export function DenseTable({ user_id }: ProfilePropsType) {
 	const packs = useAppSelector<packType[]>(
 		(state) => state.packsReducer.cardPacks,
 	);
+	const page = useAppSelector(selectPacksPageNumber);
+	const pageCount = useAppSelector(selectPacksPageSize);
 	const autorisedUserId = useAppSelector(selectAutorisedUserId);
 	const dispatch = useDispatch();
 	const { currentUserId } = useParams();
 
+	const cardsPack_id = useAppSelector(selectCurrentPackId);
 	const sortCards = useAppSelector(selectSortPacks);
 	const sortDirection = +sortCards[0];
 	const sortField = sortCards.slice(1);
@@ -66,10 +75,13 @@ export function DenseTable({ user_id }: ProfilePropsType) {
 		const onDeleteClickHandler = () => dispatch(deletePackTC(m._id, m.user_id));
 		const onUpdateClickHandler = (text: string) =>
 			dispatch(
-				updatePackTC({
-					...m,
-					name: text,
-				}),
+				updatePackTC(
+					{
+						...m,
+						name: text,
+					},
+					m.user_id,
+				),
 			);
 
 		return (
@@ -112,9 +124,11 @@ export function DenseTable({ user_id }: ProfilePropsType) {
 			getPacks({
 				user_id: user_id ? user_id : currentUserId,
 				sortPacks: sortDirection + sortField,
+				page,
+				pageCount,
 			}),
 		);
-	}, [currentUserId, sortDirection, sortField]);
+	}, [currentUserId, sortDirection, sortField, page, pageCount]);
 
 	const clickHandler: MouseEventHandler = (e) => {
 		const field = (e.target as unknown as { dataset: { sortField: string } })
@@ -148,13 +162,13 @@ export function DenseTable({ user_id }: ProfilePropsType) {
 							/>
 						</TableCell>
 
-						<TableCell align='right' data-sort-field='cards'>
+						<TableCell align='right' data-sort-field='cardsCount'>
 							Cards
 							<img
 								className={s.img}
 								src={arrow}
 								alt=''
-								style={getArrowStyle('cards')}
+								style={getArrowStyle('cardsCount')}
 							/>
 						</TableCell>
 						<TableCell align='right' data-sort-field='updated'>
