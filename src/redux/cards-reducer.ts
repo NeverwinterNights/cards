@@ -8,6 +8,7 @@ import {
 } from '../api/api';
 import { AppThunk } from './store';
 import { clearAuthData } from './authReducer';
+import { setLoadingStatusAC } from './appReducer';
 
 
 const initialState: cardsUserType = {
@@ -105,10 +106,12 @@ export const setCardsQuestion = (cardQuestion: string) => ( {
 } as const );
 
 export const getCards = (payload: getCardsPayloadType): AppThunk => (dispatch, getState) => {
+	dispatch(setLoadingStatusAC('loading'))
 	const { page, pageCount, sortCards, cardQuestion } = getState().cardsReducer;
 	cardsApi.getCards( { page, pageCount, sortCards, cardQuestion, ...payload } )
 		.then( (res) => {
 			dispatch( setCardsState( res.data ) );
+			dispatch(setLoadingStatusAC('idle'))
 		} )
 		.catch( (e) => {
 			if (axios.isAxiosError( e ) && e.response && e.response.status === 401) {

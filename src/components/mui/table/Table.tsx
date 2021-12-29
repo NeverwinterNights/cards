@@ -23,12 +23,14 @@ import {
 import arrow from './../../../assets/images/main/sortArrow.svg';
 import { ActionButton } from '../../common/button/ActionButton';
 import {
+	isLoading,
 	selectAutorisedUserId,
 	selectCurrentPackId,
 	selectPacksPageNumber,
 	selectPacksPageSize,
 	selectSortPacks,
 } from '../../../assets/selectors/authSelectors';
+import CircularIndeterminate from '../progress-bar/CircularIndeterminate';
 
 type sortDirectionsType = 'name' | 'cards' | 'updated' | 'created';
 
@@ -63,6 +65,7 @@ export function DenseTable({ user_id }: ProfilePropsType) {
 	const dispatch = useDispatch();
 	const { currentUserId } = useParams();
 
+	const isLoadingStatus = useAppSelector(isLoading);
 	const cardsPack_id = useAppSelector(selectCurrentPackId);
 	const sortCards = useAppSelector(selectSortPacks);
 	const sortDirection = +sortCards[0];
@@ -149,52 +152,53 @@ export function DenseTable({ user_id }: ProfilePropsType) {
 	};
 
 	return (
-		<TableContainer component={Paper}>
-			<Table sx={{ minWidth: 650 }} size='small' aria-label='a dense table'>
-				<TableHead className={s.tableHead}>
-					<StyledTableRow onClick={clickHandler}>
-						<TableCell align='left' data-sort-field='name'>
-							Name{' '}
-							<img
-								src={arrow}
-								alt=''
-								className={s.img}
-								style={getArrowStyle('name')}
-							/>
-						</TableCell>
+			<TableContainer style={isLoadingStatus === "loading" ? {pointerEvents: "none"} : {pointerEvents: "auto"} } className={s.wrapper} component={Paper}>
+				{isLoadingStatus === "loading" ? <CircularIndeterminate /> : ""}
+				<Table sx={{ minWidth: 650 }} size='small' aria-label='a dense table'>
+					<TableHead className={s.tableHead}>
+						<StyledTableRow onClick={clickHandler}>
+							<TableCell align='left' data-sort-field='name'>
+								Name{' '}
+								<img
+									src={arrow}
+									alt=''
+									className={s.img}
+									style={getArrowStyle('name')}
+								/>
+							</TableCell>
 
-						<TableCell align='right' data-sort-field='cardsCount'>
-							Cards
-							<img
-								className={s.img}
-								src={arrow}
-								alt=''
-								style={getArrowStyle('cardsCount')}
-							/>
-						</TableCell>
-						<TableCell align='right' data-sort-field='updated'>
-							Last Updated{' '}
-							<img
-								className={s.img}
-								src={arrow}
-								alt=''
-								style={getArrowStyle('updated')}
-							/>
-						</TableCell>
-						<TableCell align='right' data-sort-field='created'>
-							Created by
-							<img
-								className={s.img}
-								src={arrow}
-								alt=''
-								style={getArrowStyle('created')}
-							/>
-						</TableCell>
-						<TableCell align='right'>Actions</TableCell>
-					</StyledTableRow>
-				</TableHead>
-				<TableBody className={s.tableBody}>{rows}</TableBody>
-			</Table>
-		</TableContainer>
+							<TableCell align='right' data-sort-field='cardsCount'>
+								Cards
+								<img
+									className={s.img}
+									src={arrow}
+									alt=''
+									style={getArrowStyle('cardsCount')}
+								/>
+							</TableCell>
+							<TableCell align='right' data-sort-field='updated'>
+								Last Updated{' '}
+								<img
+									className={s.img}
+									src={arrow}
+									alt=''
+									style={getArrowStyle('updated')}
+								/>
+							</TableCell>
+							<TableCell align='right' data-sort-field='created'>
+								Created by
+								<img
+									className={s.img}
+									src={arrow}
+									alt=''
+									style={getArrowStyle('created')}
+								/>
+							</TableCell>
+							<TableCell align='right'>Actions</TableCell>
+						</StyledTableRow>
+					</TableHead>
+					<TableBody className={s.tableBody}>{rows}</TableBody>
+				</Table>
+			</TableContainer>
 	);
 }

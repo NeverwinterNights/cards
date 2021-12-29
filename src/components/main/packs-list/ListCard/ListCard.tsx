@@ -11,15 +11,17 @@ import {
 	setCardsQuestion,
 } from '../../../../redux/cards-reducer';
 import { useAppSelector } from '../../../../redux/store';
-import { selectCurrentPack } from '../../../../assets/selectors/authSelectors';
+import { isLoading, selectCurrentPack } from '../../../../assets/selectors/authSelectors';
 import { DenseTableList } from '../../../mui/table-list-card/TableListCard';
 import { PaginationCardsContainer } from '../../../mui/pagination/PaginationCardsContainer';
 import { CardInfo, confirmPayloadType } from '../CardInfo/CardInfo';
+import CircularIndeterminate from '../../../mui/progress-bar/CircularIndeterminate';
 
 export function CardsList() {
 	const { cardsPack_id } = useParams();
 	const dispatch = useDispatch();
 	const currentPack = useAppSelector(selectCurrentPack);
+
 	const [searchFieldValue, setSearchFieldValue] = useState('');
 	const [addingMode, setAddingMode] = useState(false);
 	const addCard = async (payload: confirmPayloadType) => {
@@ -46,7 +48,7 @@ export function CardsList() {
 			{addingMode && (
 				<CardInfo confirm={addCard} cancel={() => setAddingMode(false)} />
 			)}
-			<div className={s.wrapper}>
+			<div  className={s.wrapper}>
 				<div className={s.wrap}>
 					<div className={s.head}>
 						<Link className={s.link} to={`/packs/${currentPack?.user_id}`}>

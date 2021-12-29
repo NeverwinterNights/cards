@@ -3,6 +3,7 @@ import axios from 'axios';
 import { AppThunk, RootState } from './store';
 import { cardsApi, getPacksPayloadType, getPacksResponseType } from '../api/api';
 import { clearAuthData } from './authReducer';
+import { setLoadingStatusAC } from './appReducer';
 
 
 export type packType = {
@@ -116,7 +117,7 @@ export const getPacks = (payload?: getPacksPayloadType): AppThunk => (dispatch, 
 		minCardsCount,
 	} = getState().packsReducer;
 
-
+	dispatch(setLoadingStatusAC('loading'))
 	cardsApi.getPacks({
 		min: minCardsCount,
 		max: maxCardsCount,
@@ -127,6 +128,7 @@ export const getPacks = (payload?: getPacksPayloadType): AppThunk => (dispatch, 
 	})
 		.then((res) => {
 			dispatch(setPacks(res.data));
+			dispatch(setLoadingStatusAC('idle'))
 			// dispatch(SetRangeCardsAC(0, res.data.maxCardsCount));
 		})
 		.catch((e) => {

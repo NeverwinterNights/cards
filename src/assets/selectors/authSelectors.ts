@@ -2,6 +2,7 @@ import { RootState } from '../../redux/store';
 import { LoginDataType, OptionalStringType } from '../../redux/authReducer';
 import { cardsType } from '../../redux/cards-reducer';
 import { packType } from '../../redux/packs-reducer';
+import { isLoadingStatus } from '../../redux/appReducer';
 
 // auth selectors
 
@@ -41,6 +42,8 @@ export const maxCardsInPackNumber = (state: RootState): number => state.packsRed
 export const maxCardsRangeInPackNumber = (state: RootState): number => state.packsReducer.maxCardsCount;
 
 
+// app selector
+export const isLoading = (state: RootState): isLoadingStatus => state.appReducer.isLoading;
 
 
 
