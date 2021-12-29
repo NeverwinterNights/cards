@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import s from './CardInfo.module.scss';
 
@@ -23,6 +23,13 @@ export const CardInfo: React.FC<CardInfoPropsType> = ({
                                                           callBack,
                                                           EditCard
                                                       }) => {
+    useEffect( () => {
+        const body = document.querySelector( 'body' );
+        if (body) body.style.overflow = 'hidden';
+        return () => {
+            if (body) body.style.overflow = 'auto';
+        };
+    }, [] );
     const [questionFieldValue, setQuestionFieldValue] = useState(question || '');
     const [answerFieldValue, setAnswerFieldValue] = useState(answer || '');
     const onSaveClickHandler = () => {
