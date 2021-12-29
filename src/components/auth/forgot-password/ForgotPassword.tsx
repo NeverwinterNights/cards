@@ -21,7 +21,6 @@ function ForgotPassword() {
 		(state) => state.forgotReducer.status,
 	);
 	const handlerEmail = (value: string) => setEmail(value);
-	console.log(isStatus, isEmail);
 	const checkEmailValidity = (e: FormEvent, value: string) => {
 		e.preventDefault();
 		const reg = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

@@ -86,7 +86,7 @@ export const registerTC = (email: string, password: string) => (dispatch: Dispat
 
 		})
 		.catch((error) => {
-			dispatch(setErrorAC('Incorrect pair email/password'))
+			dispatch(setErrorAC('Incorrect pair email/password'));
 
 		})
 		.finally(() => {

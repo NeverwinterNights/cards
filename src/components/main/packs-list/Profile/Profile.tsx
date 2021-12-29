@@ -20,7 +20,6 @@ const defaultAva = 'https://via.placeholder.com/150';
 
 // import ButtonForTable from "./../../../Components/common/button/ButtonForTable";
 
-
 function Profile() {
 	const { name, avatar, _id } = useAppSelector(selectLoginData);
 	const { currentUserId } = useParams();
@@ -32,7 +31,6 @@ function Profile() {
 	const [search, setSearch] = useState<string>('');
 	const min = useAppSelector(minCardsInPackNumber);
 	const max = useAppSelector(maxCardsInPackNumber);
-
 
 	// useEffect(() => {
 	// 	_id &&
@@ -48,7 +46,8 @@ function Profile() {
 	const addNewPackClickHandler = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		_id &&
-		addPackValue && dispatch(createPack(addPackValue, currentUserId || _id));
+		addPackValue &&
+		dispatch(createPack(addPackValue, currentUserId || _id));
 		setAddPackValue('');
 	};
 	const searching = () => {
@@ -69,7 +68,6 @@ function Profile() {
 	};
 
 	const user_id = currentUserId ? currentUserId : _id;
-
 
 	return (
 		<div>

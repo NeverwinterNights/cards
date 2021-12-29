@@ -2,7 +2,10 @@ import React, { useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
 import { useDispatch, useSelector } from 'react-redux';
-import { PacksReducerStateType, SetRangeCardsAC } from '../../../redux/packs-reducer';
+import {
+	PacksReducerStateType,
+	SetRangeCardsAC,
+} from '../../../redux/packs-reducer';
 import { RootState, useAppSelector } from '../../../redux/store';
 import { maxCardsRangeInPackNumber } from '../../../assets/selectors/authSelectors';
 
@@ -22,9 +25,8 @@ export default function RangeSlider() {
 	};
 
 	useEffect(() => {
-		setValue([0, maxNumberCards])
+		setValue([0, maxNumberCards]);
 	}, [maxNumberCards]);
-
 
 	useEffect(() => {
 		dispatch(SetRangeCardsAC(value[0], value[1]));
