@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 import s from './Learn.module.scss';
 import { CustomizedRadios } from '../../../mui/radio-button/RadioButton';
@@ -68,7 +68,9 @@ export function Learn() {
 							</>
 						)}
 						<div className={s.wrapBtn}>
-							<button className={s.btnCancel}>Cancel</button>
+							<Link to={`/cards/${cardsPack_id}`}>
+								<button className={s.btnCancel}>Cancel</button>
+							</Link>
 							{isAnswered ? (
 								<button className={s.btnSave} onClick={onNextClickHandler}>
 									Next

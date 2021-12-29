@@ -32,7 +32,6 @@ import {
 
 type sortDirectionsType = 'name' | 'cards' | 'updated' | 'created';
 
-
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
 	'&:nth-of-type(odd)': {
 		backgroundColor: theme.palette.action.hover,
@@ -47,7 +46,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 export const cutDate = (date: string) => new Date(date).toLocaleDateString();
-
 
 type ProfilePropsType = {
 	user_id?: string;

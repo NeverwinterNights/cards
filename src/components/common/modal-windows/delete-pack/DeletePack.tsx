@@ -10,13 +10,13 @@ type DeletePackType = {
 function DeletePack({ setModal, deleteCallBack }: DeletePackType) {
 	const deletePack = () => deleteCallBack && deleteCallBack();
 
-	useEffect( () => {
-		const body = document.querySelector( 'body' );
+	useEffect(() => {
+		const body = document.querySelector('body');
 		if (body) body.style.overflow = 'hidden';
 		return () => {
 			if (body) body.style.overflow = 'auto';
 		};
-	}, [] );
+	}, []);
 
 	return (
 		<div className={s.modal} onClick={setModal}>
