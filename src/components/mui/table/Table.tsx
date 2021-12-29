@@ -108,6 +108,7 @@ export function DenseTable({ user_id }: ProfilePropsType) {
 							<ActionButton
 								title='Edit'
 								addName={onUpdateClickHandler}
+								name={m.name}
 							/>
 						</>
 					)}
