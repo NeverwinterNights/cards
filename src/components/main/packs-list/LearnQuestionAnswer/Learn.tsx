@@ -4,10 +4,9 @@ import { useParams } from 'react-router-dom';
 
 import s from './Learn.module.scss';
 import { CustomizedRadios } from '../../../mui/radio-button/RadioButton';
-import { getCards } from '../../../../redux/cards-reducer';
+import { getCards, putGrade } from '../../../../redux/cards-reducer';
 import { useAppSelector } from '../../../../redux/store';
 import { selectCards } from '../../../../assets/selectors/authSelectors';
-import { axiosInstance } from '../../../../api/api';
 
 export function Learn() {
 	const cards = useAppSelector(selectCards);
@@ -30,8 +29,13 @@ export function Learn() {
 	}, [cards]);
 
 	const [grade, setGrade] = useState(1);
-	const onGradeChange = (newGrade: number) => {
-		setGrade(newGrade);
+	const onGradeChange = (newGrade: number) => setGrade(newGrade);
+
+	const showAnswerClickHandler = () => setIsAnswered(true);
+
+	const onNextClickHandler = () => {
+		setIsAnswered(false);
+		randomCard && dispatch(putGrade({ card_id: randomCard._id, grade }));
 	};
 
 	useEffect(() => {
@@ -39,21 +43,6 @@ export function Learn() {
 			dispatch(getCards({ cardsPack_id, pageCount: 1000 }));
 		}
 	}, [cardsPack_id]);
-
-	const showAnswerClickHandler = () => {
-		setIsAnswered(true);
-	};
-
-	const onNextClickHandler = () => {
-		setIsAnswered(false);
-		axiosInstance
-			.put('/cards/grade', { grade, card_id: randomCard?._id })
-			.then(() => {
-				if (cardsPack_id) {
-					dispatch(getCards({ cardsPack_id, pageCount: 1000 }));
-				}
-			});
-	};
 
 	return (
 		<div>

@@ -1,5 +1,11 @@
 import axios from 'axios';
-import { cardsApi, createCardParamsType, getCardsPayloadType, getCardsResponseType } from '../api/api';
+import {
+	cardsApi,
+	createCardParamsType,
+	getCardsPayloadType,
+	getCardsResponseType,
+	putGradePayloadType,
+} from '../api/api';
 import { AppThunk } from './store';
 import { clearAuthData } from './authReducer';
 
@@ -139,3 +145,14 @@ export const UpdateCardTC = (payload: cardsType): AppThunk => async (dispatch) =
 	}
 };
 
+export const putGrade = (payload: putGradePayloadType): AppThunk => async (dispatch) => {
+	try {
+		const { data: { updatedGrade: { cardsPack_id } } } = await cardsApi.putGrade( payload );
+		dispatch( getCards( {cardsPack_id, pageCount: 100000} ) );
+
+	} catch (e) {
+		if (axios.isAxiosError( e ) && e.response && e.response.status === 401) {
+			dispatch( clearAuthData() );
+		}
+	}
+};

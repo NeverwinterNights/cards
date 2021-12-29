@@ -241,6 +241,30 @@ type updateCardPayloadType = {
 	comments?: string
 }
 
+export type putGradePayloadType = {
+	grade: number
+	card_id: string
+}
+
+type updatedGradeType = {
+	card_id: string
+	cardsPack_id: string
+	created: string
+	grade: number
+	more_id: string
+	shots: number
+	updated: string
+	user_id: string
+	__v: number
+	_id: string
+}
+
+type putGradeResponseType = {
+	token: string
+	tokenDeathTime: number
+	updatedGrade: updatedGradeType
+}
+
 export const cardsApi = {
 	// возвращает промис с паками
 	getPacks(payload = {} as getPacksPayloadType) {
@@ -282,6 +306,11 @@ export const cardsApi = {
 	updateCard(payload: updateCardPayloadType) {
 		return axiosInstance.put( 'cards/card', { card: { ...payload } } );
 	},
-
-
+	// возвращает промис с обновленной картой.
+	putGrade(payload: putGradePayloadType) {
+		return axiosInstance.put<putGradeResponseType>( 'cards/grade', payload );
+	},
 };
+
+
+

@@ -24,11 +24,9 @@ import arrow from './../../../assets/images/main/sortArrow.svg';
 import { ActionButton } from '../../common/button/ActionButton';
 import {
 	selectAutorisedUserId,
-	selectCurrentPackId,
 	selectSortPacks,
 } from '../../../assets/selectors/authSelectors';
 
-type sortDirectionsType = 'name' | 'cards' | 'updated' | 'created';
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
 	'&:nth-of-type(odd)': {
@@ -57,7 +55,6 @@ export function DenseTable({ user_id }: ProfilePropsType) {
 	const dispatch = useDispatch();
 	const { currentUserId } = useParams();
 
-	const cardsPack_id = useAppSelector(selectCurrentPackId);
 	const sortCards = useAppSelector(selectSortPacks);
 	const sortDirection = +sortCards[0];
 	const sortField = sortCards.slice(1);
@@ -98,12 +95,13 @@ export function DenseTable({ user_id }: ProfilePropsType) {
 							/>
 							<ActionButton
 								title='Edit'
-								style={{ background: '#f1453d', color: '#fff' }}
 								addName={onUpdateClickHandler}
 							/>
 						</>
 					)}
-					<ActionButton title='Learn' />
+					<Link to={`/learn/${m._id}`}>
+						<ActionButton title='Learn' />
+					</Link>
 				</TableCell>
 			</StyledTableRow>
 		);
