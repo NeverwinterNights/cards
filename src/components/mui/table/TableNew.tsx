@@ -121,9 +121,11 @@ export function DenseTable({ user_id }: ProfilePropsType) {
 							<ActionButton title='Edit' callBack={onEditClickHandler} />
 						</>
 					)}
-					<Link to={`/learn/${m._id}`}>
-						<ActionButton title='Learn' />
-					</Link>
+					{!!m.cardsCount && (
+						<Link to={`/learn/${m._id}`}>
+							<ActionButton title='Learn' />
+						</Link>
+					)}
 				</TableCell>
 			</StyledTableRow>
 		);

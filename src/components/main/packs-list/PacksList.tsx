@@ -4,21 +4,17 @@ import { useParams } from 'react-router-dom';
 
 import s from './PackList.module.scss';
 import RangeSlider from '../../mui/range-slider/RangeSlider';
-import { DenseTable } from '../../mui/table/Table';
+import { DenseTable } from '../../mui/table/TableNew';
 import { ToggleOwnerPacksShowButtons } from './buttons/ToggleOwnerPacksShowButtons';
 import { useAppSelector } from '../../../redux/store';
 import {
 	maxCardsInPackNumber,
 	minCardsInPackNumber,
-	selectPacksPageNumber,
-	selectPacksPageSize,
 } from '../../../assets/selectors/authSelectors';
 import { createPack, getPacks } from '../../../redux/packs-reducer';
 import { PaginationPacksContainer } from '../../mui/pagination/PaginationPacksContainer';
 
 function PackList() {
-	const page = useAppSelector(selectPacksPageNumber);
-	const pageCount = useAppSelector(selectPacksPageSize);
 	const [search, setSearch] = useState<string>('');
 	const dispatch = useDispatch();
 	const { currentUserId } = useParams();
