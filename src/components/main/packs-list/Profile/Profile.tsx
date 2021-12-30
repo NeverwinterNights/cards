@@ -14,7 +14,6 @@ import {
 } from '../../../../assets/selectors/authSelectors';
 import { createPack, getPacks } from '../../../../redux/packs-reducer';
 import { PaginationPacksContainer } from '../../../mui/pagination/PaginationPacksContainer';
-import CircularIndeterminate from '../../../mui/progress-bar/CircularIndeterminate';
 
 const defaultAva = 'https://via.placeholder.com/150';
 
@@ -66,7 +65,6 @@ function Profile() {
 			}
 		>
 			<div className={s.wrapper}>
-
 				<div className={s.wrapLeft}>
 					<div className={s.wrapPerson}>
 						<img className={s.img} src={avatar ? avatar : defaultAva} alt='' />
