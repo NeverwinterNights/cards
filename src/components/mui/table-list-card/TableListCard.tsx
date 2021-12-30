@@ -12,6 +12,7 @@ import { styled } from '@mui/material/styles';
 import s from './TableListCard.module.scss';
 import { useAppSelector } from '../../../redux/store';
 import {
+	isLoading,
 	selectAutorisedUserId,
 	selectCards,
 	selectCardsPageNumber,
@@ -34,6 +35,7 @@ import {
 	confirmPayloadType,
 } from '../../main/packs-list/CardInfo/CardInfo';
 import arrow from '../../../assets/images/main/sortArrow.svg';
+import CircularIndeterminate from '../progress-bar/CircularIndeterminate';
 
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
@@ -58,6 +60,7 @@ export function DenseTableList() {
 	const dispatch = useDispatch();
 	const [editMode, setEditMode] = useState(false);
 	const [editableCard, setEditableCard] = useState<cardsType | null>(null);
+	const isLoadingStatus = useAppSelector(isLoading);
 
 	const sortCards = useAppSelector(selectSortCards);
 	const sortDirection = +sortCards[0];
@@ -136,7 +139,11 @@ export function DenseTableList() {
 	});
 
 	return (
-		<>
+		<div
+			className={s.wrapper}
+			style={isLoadingStatus === 'loading' ? { pointerEvents: 'none' } : { pointerEvents: 'auto' }}>
+			{isLoadingStatus === 'loading' ? <CircularIndeterminate /> : ''}
+
 			{editMode && (
 				<CardInfo
 					confirm={editCard}
@@ -191,6 +198,6 @@ export function DenseTableList() {
 					<TableBody className={s.tableBody}>{rows}</TableBody>
 				</Table>
 			</TableContainer>
-		</>
+		</div>
 	);
 }
