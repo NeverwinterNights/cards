@@ -24,13 +24,10 @@ import arrow from './../../../assets/images/main/sortArrow.svg';
 import { ActionButton } from '../../common/button/ActionButton';
 import {
 	selectAutorisedUserId,
-	selectCurrentPackId,
 	selectPacksPageNumber,
 	selectPacksPageSize,
 	selectSortPacks,
 } from '../../../assets/selectors/authSelectors';
-
-type sortDirectionsType = 'name' | 'cards' | 'updated' | 'created';
 
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
@@ -48,7 +45,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 export const cutDate = (date: string) => new Date(date).toLocaleDateString();
 
-
 type ProfilePropsType = {
 	user_id?: string;
 };
@@ -63,7 +59,6 @@ export function DenseTable({ user_id }: ProfilePropsType) {
 	const dispatch = useDispatch();
 	const { currentUserId } = useParams();
 
-	const cardsPack_id = useAppSelector(selectCurrentPackId);
 	const sortCards = useAppSelector(selectSortPacks);
 	const sortDirection = +sortCards[0];
 	const sortField = sortCards.slice(1);

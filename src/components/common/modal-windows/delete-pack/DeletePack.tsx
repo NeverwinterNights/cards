@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import s from './DeletePack.module.scss';
-import cross from '../../../../assets/images/modal/cross.png';
 
 type DeletePackType = {
 	setModal: () => void;
@@ -10,13 +9,13 @@ type DeletePackType = {
 function DeletePack({ setModal, deleteCallBack }: DeletePackType) {
 	const deletePack = () => deleteCallBack && deleteCallBack();
 
-	useEffect( () => {
-		const body = document.querySelector( 'body' );
+	useEffect(() => {
+		const body = document.querySelector('body');
 		if (body) body.style.overflow = 'hidden';
 		return () => {
 			if (body) body.style.overflow = 'auto';
 		};
-	}, [] );
+	}, []);
 
 	return (
 		<div className={s.modal} onClick={setModal}>
