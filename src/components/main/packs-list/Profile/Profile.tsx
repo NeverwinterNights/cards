@@ -83,7 +83,6 @@ function Profile() {
 					</div>
 				</div>
 				<div className={s.wrapRight}>
-					{isLoadingStatus === "loading" ? <CircularIndeterminate /> : ""}
 					<h2 className={s.title}>{`${name} Packs list`}</h2>
 					<div className={s.wrapForm}>
 						<form className={s.wrapForm} onSubmit={addNewPackClickHandler}>
