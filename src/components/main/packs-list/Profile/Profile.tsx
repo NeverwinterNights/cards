@@ -4,15 +4,13 @@ import { useDispatch } from 'react-redux';
 
 import s from './Profile.module.scss';
 import RangeSlider from '../../../mui/range-slider/RangeSlider';
-import { DenseTable } from '../../../mui/table/Table';
+import { DenseTable } from '../../../mui/table/TableNew';
 import { useAppSelector } from '../../../../redux/store';
 import {
 	isLoading,
 	maxCardsInPackNumber,
 	minCardsInPackNumber,
 	selectLoginData,
-	selectPacksPageNumber,
-	selectPacksPageSize,
 } from '../../../../assets/selectors/authSelectors';
 import { createPack, getPacks } from '../../../../redux/packs-reducer';
 import { PaginationPacksContainer } from '../../../mui/pagination/PaginationPacksContainer';
@@ -26,15 +24,12 @@ function Profile() {
 	const { name, avatar, _id } = useAppSelector(selectLoginData);
 	const { currentUserId } = useParams();
 	const dispatch = useDispatch();
-	const page = useAppSelector(selectPacksPageNumber);
-	const pageCount = useAppSelector(selectPacksPageSize);
 	const isLoadingStatus = useAppSelector(isLoading);
 
 	const [addPackValue, setAddPackValue] = useState('');
 	const [search, setSearch] = useState<string>('');
 	const min = useAppSelector(minCardsInPackNumber);
 	const max = useAppSelector(maxCardsInPackNumber);
-
 
 	const addNewPackClickHandler = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -63,9 +58,14 @@ function Profile() {
 	const user_id = currentUserId ? currentUserId : _id;
 
 	return (
-		<div style={isLoadingStatus === "loading" ? {pointerEvents: "none"} : {pointerEvents: "auto"} }>
+		<div
+			style={
+				isLoadingStatus === 'loading'
+					? { pointerEvents: 'none' }
+					: { pointerEvents: 'auto' }
+			}
+		>
 			<div className={s.wrapper}>
-
 				<div className={s.wrapLeft}>
 					<div className={s.wrapPerson}>
 						<img className={s.img} src={avatar ? avatar : defaultAva} alt='' />
@@ -83,7 +83,7 @@ function Profile() {
 					</div>
 				</div>
 				<div className={s.wrapRight}>
-					{isLoadingStatus === "loading" ? <CircularIndeterminate /> : ""}
+					{isLoadingStatus === 'loading' ? <CircularIndeterminate /> : ''}
 					<h2 className={s.title}>{`${name} Packs list`}</h2>
 					<div className={s.wrapForm}>
 						<form className={s.wrapForm} onSubmit={addNewPackClickHandler}>

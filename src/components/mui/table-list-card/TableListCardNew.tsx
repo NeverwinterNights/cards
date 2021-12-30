@@ -22,7 +22,7 @@ import {
 } from '../../../assets/selectors/authSelectors';
 import { CustomizedRating } from '../rating/Rating';
 import { cutDate } from '../table/Table';
-import { ActionButton } from '../../common/button/ActionButton';
+import { ActionButton } from '../../common/button/ActionButtonNew';
 import {
 	cardsType,
 	DeleteCardTC,
@@ -33,9 +33,10 @@ import {
 import {
 	CardInfo,
 	confirmPayloadType,
-} from '../../main/packs-list/CardInfo/CardInfo';
+} from '../../main/packs-list/CardInfo/CardInfoNew';
 import arrow from '../../../assets/images/main/sortArrow.svg';
 import CircularIndeterminate from '../progress-bar/CircularIndeterminate';
+import { DeleteCard } from '../../common/modal-windows/delete-pack/DeleteCardNew';
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
 	'&:nth-of-type(even)': {
@@ -58,6 +59,10 @@ export function DenseTableList() {
 	const pageCount = useAppSelector(selectCardsPageSize);
 	const dispatch = useDispatch();
 	const [editMode, setEditMode] = useState(false);
+	const [deleteMode, setDeleteMode] = useState(false);
+
+	const [deletableCard, setDeletableCard] = useState<cardsType | null>(null);
+
 	const [editableCard, setEditableCard] = useState<cardsType | null>(null);
 	const isLoadingStatus = useAppSelector(isLoading);
 
@@ -65,10 +70,14 @@ export function DenseTableList() {
 	const sortDirection = +sortCards[0];
 	const sortField = sortCards.slice(1);
 
-	const editCard = (payload: confirmPayloadType) => {
-		editableCard?._id &&
-			dispatch(UpdateCardTC({ ...editableCard, ...payload }));
+	const updateCardHandler = (payload: confirmPayloadType) => {
+		editableCard && dispatch(UpdateCardTC({ ...editableCard, ...payload }));
 		setEditMode(false);
+	};
+	const deleteCardHandler = () => {
+		deletableCard &&
+			dispatch(DeleteCardTC(deletableCard?._id, deletableCard?.cardsPack_id));
+		setDeleteMode(false);
 	};
 
 	const clickHandler: MouseEventHandler = (e) => {
@@ -101,10 +110,11 @@ export function DenseTableList() {
 	};
 
 	const rows = cards.map((m) => {
-		const onDeleteClickHandler = () =>
-			dispatch(DeleteCardTC(m._id, m.cardsPack_id));
-		const onEditClickHandler = (payload: confirmPayloadType) => {
-			dispatch(UpdateCardTC({ ...m, ...payload }));
+		const onDeleteClickHandler = () => {
+			setDeletableCard(m);
+			setDeleteMode(true);
+		};
+		const onEditClickHandler = () => {
 			setEditableCard(m);
 			setEditMode(true);
 		};
@@ -129,7 +139,7 @@ export function DenseTableList() {
 								style={{ background: '#f1453d', color: '#fff' }}
 								callBack={onDeleteClickHandler}
 							/>
-							<ActionButton title='EditCard' changeCard={onEditClickHandler} />
+							<ActionButton title='EditCard' callBack={onEditClickHandler} />
 						</>
 					)}
 				</TableCell>
@@ -150,10 +160,17 @@ export function DenseTableList() {
 
 			{editMode && (
 				<CardInfo
-					confirm={editCard}
+					confirm={updateCardHandler}
 					cancel={() => setEditMode(false)}
 					answer={editableCard?.answer}
 					question={editableCard?.question}
+				/>
+			)}
+
+			{deleteMode && (
+				<DeleteCard
+					cancel={() => setDeleteMode(false)}
+					confirm={deleteCardHandler}
 				/>
 			)}
 			<TableContainer component={Paper}>

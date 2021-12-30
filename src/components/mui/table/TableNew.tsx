@@ -1,4 +1,4 @@
-import React, { MouseEventHandler, useEffect } from 'react';
+import React, { MouseEventHandler, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
@@ -21,7 +21,7 @@ import {
 	updatePackTC,
 } from '../../../redux/packs-reducer';
 import arrow from './../../../assets/images/main/sortArrow.svg';
-import { ActionButton } from '../../common/button/ActionButton';
+import { ActionButton } from '../../common/button/ActionButtonNew';
 import {
 	isLoading,
 	selectAutorisedUserId,
@@ -30,6 +30,8 @@ import {
 	selectSortPacks,
 } from '../../../assets/selectors/authSelectors';
 import CircularIndeterminate from '../progress-bar/CircularIndeterminate';
+import EditPackName from '../../common/modal-windows/add-new-pack/EditPackName';
+import DeletePack from '../../common/modal-windows/delete-pack/DeletePackNew';
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
 	'&:nth-of-type(odd)': {
@@ -61,6 +63,23 @@ export function DenseTable({ user_id }: ProfilePropsType) {
 	const { currentUserId } = useParams();
 
 	const isLoadingStatus = useAppSelector(isLoading);
+
+	const [editMode, setEditMode] = useState(false);
+	const [editablePack, setEditablePack] = useState<packType | null>(null);
+
+	const [deleteMode, setDeleteMode] = useState(false);
+	const [deletablePack, setDeletablePack] = useState<packType | null>(null);
+
+	const editPackHandler = (newName: string) => {
+		editablePack && dispatch(updatePackTC({ ...editablePack, name: newName }));
+		setEditMode(false);
+	};
+
+	const deletePackHandler = () => {
+		deletablePack && dispatch(deletePackTC(deletablePack._id));
+		setDeleteMode(false);
+	};
+
 	const sortCards = useAppSelector(selectSortPacks);
 	const sortDirection = +sortCards[0];
 	const sortField = sortCards.slice(1);
@@ -69,17 +88,14 @@ export function DenseTable({ user_id }: ProfilePropsType) {
 		const linkClickHandler = () => {
 			dispatch(setCurrentPack(m));
 		};
-		const onDeleteClickHandler = () => dispatch(deletePackTC(m._id, m.user_id));
-		const onUpdateClickHandler = (text: string) =>
-			dispatch(
-				updatePackTC(
-					{
-						...m,
-						name: text,
-					},
-					m.user_id,
-				),
-			);
+		const onDeleteClickHandler = () => {
+			setDeletablePack(m);
+			setDeleteMode(true);
+		};
+		const onEditClickHandler = () => {
+			setEditablePack(m);
+			setEditMode(true);
+		};
 
 		return (
 			<StyledTableRow
@@ -102,11 +118,7 @@ export function DenseTable({ user_id }: ProfilePropsType) {
 								style={{ background: '#f1453d', color: '#fff' }}
 								callBack={onDeleteClickHandler}
 							/>
-							<ActionButton
-								title='Edit'
-								addName={onUpdateClickHandler}
-								name={m.name}
-							/>
+							<ActionButton title='Edit' callBack={onEditClickHandler} />
 						</>
 					)}
 					<Link to={`/learn/${m._id}`}>
@@ -128,7 +140,7 @@ export function DenseTable({ user_id }: ProfilePropsType) {
 		);
 	}, [currentUserId, sortDirection, sortField, page, pageCount]);
 
-	const clickHandler: MouseEventHandler = (e) => {
+	const tableHeadClickHandler: MouseEventHandler = (e) => {
 		const field = (e.target as unknown as { dataset: { sortField: string } })
 			.dataset.sortField;
 		if (!field) return;
@@ -146,61 +158,78 @@ export function DenseTable({ user_id }: ProfilePropsType) {
 	};
 
 	return (
-		<TableContainer
-			style={
-				isLoadingStatus === 'loading'
-					? { pointerEvents: 'none' }
-					: { pointerEvents: 'auto' }
-			}
-			className={s.wrapper}
-			component={Paper}
-		>
-			{isLoadingStatus === 'loading' ? <CircularIndeterminate /> : ''}
-			<Table sx={{ minWidth: 650 }} size='small' aria-label='a dense table'>
-				<TableHead className={s.tableHead}>
-					<StyledTableRow onClick={clickHandler}>
-						<TableCell align='left' data-sort-field='name'>
-							Name{' '}
-							<img
-								src={arrow}
-								alt=''
-								className={s.img}
-								style={getArrowStyle('name')}
-							/>
-						</TableCell>
+		<>
+			{editMode && (
+				<EditPackName
+					cancel={() => setEditMode(false)}
+					confirm={editPackHandler}
+					name={editablePack?.name}
+				/>
+			)}
+			{deleteMode && (
+				<DeletePack
+					confirm={deletePackHandler}
+					cancel={() => setDeleteMode(false)}
+					packName={deletablePack?.name}
+				/>
+			)}
 
-						<TableCell align='right' data-sort-field='cardsCount'>
-							Cards
-							<img
-								className={s.img}
-								src={arrow}
-								alt=''
-								style={getArrowStyle('cardsCount')}
-							/>
-						</TableCell>
-						<TableCell align='right' data-sort-field='updated'>
-							Last Updated{' '}
-							<img
-								className={s.img}
-								src={arrow}
-								alt=''
-								style={getArrowStyle('updated')}
-							/>
-						</TableCell>
-						<TableCell align='right' data-sort-field='created'>
-							Created by
-							<img
-								className={s.img}
-								src={arrow}
-								alt=''
-								style={getArrowStyle('created')}
-							/>
-						</TableCell>
-						<TableCell align='right'>Actions</TableCell>
-					</StyledTableRow>
-				</TableHead>
-				<TableBody className={s.tableBody}>{rows}</TableBody>
-			</Table>
-		</TableContainer>
+			<TableContainer
+				style={
+					isLoadingStatus === 'loading'
+						? { pointerEvents: 'none' }
+						: { pointerEvents: 'auto' }
+				}
+				className={s.wrapper}
+				component={Paper}
+			>
+				{isLoadingStatus === 'loading' ? <CircularIndeterminate /> : ''}
+				<Table sx={{ minWidth: 650 }} size='small' aria-label='a dense table'>
+					<TableHead className={s.tableHead}>
+						<StyledTableRow onClick={tableHeadClickHandler}>
+							<TableCell align='left' data-sort-field='name'>
+								Name{' '}
+								<img
+									src={arrow}
+									alt=''
+									className={s.img}
+									style={getArrowStyle('name')}
+								/>
+							</TableCell>
+
+							<TableCell align='right' data-sort-field='cardsCount'>
+								Cards
+								<img
+									className={s.img}
+									src={arrow}
+									alt=''
+									style={getArrowStyle('cardsCount')}
+								/>
+							</TableCell>
+							<TableCell align='right' data-sort-field='updated'>
+								Last Updated{' '}
+								<img
+									className={s.img}
+									src={arrow}
+									alt=''
+									style={getArrowStyle('updated')}
+								/>
+							</TableCell>
+							<TableCell align='right' data-sort-field='created'>
+								Created by
+								<img
+									className={s.img}
+									src={arrow}
+									alt=''
+									style={getArrowStyle('created')}
+								/>
+							</TableCell>
+							<TableCell align='right'>Actions</TableCell>
+						</StyledTableRow>
+					</TableHead>
+					<TableBody className={s.tableBody}>{rows}</TableBody>
+				</Table>
+			</TableContainer>
+		</>
 	);
 }

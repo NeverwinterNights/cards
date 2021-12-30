@@ -4,15 +4,13 @@ import s from './CardInfo.module.scss';
 
 // import arrow from "../../../images/main/arrow.svg";
 
-export type confirmPayloadType = { answer?: string; question?: string };
+export type confirmPayloadType = { answer: string; question: string };
 
 type CardInfoPropsType = {
 	question?: string;
 	answer?: string;
 	confirm?: (payload: confirmPayloadType) => void;
 	cancel: () => void;
-	callBack?: (payload: confirmPayloadType) => void;
-	EditCard?: string;
 };
 
 export const CardInfo: React.FC<CardInfoPropsType> = ({
@@ -20,8 +18,6 @@ export const CardInfo: React.FC<CardInfoPropsType> = ({
 	question,
 	cancel,
 	confirm,
-	callBack,
-	EditCard,
 }) => {
 	useEffect(() => {
 		const body = document.querySelector('body');
@@ -33,18 +29,12 @@ export const CardInfo: React.FC<CardInfoPropsType> = ({
 	const [questionFieldValue, setQuestionFieldValue] = useState(question || '');
 	const [answerFieldValue, setAnswerFieldValue] = useState(answer || '');
 	const onSaveClickHandler = () => {
-		if (EditCard === 'EditCard') {
-			callBack &&
-				callBack({ question: questionFieldValue, answer: answerFieldValue });
-			cancel();
-			return;
-		}
 		confirm &&
 			confirm({ answer: answerFieldValue, question: questionFieldValue });
 	};
 
 	return (
-		<div className={s.modal} onClick={() => cancel()}>
+		<div className={s.modal} onClick={cancel}>
 			<div className={s.wrapper}>
 				<div className={s.wrap} onClick={(e) => e.stopPropagation()}>
 					<h3 className={s.subtitle}>Card Info</h3>
