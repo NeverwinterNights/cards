@@ -66,7 +66,6 @@ type ActionsType =
 export type RegistrationRequestType = {
 	email: string
 	password: string
-
 }
 
 

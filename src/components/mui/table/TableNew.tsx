@@ -71,12 +71,17 @@ export function DenseTable({ user_id }: ProfilePropsType) {
 	const [deletablePack, setDeletablePack] = useState<packType | null>(null);
 
 	const editPackHandler = (newName: string) => {
-		editablePack && dispatch(updatePackTC({ ...editablePack, name: newName }));
+		currentUserId && editablePack && dispatch(updatePackTC({  // добавил currentUserId для
+			// сохранения паков конкретного юзера
+			...editablePack,
+			name: newName,
+			user_id: currentUserId, // добавил для сохранения паков конкретного юзера
+		}));
 		setEditMode(false);
 	};
 
 	const deletePackHandler = () => {
-		deletablePack && dispatch(deletePackTC(deletablePack._id));
+		autorisedUserId && deletablePack && dispatch(deletePackTC(deletablePack._id, autorisedUserId)); // добавил для сохранения паков конкретного юзера
 		setDeleteMode(false);
 	};
 
