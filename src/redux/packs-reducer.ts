@@ -148,7 +148,7 @@ export const deletePackTC = (idPack: string, user_id?: string): AppThunk => asyn
 		}
 	}
 };
-export const updatePackTC = (payload: packType, user_id?: string): AppThunk => async (dispatch, getState: () => RootState) => {
+export const updatePackTC = (payload: packType): AppThunk => async (dispatch, getState: () => RootState) => {
 	try {
 		const pack = getState().packsReducer.cardPacks.find(item => item._id === payload._id);
 		if (!pack) {
@@ -156,8 +156,7 @@ export const updatePackTC = (payload: packType, user_id?: string): AppThunk => a
 		}
 		const updatePack = { ...pack, ...payload };
 		await cardsApi.updatePack(updatePack);
-
-		dispatch(getPacks({ ...payload, user_id }));
+		dispatch(getPacks({user_id: payload.user_id}));
 
 	} catch (e) {
 		if (axios.isAxiosError(e) && e.response) {
