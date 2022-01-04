@@ -12,8 +12,6 @@ const App = () => {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(checkAuth());
-        filesApi.getFiles().then(res => console.log(res))
-        filesApi.setFiles(image).then(res => console.log(res))
     }, []);
     return (
         <div>
