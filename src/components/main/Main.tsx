@@ -52,6 +52,7 @@ function Main() {
 			<section className={s.content}>
 				<Outlet />
 			</section>
+
 		</div>
 	);
 }

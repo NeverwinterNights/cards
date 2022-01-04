@@ -14,6 +14,7 @@ import {
 } from '../../../../assets/selectors/authSelectors';
 import { createPack, getPacks } from '../../../../redux/packs-reducer';
 import { PaginationPacksContainer } from '../../../mui/pagination/PaginationPacksContainer';
+import { Video } from '../../../video/Video';
 
 const defaultAva = 'https://via.placeholder.com/150';
 
@@ -114,6 +115,7 @@ function Profile() {
 					</div>
 				</div>
 			</div>
+			<Video/>
 		</div>
 	);
 }

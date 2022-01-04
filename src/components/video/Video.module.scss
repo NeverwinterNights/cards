@@ -1,0 +1,56 @@
+.main {
+  margin: 20px 0px 20px 0px;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px !important;
+}
+
+.control__inp {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 18px;
+  margin-bottom: 20px;
+
+  div {
+    margin-right: 5px;
+  }
+}
+
+.video {
+  background-color: #2d2e46;
+  width: 400px;
+  height: 300px;
+  margin: 0 auto 20px auto;
+}
+
+video {
+  width: 100%;
+  height: 100%;
+}
+
+.controls {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+
+}
+
+
+.button {
+  background: #21268f;
+  border-radius: 20px;
+  color: #ffffff;
+  padding: 10px;
+  &:not(:last-child) {
+    margin-right: 15px;
+  }
+}
+
+
+
+
+
+
