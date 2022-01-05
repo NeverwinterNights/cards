@@ -7,9 +7,10 @@ const instance = axios.create({
 
 export const filesApi = {
     getFiles() {
-        return instance.get('/file')
+        return instance.get('/file', {responseType: 'blob'})
     },
-    setFiles(file: any) {
-        return instance.post(`/file`, {myFile: file})
+    setFiles(myFile: any) {
+        console.log('filess', myFile)
+        return instance.post(`/file`, myFile)
     }
 }
