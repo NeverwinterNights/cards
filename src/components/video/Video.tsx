@@ -71,7 +71,7 @@ export const Video = React.memo(() => {
 
 
 	const playbackRateUp = () => {
-		videoRef && videoRef.current && videoRef.current.currentTime < 1 ? (videoRef.current.playbackRate += 0.1) : videoRef && videoRef.current && (videoRef.current.playbackRate = 1);
+		videoRef && videoRef.current && videoRef.current.currentTime < 1 ? (videoRef.current.playbackRate += 0.1) : videoRef && videoRef.current && (videoRef.current.playbackRate = 2);
 
 	};
 
