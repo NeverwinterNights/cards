@@ -12,8 +12,13 @@ import PackList from '../main/packs-list/PacksList';
 import { EditProfile } from '../main/packs-list/EditProfile/EditProfile';
 import { CardsList } from '../main/packs-list/ListCard/ListCard';
 import { Learn } from '../main/packs-list/LearnQuestionAnswer/Learn';
+import { useAppSelector } from '../../redux/store';
+import { InitialStateTypeFile, TypeReader } from '../../redux/fileReducer';
 
 export const MyRoutes = () => {
+
+
+
 	return (
 		<Routes>
 			<Route path='/' element={<Main />}>
