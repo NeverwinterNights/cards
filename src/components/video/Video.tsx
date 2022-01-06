@@ -64,6 +64,19 @@ export const Video = React.memo(() => {
 
 	};
 
+
+	// const currentTimeUp = () => {
+	// 	if (videoRef && videoRef.current
+	// 		&& videoRef.current.currentTime < videoRef.current.duration - 0.3) videoRef.current.currentTime += 0.3;
+	// 	else videoRef && videoRef.current && (videoRef.current.currentTime = videoRef.current.duration);
+	// };
+	// const currentTimeDown = () => {
+	// 	if (videoRef && videoRef.current
+	// 		&& videoRef.current.currentTime > 0.3) videoRef.current.currentTime -= 0.3;
+	// 	else videoRef && videoRef.current && (videoRef.current.currentTime = 0);
+	// };
+
+
 	const width100 = () => {
 		videoRef && videoRef.current && (videoRef.current.width = 100);
 
