@@ -56,12 +56,11 @@ export const Video = React.memo(() => {
 	};
 
 	const currentTimeDown = () => {
-		videoRef && videoRef.current && videoRef.current.currentTime > 0.2 ? videoRef.current.currentTime -= 0.1 : videoRef && videoRef.current && (videoRef.current.currentTime = 1);
+		videoRef && videoRef.current && videoRef.current.currentTime > 10 ? videoRef.current.currentTime -= 10 : videoRef && videoRef.current && (videoRef.current.currentTime = 1);
 	};
 
 	const currentTimeUp = () => {
-		videoRef && videoRef.current && videoRef.current.currentTime < videoRef.current.duration - 0.3 ? videoRef.current.currentTime += 0.1 : videoRef && videoRef.current && videoRef.current.duration && (videoRef.current.currentTime = videoRef.current.duration);
-
+		videoRef && videoRef.current && videoRef.current.currentTime < videoRef.current.duration - 10? videoRef.current.currentTime += 10 : videoRef && videoRef.current && videoRef.current.duration && (videoRef.current.currentTime = videoRef.current.duration);
 	};
 
 
